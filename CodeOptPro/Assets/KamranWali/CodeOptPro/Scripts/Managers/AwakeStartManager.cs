@@ -20,8 +20,11 @@ namespace KamranWali.CodeOptPro.Managers
             for (_counter = 0; _counter < _data.Count; _counter++) _data[_counter].AwakeAdv(); // Calling all awakes
         }
         
-        private void Start() { for (_counter = 0; _counter < _data.Count; _counter++) _data[_counter].StartAdv(); } // Calling all starts
-                                                                                                                    //TODO: Call linked manager either in update or call the individually that is awake ones from awake and start ones from start
+        private void Start() 
+        { 
+            for (_counter = 0; _counter < _data.Count; _counter++) _data[_counter].StartAdv(); 
+        } // Calling all starts
+          //TODO: Call linked manager either in update or call the individually that is awake ones from awake and start ones from start
 
         #region Editor Methods
         /// <summary>

@@ -38,6 +38,7 @@ namespace KamranWali.CodeOptPro.Editor
             }
 
             for (_counter = 0; _counter < _objects.Length; _counter++) _objects[_counter].Init(); // Initializing objects
+            for (_counter = 0; _counter < _managers.Length; _counter++) EditorUtility.SetDirty(_managers[_counter]); // Dirtying managers for save
         }
     }
 }
