@@ -4,29 +4,28 @@ using UnityEngine;
 
 namespace KamranWali.CodeOptPro.Managers
 {
-    public class MonoAdvManager : MonoBehaviour
+    public class MonoAdvManager : MonoBehaviour, ICOPSetup<MonoAdv>, IInit
     {
-        [Header("AwakeStartManager Global Properties")]
-        [SerializeField] private AwakeStartManagerHelper _helper;
+        [Header("MonoAdvManager Global Properties")]
+        [SerializeField] private MonoAdvManagerHelper _helper;
 
         [Header("AwakeStartManager Local Properties")]
         [SerializeField] private List<MonoAdv> _data;
 
         private int _counter;
 
-        private void Awake() => _helper.SetManager(this);
-
         /// <summary>
-        /// This method is called during awake, SHOULD BE CALLED BY AwakeStartManager_Call ONLY.
+        /// This method does setup before AwakeAdv.
         /// </summary>
-        public void AwakeAdv()
-        {
-            _helper.SetManager(this);
-            for (_counter = 0; _counter < _data.Count; _counter++) _data[_counter].AwakeAdv(); // Calling all awakes
-        }
+        public void PreAwakeAdv() => _helper.SetManager(this);
 
         /// <summary>
-        /// This method is called during start, SHOULD BE CALLED BY AwakeStartManager_Call ONLY.
+        /// This method is called during awake, SHOULD BE CALLED BY MonoAdvManager_Call ONLY.
+        /// </summary>
+        public void AwakeAdv() { for (_counter = 0; _counter < _data.Count; _counter++) _data[_counter].AwakeAdv(); } // Calling all awakes
+
+        /// <summary>
+        /// This method is called during start, SHOULD BE CALLED BY MonoAdvManager_Call ONLY.
         /// </summary>
         public void StartAdv() { for (_counter = 0; _counter < _data.Count; _counter++) _data[_counter].StartAdv(); }
 

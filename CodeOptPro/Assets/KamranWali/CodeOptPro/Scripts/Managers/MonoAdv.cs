@@ -3,10 +3,10 @@ using UnityEngine;
 
 namespace KamranWali.CodeOptPro.Managers
 {
-    public abstract class MonoAdv : MonoBehaviour
+    public abstract class MonoAdv : MonoBehaviour, IInit
     {
-        [Header("BaseAwakeStart Global Properties")]
-        [SerializeField] private AwakeStartManagerHelper _manager;
+        [Header("MonoAdv Global Properties")]
+        [SerializeField] private MonoAdvManagerHelper _manager;
 
         #region Editor Scripts
         /// <summary>

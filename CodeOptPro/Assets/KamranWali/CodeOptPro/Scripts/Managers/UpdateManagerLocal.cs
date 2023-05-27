@@ -3,10 +3,10 @@ using UnityEngine;
 
 namespace KamranWali.CodeOptPro.Managers
 {
-    public class UpdateManagerLocal : MonoAdv
+    public class UpdateManagerLocal : MonoAdv, ICOPSetup<MonoAdvUpdate>
     {
         [Header("UpdateManagerLocal Local Properties")]
-        [SerializeField] private List<MonoAdvUpdateLocal> _objects;
+        [SerializeField] private List<MonoAdvUpdate> _objects;
         [SerializeField, Min(1)] private int _numUpdate = 1;
 
         private int _pointer;
@@ -41,8 +41,8 @@ namespace KamranWali.CodeOptPro.Managers
         /// <summary>
         /// This method adds an object to the list, ONLY CALL FROM EDITOR SCRIPT.
         /// </summary>
-        /// <param name="obj">The object to add, of type MonoAdvUpdateLocal</param>
-        public void AddObject(MonoAdvUpdateLocal obj)
+        /// <param name="obj">The object to add, of type MonoAdvUpdate</param>
+        public void AddObject(MonoAdvUpdate obj)
         {
             if (_objects == null) ResetData();
             _objects.Add(obj);
@@ -51,7 +51,7 @@ namespace KamranWali.CodeOptPro.Managers
         /// <summary>
         /// This method removes all object from the list.
         /// </summary>
-        public void ResetData() => _objects = new List<MonoAdvUpdateLocal>();
+        public void ResetData() => _objects = new List<MonoAdvUpdate>();
         #endregion
 
         /// <summary>
