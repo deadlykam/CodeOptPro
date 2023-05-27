@@ -16,7 +16,7 @@ namespace KamranWali.CodeOptPro.ScriptableObjects
         public float GetTimeDelta() => manager != null ? manager.GetTimeDelta() : -1f;
 
         /// <summary>
-        /// Gets the Time.deltaTime value for the manager.
+        /// Gets the calculated Time.deltaTime value from the manager.
         /// </summary>
         /// <returns>The calculated Time.deltaTime value, of type float</returns>
         public float GetTime() => manager != null ? manager.GetTime() : -1f;

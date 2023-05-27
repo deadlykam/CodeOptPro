@@ -32,7 +32,7 @@ namespace KamranWali.CodeOptPro.Managers
         public float GetTimeDelta() => _timeDelta;
 
         /// <summary>
-        /// Gets the Time.deltaTime value for the manager.
+        /// Gets the calculated Time.deltaTime value from the manager.
         /// </summary>
         /// <returns>The calculated Time.deltaTime value, of type float</returns>
         public float GetTime() => _timeDelta * Time.deltaTime;
