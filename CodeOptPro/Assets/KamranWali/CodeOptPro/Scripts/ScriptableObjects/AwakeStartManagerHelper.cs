@@ -18,6 +18,16 @@ namespace KamranWali.CodeOptPro.ScriptableObjects
         public void SetManager(AwakeStartManager manager) => _manager = manager;
 
         /// <summary>
+        /// This method is called during awake, SHOULD BE CALLED BY AwakeStartManager_Call ONLY.
+        /// </summary>
+        public void AwakeAdv() => _manager?.AwakeAdv();
+
+        /// <summary>
+        /// This method is called during start, SHOULD BE CALLED BY AwakeStartManager_Call ONLY.
+        /// </summary>
+        public void StartAdv() => _manager?.StartAdv();
+
+        /// <summary>
         /// This method adds an object to the list, NOT RECOMMENDED TO BE CALLED ON RUN TIME!
         /// </summary>
         /// <param name="obj">The object to add, of type BaseAwakeStart</param>

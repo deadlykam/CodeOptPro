@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace KamranWali.CodeOptPro.Managers
 {
-    public abstract class BaseAwakeStart : MonoBehaviour, IAwakeStart
+    public abstract class BaseAwakeStart : MonoBehaviour
     {
         [Header("BaseAwakeStart Global Properties")]
         [SerializeField] private AwakeStartManagerHelper _manager;

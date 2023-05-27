@@ -14,17 +14,21 @@ namespace KamranWali.CodeOptPro.Managers
 
         private int _counter;
 
-        private void Awake() 
+        private void Awake() => _helper.SetManager(this);
+
+        /// <summary>
+        /// This method is called during awake, SHOULD BE CALLED BY AwakeStartManager_Call ONLY.
+        /// </summary>
+        public void AwakeAdv()
         {
             _helper.SetManager(this);
             for (_counter = 0; _counter < _data.Count; _counter++) _data[_counter].AwakeAdv(); // Calling all awakes
         }
-        
-        private void Start() 
-        { 
-            for (_counter = 0; _counter < _data.Count; _counter++) _data[_counter].StartAdv(); 
-        } // Calling all starts
-          //TODO: Call linked manager either in update or call the individually that is awake ones from awake and start ones from start
+
+        /// <summary>
+        /// This method is called during start, SHOULD BE CALLED BY AwakeStartManager_Call ONLY.
+        /// </summary>
+        public void StartAdv() { for (_counter = 0; _counter < _data.Count; _counter++) _data[_counter].StartAdv(); }
 
         #region Editor Methods
         /// <summary>
