@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace KamranWali.CodeOptPro
 {
-    public class TestScript : BaseAwakeStart
+    public class TestScript : MonoAdv
     {
         public override void AwakeAdv()
         {

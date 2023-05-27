@@ -4,17 +4,17 @@ using UnityEngine;
 
 namespace KamranWali.CodeOptPro.Editor
 {
-    public class AwakeStartSetup : EditorWindow
+    public class CodeOptProSetup : EditorWindow
     {
-        private AwakeStartManager[] _managers;
-        private BaseAwakeStart[] _objects;
+        private MonoAdvManager[] _managers;
+        private MonoAdv[] _objects;
 
         private int _counter;
 
         [MenuItem("KamranWali/CodeOptPro")]
         private static void Init()
         {
-            AwakeStartSetup window = (AwakeStartSetup)EditorWindow.GetWindow(typeof(AwakeStartSetup)); // Setting the window
+            CodeOptProSetup window = (CodeOptProSetup)EditorWindow.GetWindow(typeof(CodeOptProSetup)); // Setting the window
             window.Show(); // Opening the window
         }
 
@@ -28,10 +28,10 @@ namespace KamranWali.CodeOptPro.Editor
         /// </summary>
         private void Setup()
         {
-            _managers = FindObjectsByType<AwakeStartManager>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-            _objects = FindObjectsByType<BaseAwakeStart>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            _managers = FindObjectsByType<MonoAdvManager>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            _objects = FindObjectsByType<MonoAdv>(FindObjectsInactive.Include, FindObjectsSortMode.None);
 
-            for (_counter = 0; _counter < _managers.Length; _counter++) // Loop for initializing the awake start manager
+            for (_counter = 0; _counter < _managers.Length; _counter++) // Loop for initializing the mono adv manager
             {
                 _managers[_counter].Init(); // Initializing managers
                 _managers[_counter].ResetData(); // Resetting data

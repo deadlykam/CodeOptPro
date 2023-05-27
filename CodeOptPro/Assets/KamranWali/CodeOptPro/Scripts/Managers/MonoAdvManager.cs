@@ -4,13 +4,13 @@ using UnityEngine;
 
 namespace KamranWali.CodeOptPro.Managers
 {
-    public class AwakeStartManager : MonoBehaviour
+    public class MonoAdvManager : MonoBehaviour
     {
         [Header("AwakeStartManager Global Properties")]
         [SerializeField] private AwakeStartManagerHelper _helper;
 
         [Header("AwakeStartManager Local Properties")]
-        [SerializeField] private List<BaseAwakeStart> _data;
+        [SerializeField] private List<MonoAdv> _data;
 
         private int _counter;
 
@@ -40,7 +40,7 @@ namespace KamranWali.CodeOptPro.Managers
         /// This method adds an object to the list, NOT RECOMMENDED TO BE CALLED ON RUN TIME!
         /// </summary>
         /// <param name="obj">The object to add, of type BaseAwakeStart</param>
-        public void AddObject(BaseAwakeStart obj)
+        public void AddObject(MonoAdv obj)
         {
             if (_data == null) ResetData(); // Checking if list is null then initializing it
             _data.Add(obj);
@@ -49,7 +49,7 @@ namespace KamranWali.CodeOptPro.Managers
         /// <summary>
         /// This method removes all data from the list.
         /// </summary>
-        public void ResetData() => _data = new List<BaseAwakeStart>();
+        public void ResetData() => _data = new List<MonoAdv>();
         #endregion
     }
 }

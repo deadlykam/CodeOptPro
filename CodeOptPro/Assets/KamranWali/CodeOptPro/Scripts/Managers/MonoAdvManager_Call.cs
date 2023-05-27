@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace KamranWali.CodeOptPro.Managers
 {
-    public class AwakeStartManager_Call : MonoBehaviour
+    public class MonoAdvManager_Call : MonoBehaviour
     {
         [Header("AwakeStartManager_Call Local Properties")]
         [SerializeField] private AwakeStartManagerHelper[] _managers;

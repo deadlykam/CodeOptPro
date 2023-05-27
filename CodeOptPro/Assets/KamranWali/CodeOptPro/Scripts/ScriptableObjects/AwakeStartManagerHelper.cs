@@ -9,13 +9,13 @@ namespace KamranWali.CodeOptPro.ScriptableObjects
                      order = 1)]
     public class AwakeStartManagerHelper : ScriptableObject
     {
-        private AwakeStartManager _manager;
+        private MonoAdvManager _manager;
 
         /// <summary>
         /// This method sets the manager.
         /// </summary>
         /// <param name="manager">The manager to set, of type AwakeStartManager</param>
-        public void SetManager(AwakeStartManager manager) => _manager = manager;
+        public void SetManager(MonoAdvManager manager) => _manager = manager;
 
         /// <summary>
         /// This method is called during awake, SHOULD BE CALLED BY AwakeStartManager_Call ONLY.
@@ -31,7 +31,7 @@ namespace KamranWali.CodeOptPro.ScriptableObjects
         /// This method adds an object to the list, NOT RECOMMENDED TO BE CALLED ON RUN TIME!
         /// </summary>
         /// <param name="obj">The object to add, of type BaseAwakeStart</param>
-        public void AddObject(BaseAwakeStart obj) => _manager?.AddObject(obj);
+        public void AddObject(MonoAdv obj) => _manager?.AddObject(obj);
 
         /// <summary>
         /// This method removes all data from the list.
