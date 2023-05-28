@@ -1,4 +1,5 @@
 using KamranWali.CodeOptPro.Managers;
+using KamranWali.CodeOptPro.ScriptableObjects;
 using UnityEditor;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ namespace KamranWali.CodeOptPro.Editor
 {
     public class CodeOptProSetup : EditorWindow
     {
+        [SerializeField] private CodeOptProSettings _settings;
         private MonoAdvManager_Call _managerCaller;
         private MonoAdvManager[] _managers;
         private UpdateManagerLocal[] _ums_Local;
@@ -14,6 +16,8 @@ namespace KamranWali.CodeOptPro.Editor
 
         private int _counter;
         private string _log;
+        private bool _preIsAutoSetup;
+        private bool _preIsAutoSave;
 
         [MenuItem("KamranWali/CodeOptPro")]
         private static void Init()
@@ -25,9 +29,49 @@ namespace KamranWali.CodeOptPro.Editor
         private void OnGUI() 
         {
             if (GUILayout.Button("Setup")) Setup();
+
+            if (GUILayout.Button("Play")) // For setting up and playing
+            {
+                Setup();
+                EditorApplication.isPlaying = true; // Starting play mode
+            }
+
+            _settings.SetIsAutoSetup(EditorGUILayout.Toggle("Enable Auto Setup", _settings.IsAutoSetup()));
+            _settings.SetIsAutoSave(EditorGUILayout.Toggle("Enable Auto Save", _settings.IsAutoSave()));
+            UpdateSettings(); // Saving settings
+
             EditorGUI.BeginDisabledGroup(true);
             _log = EditorGUILayout.TextArea(_log);
             EditorGUI.EndDisabledGroup();
+        }
+
+        /// <summary>
+        /// This method updates the settings for the CodeOptProSetupAuto.
+        /// </summary>
+        private void UpdateSettings()
+        {
+            if (_preIsAutoSetup != _settings.IsAutoSetup()) // Condition to update auto setup
+            {
+                CodeOptProSetupAuto.SetIsAutoSetup(_settings.IsAutoSetup());
+                _preIsAutoSetup = _settings.IsAutoSetup();
+                DirtyingSettings();
+            }
+
+            if (_preIsAutoSave != _settings.IsAutoSave()) // Condition to update auto save
+            {
+                CodeOptProSetupAuto.SetIsAutoSave(_settings.IsAutoSave());
+                _preIsAutoSave = _settings.IsAutoSave();
+                DirtyingSettings();
+            }
+        }
+
+        /// <summary>
+        /// This method dirtys the setting so that it can be saved.
+        /// </summary>
+        private void DirtyingSettings()
+        {
+            EditorUtility.SetDirty(_settings);
+            Undo.RecordObject(_settings, "Settings Updated");
         }
 
         /// <summary>
