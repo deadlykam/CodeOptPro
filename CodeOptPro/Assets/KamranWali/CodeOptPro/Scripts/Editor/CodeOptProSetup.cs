@@ -16,8 +16,22 @@ namespace KamranWali.CodeOptPro.Editor
 
         private int _counter;
         private string _log;
-        private bool _preIsAutoSetup;
-        private bool _preIsAutoSave;
+        private bool _isSetLogo;
+        private Vector2 _scrollPos;
+        private Texture _texLogo;
+        private Texture _texLogoName;
+        private readonly string _logoPath = "KamranWali/CodeOptPro/Images/CodeOptProLogo_Only_500x651";
+        private readonly string _logoNamePath = "KamranWali/CodeOptPro/Images/CodeOptProLogo_Name_500x89";
+        private  GUIStyle _versionStyle;
+        private readonly int _fontSize = 18;
+        private readonly string _version = "Version - v1.0.0";
+        private readonly string _setupButtonToolTip = "For manually calling manager setup. Use this button if auto setup is" +
+            " disabled.";
+        private readonly string _autoSetupToolTip = "If enabled then will do auto setup when entering play mode or when" +
+            " play button is pressed. If disabled then it is suggested to use the 'Setup' button for setting up the objects.";
+        private readonly string _autoSaveToolTip = "If enabled then will auto save the scene when entering play mode or when" +
+            " play button is pressed. If disabled then it is suggested to save the scene manually after exiting the play mode so that" +
+            " all the objects added to the managers are saved for later use.";
 
         [MenuItem("KamranWali/CodeOptPro")]
         private static void Init()
@@ -28,21 +42,51 @@ namespace KamranWali.CodeOptPro.Editor
 
         private void OnGUI() 
         {
-            if (GUILayout.Button("Setup")) Setup();
-
-            if (GUILayout.Button("Play")) // For setting up and playing
+            if (!_isSetLogo)
             {
-                Setup();
-                EditorApplication.isPlaying = true; // Starting play mode
+                _texLogo = Resources.Load<Texture>(_logoPath);
+                _texLogoName = Resources.Load<Texture>(_logoNamePath);
+                _versionStyle = new GUIStyle();
+                _versionStyle.fontSize = _fontSize;
+                _versionStyle.normal.textColor = Color.white;
+                _isSetLogo = true;
             }
 
-            _settings.SetIsAutoSetup(EditorGUILayout.Toggle("Enable Auto Setup", _settings.IsAutoSetup()));
-            _settings.SetIsAutoSave(EditorGUILayout.Toggle("Enable Auto Save", _settings.IsAutoSave()));
+            _scrollPos = EditorGUILayout.BeginScrollView(_scrollPos);
+            EditorGUILayout.BeginVertical("Box");
+            GUI.skin.label.fontSize = 20;
+            GUILayout.Label("Editor Settings");
+            _settings.SetIsAutoSetup(EditorGUILayout.Toggle(new GUIContent("Enable Auto Setup", _autoSetupToolTip), _settings.IsAutoSetup()));
+            _settings.SetIsAutoSave(EditorGUILayout.Toggle(new GUIContent("Enable Auto Save", _autoSaveToolTip), _settings.IsAutoSave()));
             UpdateSettings(); // Saving settings
+            EditorGUILayout.EndVertical();
+
+            if (!_settings.IsAutoSetup()) // Condition to show manual setup
+            {
+                EditorGUILayout.BeginVertical("Box");
+                GUI.skin.label.fontSize = 20;
+                GUILayout.Label("Manual Setup");
+                if (GUILayout.Button(new GUIContent("SETUP", _setupButtonToolTip))) Setup();
+                EditorGUILayout.EndVertical();
+            }
 
             EditorGUI.BeginDisabledGroup(true);
             _log = EditorGUILayout.TextArea(_log);
             EditorGUI.EndDisabledGroup();
+
+            if (_isSetLogo) // Condition to show the logo
+            {
+                GUILayout.Space(30f);
+                GUILayout.Box(_texLogo, new GUILayoutOption[] { GUILayout.Width(100f), GUILayout.Height(130.2f), GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(false) });
+                GUILayout.Box(_texLogoName, new GUILayoutOption[] { GUILayout.Width(200f), GUILayout.Height(35.6f), GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(false) });
+                GUILayout.Space(10f);
+                GUILayout.BeginHorizontal();
+                GUILayout.Space(5f);
+                EditorGUILayout.LabelField(_version, _versionStyle);
+                GUILayout.EndHorizontal();
+            }
+
+            EditorGUILayout.EndScrollView();
         }
 
         /// <summary>
@@ -50,17 +94,15 @@ namespace KamranWali.CodeOptPro.Editor
         /// </summary>
         private void UpdateSettings()
         {
-            if (_preIsAutoSetup != _settings.IsAutoSetup()) // Condition to update auto setup
+            if (CodeOptProSetupAuto.IsAutoSetup() != _settings.IsAutoSetup()) // Condition to update auto setup
             {
                 CodeOptProSetupAuto.SetIsAutoSetup(_settings.IsAutoSetup());
-                _preIsAutoSetup = _settings.IsAutoSetup();
                 DirtyingSettings();
             }
 
-            if (_preIsAutoSave != _settings.IsAutoSave()) // Condition to update auto save
+            if (CodeOptProSetupAuto.IsAutoSave() != _settings.IsAutoSave()) // Condition to update auto save
             {
                 CodeOptProSetupAuto.SetIsAutoSave(_settings.IsAutoSave());
-                _preIsAutoSave = _settings.IsAutoSave();
                 DirtyingSettings();
             }
         }

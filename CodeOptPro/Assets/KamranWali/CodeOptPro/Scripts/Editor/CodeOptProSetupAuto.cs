@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 using KamranWali.CodeOptPro.Managers;
+using UnityEditor.SceneManagement;
 
 namespace KamranWali.CodeOptPro.Editor
 {
@@ -20,6 +21,8 @@ namespace KamranWali.CodeOptPro.Editor
 
         public static void SetIsAutoSetup(bool value) => _isAutoSetup = value;
         public static void SetIsAutoSave(bool value) => _isAutoSave = value;
+        public static bool IsAutoSetup() => _isAutoSetup;
+        public static bool IsAutoSave() => _isAutoSave;
 
         /// <summary>
         /// This method calls the setup on play state change.
@@ -27,7 +30,11 @@ namespace KamranWali.CodeOptPro.Editor
         /// <param name="state">The state to check if exiting edit mode, of type PlayModeStateChange</param>
         private static void OnPlayModeStateChange(PlayModeStateChange state) 
         {
-            if (state == PlayModeStateChange.ExitingEditMode && _isAutoSetup) Setup(); 
+            if (state == PlayModeStateChange.ExitingEditMode) // Condition to execute during pre play mode
+            {
+                if (_isAutoSetup) Setup(); // Condition for auto setup
+                if (_isAutoSave) AutoSaveScene(); // Condition for auto save
+            }
         }
 
         /// <summary>
@@ -95,6 +102,11 @@ namespace KamranWali.CodeOptPro.Editor
 
             EditorUtility.ClearProgressBar();
         }
+
+        /// <summary>
+        /// This method saves the scene automatically.
+        /// </summary>
+        private static void AutoSaveScene() => EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene());
 
         /// <summary>
         /// This method shows the progress bar.
