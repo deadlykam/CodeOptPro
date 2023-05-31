@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: DefaultCodeOptProSettings
   m_EditorClassIdentifier: 
   _isAutoSetup: 1
-  _isAutoSave: 1
+  _isAutoSave: 0

@@ -40,7 +40,7 @@ namespace KamranWali.CodeOptPro.Editor
         /// <summary>
         /// This method sets up the awake start system.
         /// </summary>
-        private static void Setup()
+        public static void Setup()
         {
             _managerCaller = EditorWindow.FindAnyObjectByType<MonoAdvManager_Call>(FindObjectsInactive.Include);
             _managers = EditorWindow.FindObjectsByType<MonoAdvManager>(FindObjectsInactive.Include, FindObjectsSortMode.None);
