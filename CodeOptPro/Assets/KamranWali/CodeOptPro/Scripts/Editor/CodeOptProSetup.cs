@@ -62,20 +62,17 @@ namespace KamranWali.CodeOptPro.Editor
             UpdateSettings(); // Saving settings
             EditorGUILayout.EndVertical();
 
-            if (!_settings.IsAutoSetup()) // Condition to show manual setup
+            EditorGUILayout.BeginVertical("Box");
+            GUI.skin.label.fontSize = 20;
+            GUILayout.Label("Manual Setup");
+            if (GUILayout.Button(new GUIContent("SETUP", _setupButtonToolTip)))
             {
-                EditorGUILayout.BeginVertical("Box");
-                GUI.skin.label.fontSize = 20;
-                GUILayout.Label("Manual Setup");
-                if (GUILayout.Button(new GUIContent("SETUP", _setupButtonToolTip)))
-                {
-                    _log = "Initializing...";
-                    CodeOptProSetupAuto.Setup();
-                    WriteToLog("Setup Successful!");
-                }
-                EditorGUILayout.EndVertical();
+                _log = "Initializing...";
+                CodeOptProSetupAuto.Setup();
+                WriteToLog("Setup Successful!");
             }
-
+            EditorGUILayout.EndVertical();
+            
             EditorGUI.BeginDisabledGroup(true);
             _log = EditorGUILayout.TextArea(_log);
             EditorGUI.EndDisabledGroup();

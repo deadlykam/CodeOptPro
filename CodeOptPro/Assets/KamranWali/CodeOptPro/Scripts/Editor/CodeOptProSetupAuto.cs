@@ -15,6 +15,7 @@ namespace KamranWali.CodeOptPro.Editor
         private static UpdateManagerLocal[] _ums_Local;
         private static UpdateManagerGlobal[] _ums_Global;
         private static MonoAdv[] _objects;
+        private static List<MonoAdvManagerHelper> _managerHelpers;
         private static int _counter;
         private static bool _isAutoSetup;
         private static bool _isAutoSave;
@@ -49,6 +50,7 @@ namespace KamranWali.CodeOptPro.Editor
             _ums_Local = EditorWindow.FindObjectsByType<UpdateManagerLocal>(FindObjectsInactive.Include, FindObjectsSortMode.None);
             _ums_Global = EditorWindow.FindObjectsByType<UpdateManagerGlobal>(FindObjectsInactive.Include, FindObjectsSortMode.None);
             _objects = EditorWindow.FindObjectsByType<MonoAdv>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            //TODO: Initialize the manager helper list here and later on do the validations and the whole list
             ShowProgressBar("All objects found.", .0f);
             _managerCaller.ResetData();
             ShowProgressBar("Initializing Managers...", .01f);

@@ -28,6 +28,8 @@ namespace KamranWali.CodeOptPro.Managers
             if (!_managers.Contains(obj)) _managers.Add(obj);
         }
 
+        public List<MonoAdvManagerHelper> GetManagers() => _managers;
+
         public void ResetData()
         {
             _managers_PreAwakeAdv_Setup = new List<MonoAdvManager>();
