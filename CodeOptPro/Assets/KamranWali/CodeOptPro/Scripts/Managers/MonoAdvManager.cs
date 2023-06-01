@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace KamranWali.CodeOptPro.Managers
 {
-    public class MonoAdvManager : MonoBehaviour, ICOPSetup<MonoAdv>, IInit
+    public class MonoAdvManager : MonoBehaviour, ICOPSetup_Manager<MonoAdv>, IInit
     {
         [Header("MonoAdvManager Global Properties")]
         [SerializeField] private MonoAdvManagerHelper _helper;
