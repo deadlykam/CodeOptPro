@@ -107,7 +107,7 @@ namespace KamranWali.CodeOptPro.Editor
             {
                 _managers_creator = new GameObject(_managers_name);
                 _managers_creator.transform.position = Vector3.zero;
-                _managers_creator.AddComponent<MonoAdvManager_Call>().SetManagers(new MonoAdvManagerHelper[] { _defaultManager });
+                _managers_creator.AddComponent<MonoAdvManager_Call>().AddManagerHelper(_defaultManager);
                 _managers_creator.AddComponent<MonoAdvManager>();
                 WriteToLog("Setup Done!");
             }

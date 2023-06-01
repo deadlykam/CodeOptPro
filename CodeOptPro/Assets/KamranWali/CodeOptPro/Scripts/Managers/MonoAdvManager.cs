@@ -31,7 +31,7 @@ namespace KamranWali.CodeOptPro.Managers
 
         #region Editor Methods
         /// <summary>
-        /// This method initializes the object.
+        /// This method initializes the object, THIS METHOD IS FOR EDITOR ONLY!
         /// </summary>
         public void Init() => _helper.SetManager(this);
 
@@ -46,7 +46,13 @@ namespace KamranWali.CodeOptPro.Managers
         }
 
         /// <summary>
-        /// This method removes all data from the list.
+        /// This method gets the manager helper, THIS METHOD IS FOR EDITOR ONLY!
+        /// </summary>
+        /// <returns></returns>
+        public MonoAdvManagerHelper GetManagerHelper() => _helper;
+
+        /// <summary>
+        /// This method removes all data from the list, THIS METHOD IS FOR EDITOR ONLY!
         /// </summary>
         public void ResetData() => _data = new List<MonoAdv>();
         #endregion

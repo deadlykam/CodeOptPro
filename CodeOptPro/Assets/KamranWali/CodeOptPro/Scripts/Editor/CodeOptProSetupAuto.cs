@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEditor;
 using KamranWali.CodeOptPro.Managers;
 using UnityEditor.SceneManagement;
+using System.Collections.Generic;
+using KamranWali.CodeOptPro.ScriptableObjects;
 
 namespace KamranWali.CodeOptPro.Editor
 {
@@ -56,6 +58,7 @@ namespace KamranWali.CodeOptPro.Editor
                 _managerCaller.AddObject(_managers[_counter]); // Adding the manager to the calling manager
                 _managers[_counter].Init(); // Initializing managers
                 _managers[_counter].ResetData(); // Resetting data
+                _managerCaller.AddManagerHelper(_managers[_counter].GetManagerHelper());
                 ShowProgressBar("Setting MonoAdvManager and Caller...", ((_counter / _managers.Length) * .14f) + .01f);
 
             }
