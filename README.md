@@ -39,5 +39,9 @@ To use this feature simply import from _using KamranWali.CodeOptPro.Managers;_ a
 Once you exit the play mode you will notice that your scene has become dirty. This is done intentionally because just before entering the play mode CodeOptPro automatically finds all the objects needs to be referenced and stores them to the correct managers. So once this process is done only then will the play mode start. If you want to can enable auto save from the CodeOptPro interface from KamranWali -> CodeOptPro. Enabling this will save everything when entering play mode. So if you make any changes to the scene for testing those too will be saved. That is why I have it disabled by default so that the user understands what will happen if enabled.
 
 #### Awake & Start Call Order:
-Another powerful feature of CodeOptPro is that you can order which group's awake and start method should be called first. By default every group belongs to _DefaultManagerHelper_. To add a new group
+Another powerful feature of CodeOptPro is that you can order which group's awake and start methods should be called first. By default every group belongs to _DefaultManagerHelper_. Adding a new group is easy. Follow the steps below:
+1. In the Project tab right any folder where you want to create a new group. Then go to Create -> CodeOptPro -> ScriptableObjects -> Managers -> MonoAdvManagerHelper. Give the group a name.
+2. Select the _Managers_ GameObject in the scene. Then add a new component called _MonoAdvManager_.
+3. Now for the _Helper_ property under the _MonoAdvManager Global Properties_ select the newly created group.
+4. Finally in MonoAdvManager_Call
 ***
