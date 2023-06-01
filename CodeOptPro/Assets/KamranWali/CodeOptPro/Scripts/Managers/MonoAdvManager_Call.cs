@@ -20,6 +20,7 @@ namespace KamranWali.CodeOptPro.Managers
         private void Start() { for (_counter = 0; _counter < _managers.Length; _counter++) _managers[_counter].StartAdv(); } // Calling all manager start
 
         #region Editor Script
+        public void SetManagers(MonoAdvManagerHelper[] managers) => _managers = managers;
         public void AddObject(MonoAdvManager obj) => _managers_PreAwakeAdv_Setup.Add(obj);
         
         public void ResetData()

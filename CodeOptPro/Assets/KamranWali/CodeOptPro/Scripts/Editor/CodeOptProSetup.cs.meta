@@ -6,6 +6,7 @@ MonoImporter:
   defaultReferences:
   - m_ViewDataDictionary: {instanceID: 0}
   - _settings: {fileID: 11400000, guid: 60441467db148b34db664992a1408405, type: 2}
+  - _defaultManager: {fileID: 11400000, guid: dbbe919781cbd094485176840e7b626e, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

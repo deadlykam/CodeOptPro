@@ -8,7 +8,10 @@ namespace KamranWali.CodeOptPro.Editor
     public class CodeOptProSetup : EditorWindow
     {
         [SerializeField] private CodeOptProSettings _settings;
+        [SerializeField] private MonoAdvManagerHelper _defaultManager;
 
+        private GameObject _managers_creator;
+        private readonly string _managers_name = "Managers";
         private string _log;
         private bool _isSetLogo;
         private Vector2 _scrollPos;
@@ -26,6 +29,8 @@ namespace KamranWali.CodeOptPro.Editor
         private readonly string _autoSaveToolTip = "If enabled then will auto save the scene when entering play mode or when" +
             " play button is pressed. If disabled then it is suggested to save the scene manually after exiting the play mode so that" +
             " all the objects added to the managers are saved for later use.";
+        private readonly string _setupSceneToolTip = "This will setup the scene for using CodeOptPro. If the scene is already setup" +
+            " then no changes will be made.";
 
         [MenuItem("KamranWali/CodeOptPro")]
         private static void Init()
@@ -45,6 +50,8 @@ namespace KamranWali.CodeOptPro.Editor
                 _versionStyle.normal.textColor = Color.white;
                 _isSetLogo = true;
             }
+
+            if (GUILayout.Button(new GUIContent("SCENE SETUP", _setupSceneToolTip))) SceneSetup();
 
             _scrollPos = EditorGUILayout.BeginScrollView(_scrollPos);
             EditorGUILayout.BeginVertical("Box");
@@ -86,6 +93,26 @@ namespace KamranWali.CodeOptPro.Editor
             }
 
             EditorGUILayout.EndScrollView();
+        }
+
+        /// <summary>
+        /// This method setups the scene for using CodeOptPro.
+        /// </summary>
+        private void SceneSetup()
+        {
+            _log = "Setting up scene for CodeOptPro...";
+            _managers_creator = GameObject.Find(_managers_name);
+
+            if (_managers_creator == null)
+            {
+                _managers_creator = new GameObject(_managers_name);
+                _managers_creator.transform.position = Vector3.zero;
+                _managers_creator.AddComponent<MonoAdvManager_Call>().SetManagers(new MonoAdvManagerHelper[] { _defaultManager });
+                _managers_creator.AddComponent<MonoAdvManager>();
+                WriteToLog("Setup Done!");
+            }
+            else WriteToLog("Scene already setup for CodeOptPro.");
+            _managers_creator = null;
         }
 
         /// <summary>
