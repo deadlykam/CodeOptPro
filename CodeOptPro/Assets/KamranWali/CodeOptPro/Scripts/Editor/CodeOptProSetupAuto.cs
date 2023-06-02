@@ -17,19 +17,11 @@ namespace KamranWali.CodeOptPro.Editor
         private static MonoAdv[] _objects;
         private static List<MonoAdvManagerHelper> _managerHelpers;
         private static List<MonoAdvManagerHelper> _checkHelpers;
+        private static CodeOptProSettings _settings;
         private static int _counter;
-        private static bool _isAutoSetup;
-        private static bool _isAutoSave;
-        private static bool _isAutoFixNullMissRef;
+        private static readonly string _settingsPath = "Assets/KamranWali/CodeOptPro/SO_Data/DefaultCodeOptProSettings.asset";
 
         static CodeOptProSetupAuto() => EditorApplication.playModeStateChanged += OnPlayModeStateChange;
-
-        public static void SetIsAutoSetup(bool value) => _isAutoSetup = value;
-        public static void SetIsAutoSave(bool value) => _isAutoSave = value;
-        public static void SetIsAutoFixNullMissRef(bool value) => _isAutoFixNullMissRef = value;
-        public static bool IsAutoSetup() => _isAutoSetup;
-        public static bool IsAutoSave() => _isAutoSave;
-        public static bool IsAutoFixNullMissRef() => _isAutoFixNullMissRef;
 
         /// <summary>
         /// This method calls the setup on play state change.
@@ -39,8 +31,9 @@ namespace KamranWali.CodeOptPro.Editor
         {
             if (state == PlayModeStateChange.ExitingEditMode) // Condition to execute during pre play mode
             {
-                if (_isAutoSetup) Setup(); // Condition for auto setup
-                if (_isAutoSave) AutoSaveScene(); // Condition for auto save
+                LoadSettings();
+                if (_settings.IsAutoSetup()) Setup(); // Condition for auto setup
+                if (_settings.IsAutoSave()) AutoSaveScene(); // Condition for auto save
             }
         }
 
@@ -60,7 +53,7 @@ namespace KamranWali.CodeOptPro.Editor
             _managerCaller.ResetData();
             ShowProgressBar("Initializing Managers...", .01f);
 
-            if (_isAutoFixNullMissRef) // Condition to auto fix null and missing reference
+            if (_settings.IsAutoFixNullMissRef()) // Condition to auto fix null and missing reference
             {
                 for (_counter = 0; _counter < _managerHelpers.Count; _counter++) // Loop for removing null or missing references
                 {
@@ -90,7 +83,7 @@ namespace KamranWali.CodeOptPro.Editor
 
             }
 
-            if (_isAutoFixNullMissRef) // Condition to remove any helpers that does NOT exist in scene
+            if (_settings.IsAutoFixNullMissRef()) // Condition to remove any helpers that does NOT exist in scene
             {
                 for (_counter = 0; _counter < _managerHelpers.Count; _counter++) // Loop for removing any helpers that are NOT present in the scene
                 {
@@ -166,6 +159,11 @@ namespace KamranWali.CodeOptPro.Editor
 
             EditorUtility.ClearProgressBar();
         }
+
+        /// <summary>
+        /// This method loads the settings.
+        /// </summary>
+        public static void LoadSettings() => _settings = AssetDatabase.LoadAssetAtPath(_settingsPath, typeof(CodeOptProSettings)) as CodeOptProSettings; // Loading settings
 
         /// <summary>
         /// This method saves the scene automatically.

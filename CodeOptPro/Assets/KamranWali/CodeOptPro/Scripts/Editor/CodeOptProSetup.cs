@@ -23,6 +23,9 @@ namespace KamranWali.CodeOptPro.Editor
         private  GUIStyle _versionStyle;
         private readonly int _fontSize = 18;
         private readonly string _version = "Version - v1.0.0";
+        private bool _preIsAutoSetup;
+        private bool _preIsAutoSave;
+        private bool _preIsAutoFixNullMissRef;
 
         #region Tool Tips
         private readonly string _setupButtonToolTip = "For manually calling manager setup. Use this button if auto setup is" +
@@ -76,6 +79,7 @@ namespace KamranWali.CodeOptPro.Editor
             if (GUILayout.Button(new GUIContent("SETUP", _setupButtonToolTip)))
             {
                 _log = "Initializing...";
+                CodeOptProSetupAuto.LoadSettings();
                 CodeOptProSetupAuto.Setup();
                 WriteToLog("Done!");
             }
@@ -121,25 +125,25 @@ namespace KamranWali.CodeOptPro.Editor
         }
 
         /// <summary>
-        /// This method updates the settings for the CodeOptProSetupAuto.
+        /// This method updates the settings and makes it dirty for saving.
         /// </summary>
         private void UpdateSettings()
         {
-            if (CodeOptProSetupAuto.IsAutoSetup() != _settings.IsAutoSetup()) // Condition to update auto setup
+            if (_preIsAutoSetup != _settings.IsAutoSetup()) // Condition to update auto setup
             {
-                CodeOptProSetupAuto.SetIsAutoSetup(_settings.IsAutoSetup());
+                _preIsAutoSetup = _settings.IsAutoSetup();
                 DirtyingSettings();
             }
 
-            if (CodeOptProSetupAuto.IsAutoSave() != _settings.IsAutoSave()) // Condition to update auto save
+            if (_preIsAutoSave != _settings.IsAutoSave()) // Condition to update auto save
             {
-                CodeOptProSetupAuto.SetIsAutoSave(_settings.IsAutoSave());
+                _preIsAutoSave = _settings.IsAutoSave();
                 DirtyingSettings();
             }
 
-            if (CodeOptProSetupAuto.IsAutoFixNullMissRef() != _settings.IsAutoFixNullMissRef()) // Condition to update auto fix null/miss ref
+            if (_preIsAutoFixNullMissRef != _settings.IsAutoFixNullMissRef()) // Condition to update auto fix null/miss ref
             {
-                CodeOptProSetupAuto.SetIsAutoFixNullMissRef(_settings.IsAutoFixNullMissRef());
+                _preIsAutoFixNullMissRef = _settings.IsAutoFixNullMissRef();
                 DirtyingSettings();
             }
         }

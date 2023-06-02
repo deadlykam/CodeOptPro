@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace KamranWali.CodeOptPro.Managers
 {
     public abstract class MonoAdvUpdate : MonoAdv
