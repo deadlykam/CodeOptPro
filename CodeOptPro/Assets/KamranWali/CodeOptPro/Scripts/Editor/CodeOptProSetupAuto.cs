@@ -21,13 +21,16 @@ namespace KamranWali.CodeOptPro.Editor
         private static int _counter;
         private static bool _isAutoSetup;
         private static bool _isAutoSave;
+        private static bool _isAutoFixNullMissRef;
 
         static CodeOptProSetupAuto() => EditorApplication.playModeStateChanged += OnPlayModeStateChange;
 
         public static void SetIsAutoSetup(bool value) => _isAutoSetup = value;
         public static void SetIsAutoSave(bool value) => _isAutoSave = value;
+        public static void SetIsAutoFixNullMissRef(bool value) => _isAutoFixNullMissRef = value;
         public static bool IsAutoSetup() => _isAutoSetup;
         public static bool IsAutoSave() => _isAutoSave;
+        public static bool IsAutoFixNullMissRef() => _isAutoFixNullMissRef;
 
         /// <summary>
         /// This method calls the setup on play state change.
@@ -58,12 +61,15 @@ namespace KamranWali.CodeOptPro.Editor
             _managerCaller.ResetData();
             ShowProgressBar("Initializing Managers...", .01f);
 
-            for (_counter = 0; _counter < _managerHelpers.Count; _counter++) // Loop for removing null or missing references
-            { 
-                if (_managerHelpers[_counter] == null) // Condition to check if the reference is missing or null
+            if (_isAutoFixNullMissRef) // Condition to auto fix null and missing reference
+            {
+                for (_counter = 0; _counter < _managerHelpers.Count; _counter++) // Loop for removing null or missing references
                 {
-                    _managerHelpers.RemoveAt(_counter); // Removing the missing or null reference
-                    _counter--; // Helping counter to point correctly
+                    if (_managerHelpers[_counter] == null) // Condition to check if the reference is missing or null
+                    {
+                        _managerHelpers.RemoveAt(_counter); // Removing the missing or null reference
+                        _counter--; // Helping counter to point correctly
+                    }
                 }
             }
 
@@ -85,12 +91,15 @@ namespace KamranWali.CodeOptPro.Editor
 
             }
 
-            for(_counter = 0; _counter < _managerHelpers.Count; _counter++) // Loop for removing any helpers that are NOT present in the scene
+            if (_isAutoFixNullMissRef) // Condition to remove any helpers that does NOT exist in scene
             {
-                if (!_checkHelpers.Contains(_managerHelpers[_counter])) // Condition to check if helper does NOT exist
+                for (_counter = 0; _counter < _managerHelpers.Count; _counter++) // Loop for removing any helpers that are NOT present in the scene
                 {
-                    _managerHelpers.RemoveAt(_counter); // Removing the helper
-                    _counter--; // Helping counter to point correctly after removal
+                    if (!_checkHelpers.Contains(_managerHelpers[_counter])) // Condition to check if helper does NOT exist
+                    {
+                        _managerHelpers.RemoveAt(_counter); // Removing the helper
+                        _counter--; // Helping counter to point correctly after removal
+                    }
                 }
             }
 

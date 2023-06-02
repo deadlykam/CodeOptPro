@@ -23,6 +23,8 @@ namespace KamranWali.CodeOptPro.Editor
         private  GUIStyle _versionStyle;
         private readonly int _fontSize = 18;
         private readonly string _version = "Version - v1.0.0";
+
+        #region Tool Tips
         private readonly string _setupButtonToolTip = "For manually calling manager setup. Use this button if auto setup is" +
             " disabled.";
         private readonly string _autoSetupToolTip = "If enabled then will do auto setup when entering play mode or when" +
@@ -30,8 +32,12 @@ namespace KamranWali.CodeOptPro.Editor
         private readonly string _autoSaveToolTip = "If enabled then will auto save the scene when entering play mode or when" +
             " play button is pressed. If disabled then it is suggested to save the scene manually after exiting the play mode so that" +
             " all the objects added to the managers are saved for later use.";
+        private readonly string _autoFixNullMissRefToolTip = "If enabled then any missing references stored in the list will be" +
+            " removed automatically. It is recommended to keep this enabled but if disabled then user must remove the null/missing" +
+            " references manually";
         private readonly string _setupSceneToolTip = "This will setup the scene for using CodeOptPro. If the scene is already setup" +
             " then no changes will be made.";
+        #endregion
 
         [MenuItem("KamranWali/CodeOptPro")]
         private static void Init()
@@ -58,8 +64,9 @@ namespace KamranWali.CodeOptPro.Editor
             EditorGUILayout.BeginVertical("Box");
             GUI.skin.label.fontSize = 20;
             GUILayout.Label("Editor Settings");
-            _settings.SetIsAutoSetup(EditorGUILayout.Toggle(new GUIContent("Enable Auto Setup", _autoSetupToolTip), _settings.IsAutoSetup()));
-            _settings.SetIsAutoSave(EditorGUILayout.Toggle(new GUIContent("Enable Auto Save", _autoSaveToolTip), _settings.IsAutoSave()));
+            _settings.SetIsAutoSetup(EditorGUILayout.ToggleLeft(new GUIContent("Enable Auto Setup", _autoSetupToolTip), _settings.IsAutoSetup()));
+            _settings.SetIsAutoSave(EditorGUILayout.ToggleLeft(new GUIContent("Enable Auto Save", _autoSaveToolTip), _settings.IsAutoSave()));
+            _settings.SetIsAutoFixNullMissRef(EditorGUILayout.ToggleLeft(new GUIContent("Enable Auto Fix Null/Missing Refs", _autoFixNullMissRefToolTip), _settings.IsAutoFixNullMissRef()));
             UpdateSettings(); // Saving settings
             EditorGUILayout.EndVertical();
 
@@ -127,6 +134,12 @@ namespace KamranWali.CodeOptPro.Editor
             if (CodeOptProSetupAuto.IsAutoSave() != _settings.IsAutoSave()) // Condition to update auto save
             {
                 CodeOptProSetupAuto.SetIsAutoSave(_settings.IsAutoSave());
+                DirtyingSettings();
+            }
+
+            if (CodeOptProSetupAuto.IsAutoFixNullMissRef() != _settings.IsAutoFixNullMissRef()) // Condition to update auto fix null/miss ref
+            {
+                CodeOptProSetupAuto.SetIsAutoFixNullMissRef(_settings.IsAutoFixNullMissRef());
                 DirtyingSettings();
             }
         }
