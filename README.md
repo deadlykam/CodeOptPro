@@ -39,9 +39,37 @@ To use this feature simply import from _using KamranWali.CodeOptPro.Managers;_ a
 Once you exit the play mode you will notice that your scene has become dirty. This is done intentionally because just before entering the play mode CodeOptPro automatically finds all the objects needs to be referenced and stores them to the correct managers. So once this process is done only then will the play mode start. If you want to can enable auto save from the CodeOptPro interface from KamranWali -> CodeOptPro. Enabling this will save everything when entering play mode. So if you make any changes to the scene for testing those too will be saved. That is why I have it disabled by default so that the user understands what will happen if enabled.
 
 #### Awake & Start Call Order:
-Another powerful feature of CodeOptPro is that you can order which group's awake and start methods should be called first. By default every group belongs to _DefaultManagerHelper_. Adding a new group is easy. Follow the steps below:
+Another powerful feature of CodeOptPro is that you can order which group's awake and start methods should be called first. By default every group belongs to _DefaultManagerHelper_. Adding a new group is easy. Just follow the steps below:
 1. In the Project tab right any folder where you want to create a new group. Then go to Create -> CodeOptPro -> ScriptableObjects -> Managers -> MonoAdvManagerHelper. Give the group a name.
-2. Select the _Managers_ GameObject in the scene. Then add a new component called _MonoAdvManager_.
+2. Select the _Managers_ GameObject in the scene. Then add a new component called _MonoAdvManager_. (You can add this component to any GameObject. It does NOT need to be the _Managers_ GameObject).
 3. Now for the _Helper_ property under the _MonoAdvManager Global Properties_ select the newly created group.
-4. Finally in MonoAdvManager_Call
+4. Now open up the CodeOptPro interface, _KamranWali -> CodeOptPro_, if not opened already and press the _SETUP_ button.
+5. Finally select the _Managers_ game object again. Now notice the *MonoAdvManager_Call* script. You will see under the _Managers_ property the newly added group is added to the bottom. So basically this means that the _DefaultManagerHelper_ will be first to be called in Awake() and Start() and then the newly added group. You can change the order by dragging the elements.
+
+#### Performant Update:
+The other good feature of CodeOptPro is that you can use custom update to update your scripts. This custom update allows you to share one Update() method with many scripts. This in turn saves lot of performance issues as calling Unity's Update() takes a hit on performance. There are two types of custom update class in CodeOptPro, _UpdateManagerLocal_ and _UpdateManagerGlobal_. The main logic between the two are same but the only difference is that the local one needs to be referenced in coupled way while the global one is referenced in a decoupled way. To use the custom update follow the steps below.
+
+###### UpdateManagerLocal:
+1. Create a new script and extend the class called _MonoAdvUpdateLocal_.
+2. Import all the abstract methods. Now let me explain the importance of each methods below:
+- a. _AwakeAdv()_: Custom awake method
+- b. _StartAdv()_: Custom start method
+- c. _UpdateObject()_: Custom update method. All the update logics must go here. Also if your logic requires calculation with Time.delta time then it is suggested that you calculate with _updateManager.GetTime()_ method. This method will return the correct delta time calculation for the custom update. If this is not used and Time.deltaTime is used instead then your logic will give weird results.
+- d. _IsActive()_: This method is called by the update manager to check if the object is active or NOT. If object is active then the object's _UpdateObject()_ method will be called. If the object is deactive then the object's _UpdateObject()_ will NOT be called. You can set any conditions as to here to say what is considered active or inactive. For example you could use the object's gameobject to check if the object should be active or not by using _gameObject.activeSelf_. Remember if you do NOT use _gameObject.activeSelf_ to check if the object should be active or not then the _UpdateObject()_ will still be called when the game object is hidden.
+- e. _SetActive(bool)_: This method sets the active state of the object. Use this method to activate or deactivate the object's _UpdateObject()_ method. For example if the _gameObject.activeSelf_ is being used in the method _IsActive()_ then in _SetActive(bool)_ just hide or show the game object by using the code _gameObject.SetActive(isActivate)_. Again you can use any logic here that decides how to activate the object for update.
+3. Now once you are done implementing your new script then go back to the editor. Create a new GameObject or object for which your new script will be used for. Before adding your new script we first need to add the custom update manager. Click the _Add Component_ button and search and add the script called _UpdateManagerLocal_.
+4. Now add your script. Once added drag and drop the _UpdateManagerLocal_ into the _updateManager_ field of your script which is under the _MonoAdvUpdateLocal Local Properties_.
+5. Finally press the play button and your script should work especially the update logic inside _UpdateObject()_ method.
+
+Now if you create more scripts that requires the use of update per frame then just drag and drop the _UpdateManagerLocal_ to the _updateManager_ field and they too will start to use update per frame and share the main Update() method from the _UpdateManagerLocal_. There is a field in _UpdateManagerLocal_ called _NumUpdate_. This value means how many objects should be updated per frame. For example if this value is set to 5 then 5 objects will be update in one frame cycle. If there are too many objects that needs to be updated then increasing this value should make the update process much better but that depends on your scripts and their logic.
+
+###### UpdateManagerGlobal:
+1. Create a new script and extend teh class called _MonoAdvUpdateGlobal_.
+2. Import all the abstract methods and implement them. For explanation see point 2 in UpdateManagerLocal. It is similar to that.
+3. Create a new GameObjet or object for which your new script will be used for. Before adding your new script we first need to add the custom update manager. Click the _Add Component_ button and search and add the script called _UpdateManagerGlobal_. It is suggested to add the _UpdateManagerGlobal_ in a GameObject which is inside the _Managers_ game object so that it remains organized because a scriptable object is used to access this update manager in a decouple fashion.
+4. Now we need to create the scriptable object for the _UpdateManagerGlobal_. Right click any folder where you want to store the helper scriptable object then go to Create -> CodeOptPro -> ScriptableObjects -> Managers -> UpdateManagerGlobalHelper. Then it any name you want. After that set the newly created UpdateManagerGlobalHelper in the field called _Helper_ under the _UpdateManagerGlobal Global Properties_ inside the _UpdateManagerGlobal_.
+5. Now add the newly created UpdateManagerGlobalHelper in your script in the field called _updateManager_ under _MonoAdvUpdateGlobal Global Properties_.
+6. Finally press the play button and your script should work especially the update logic inside _UpdateObject()_ method.
+
+_UpdateManagerGlobal_ has the _NumUpdate_ field as well and works similarly to _UpdateManagerLocal_ so for explanation on how the field works please check the notes there. The good thing about _UpdateManagerGlobal_ is that you only need to add the helper scriptable object for the update to happen. No need to search and drag and drop. Just simply add the scriptable object from the list and it is done. This saves time too.
 ***
