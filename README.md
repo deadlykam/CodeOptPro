@@ -72,4 +72,8 @@ Now if you create more scripts that requires the use of update per frame then ju
 6. Finally press the play button and your script should work especially the update logic inside _UpdateObject()_ method.
 
 _UpdateManagerGlobal_ has the _NumUpdate_ field as well and works similarly to _UpdateManagerLocal_ so for explanation on how the field works please check the notes there. The good thing about _UpdateManagerGlobal_ is that you only need to add the helper scriptable object for the update to happen. No need to search and drag and drop. Just simply add the scriptable object from the list and it is done. This saves time too.
+
+#### Vector3 Performant Calculation:
+I have also added performant Vector 3 calculations that will save some performance issue in the long run especially when it comes to Vector3 distance calculation. I will give just brief explanation of the methods
+1. _Vec3.Distance(Vector3, Vector3)_ - This method calculates the distance between two Vector3s and the returned value is a squared value. This means that if you want to check if the distance of the two vector point is greater/less than 5 units then you must make the 5 squared which is simply 5x5 = 25. Meaning you are comparing against 25.
 ***
