@@ -16,7 +16,6 @@ namespace KamranWali.CodeOptPro.Editor
         private static UpdateManagerGlobal[] _ums_Global;
         private static MonoAdv[] _objects;
         private static List<MonoAdvManagerHelper> _managerHelpers;
-        //private static List<MonoAdvManagerHelper> _managerHelpersTemp;
         private static List<MonoAdvManagerHelper> _checkHelpers;
         private static int _counter;
         private static bool _isAutoSetup;
