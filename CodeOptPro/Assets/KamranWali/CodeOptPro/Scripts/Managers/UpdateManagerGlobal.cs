@@ -20,6 +20,8 @@ namespace KamranWali.CodeOptPro.Managers
         /// This method sets up the object which is needed by the CodeOptProSetup class, ONLY CALL FROM CodeOptProSetup CLASS.
         /// </summary>
         public void Setup() => _helper.SetManager(this);
+
+        public override bool HasManager() => base.HasManager() && (_helper != null);
         #endregion
     }
 }

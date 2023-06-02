@@ -16,6 +16,8 @@ namespace KamranWali.CodeOptPro.Editor
         private static UpdateManagerGlobal[] _ums_Global;
         private static MonoAdv[] _objects;
         private static List<MonoAdvManagerHelper> _managerHelpers;
+        //private static List<MonoAdvManagerHelper> _managerHelpersTemp;
+        private static List<MonoAdvManagerHelper> _checkHelpers;
         private static int _counter;
         private static bool _isAutoSetup;
         private static bool _isAutoSave;
@@ -50,36 +52,85 @@ namespace KamranWali.CodeOptPro.Editor
             _ums_Local = EditorWindow.FindObjectsByType<UpdateManagerLocal>(FindObjectsInactive.Include, FindObjectsSortMode.None);
             _ums_Global = EditorWindow.FindObjectsByType<UpdateManagerGlobal>(FindObjectsInactive.Include, FindObjectsSortMode.None);
             _objects = EditorWindow.FindObjectsByType<MonoAdv>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-            //TODO: Initialize the manager helper list here and later on do the validations and the whole list
+            _managerHelpers = _managerCaller.GetManagers();
+            _checkHelpers = new List<MonoAdvManagerHelper>();
             ShowProgressBar("All objects found.", .0f);
             _managerCaller.ResetData();
             ShowProgressBar("Initializing Managers...", .01f);
 
+            for (_counter = 0; _counter < _managerHelpers.Count; _counter++) // Loop for removing null or missing references
+            { 
+                if (_managerHelpers[_counter] == null) // Condition to check if the reference is missing or null
+                {
+                    _managerHelpers.RemoveAt(_counter); // Removing the missing or null reference
+                    _counter--; // Helping counter to point correctly
+                }
+            }
+
             for (_counter = 0; _counter < _managers.Length; _counter++) // Loop for initializing the mono adv manager and adding managers to caller
             {
                 _managerCaller.AddObject(_managers[_counter]); // Adding the manager to the calling manager
+
+                if (!_managers[_counter].HasManager()) // Condition to stop the system process
+                {
+                    ShowMRDialog("Missing Reference In MonoAdvManager", _managers[_counter].gameObject);
+                    return; // Stop process here until error is fixed
+                }
+
                 _managers[_counter].Init(); // Initializing managers
                 _managers[_counter].ResetData(); // Resetting data
-                _managerCaller.AddManagerHelper(_managers[_counter].GetManagerHelper());
+                if (!_managerHelpers.Contains(_managers[_counter].GetManagerHelper())) _managerHelpers.Add(_managers[_counter].GetManagerHelper()); // Adding any newly added helper
+                if (!_checkHelpers.Contains(_managers[_counter].GetManagerHelper())) _checkHelpers.Add(_managers[_counter].GetManagerHelper()); // Adding manager helpers which will later be needed for validation
                 ShowProgressBar("Setting MonoAdvManager and Caller...", ((_counter / _managers.Length) * .14f) + .01f);
 
             }
 
+            for(_counter = 0; _counter < _managerHelpers.Count; _counter++) // Loop for removing any helpers that are NOT present in the scene
+            {
+                if (!_checkHelpers.Contains(_managerHelpers[_counter])) // Condition to check if helper does NOT exist
+                {
+                    _managerHelpers.RemoveAt(_counter); // Removing the helper
+                    _counter--; // Helping counter to point correctly after removal
+                }
+            }
+
+            _managerCaller.SetManagers(_managerHelpers); // Setting the newly populated manager helpers.
+            _managerHelpers = null; // Helping with GC
+            _checkHelpers = null; // Helping with GC
+
             for (_counter = 0; _counter < _ums_Local.Length; _counter++) // Loop for resetting local Update Managers
             {
+                if (!_ums_Local[_counter].HasManager()) // Condition to stop the system process
+                {
+                    ShowMRDialog("Missing Reference In UpdateManagerLocal", _ums_Local[_counter].gameObject);
+                    return; // Stop process here until error is fixed
+                }
+
                 _ums_Local[_counter].ResetData();
                 ShowProgressBar("Setting UpdateManagerLocals...", ((_counter / _ums_Local.Length) * .14f) + .15f);
             }
 
             for (_counter = 0; _counter < _ums_Global.Length; _counter++) // Loop for setting up global Update Managers
             {
+                if (!_ums_Global[_counter].HasManager()) // Condition to stop the system process
+                {
+                    ShowMRDialog("Missing Reference In UpdateManagerGlobal", _ums_Global[_counter].gameObject);
+                    return; // Stop process here until error is fixed
+                }
+
                 _ums_Global[_counter].Setup(); // Setting up the update managers
                 _ums_Global[_counter].ResetData(); // Resetting data
                 ShowProgressBar("Setting UpdateManagerGlobals...", ((_counter / _ums_Global.Length) * .14f) + .29f);
             }
 
-            for (_counter = 0; _counter < _objects.Length; _counter++)
+            for (_counter = 0; _counter < _objects.Length; _counter++) // Loop for setting up MonoAdv objects
             {
+                if (!_objects[_counter].HasManager()) // Condition to stop the system process
+                {
+                    ShowMRDialog("Missing Reference In MonoAdv/MonoAdvUpdateLocal/MonoAdvUpdateGlobal", _objects[_counter].gameObject);
+                    return; // Stop process here until error is fixed
+                }
+
                 _objects[_counter].Init(); // Initializing objects
                 ShowProgressBar("Adding all objects...", ((_counter / _objects.Length) * .14f) + .43f);
             }
@@ -119,5 +170,21 @@ namespace KamranWali.CodeOptPro.Editor
         /// <param name="msg">The message to show</param>
         /// <param name="value">The value of the bar, range 0f - 1f, of type float</param>
         private static void ShowProgressBar(string msg, float value) => EditorUtility.DisplayProgressBar("Setting up CodeOptPro", msg, value);
+
+        /// <summary>
+        /// This method shows the missing reference dialog warning and focuses on the error game object.
+        /// </summary>
+        /// <param name="title">The title of the dialog popup, of type string</param>
+        /// <param name="obj">The gameobject to focus on when popup comes, of type GameObject</param>
+        private static void ShowMRDialog(string title, GameObject obj)
+        {
+            EditorUtility.DisplayDialog(
+                        title,
+                        $"Missing reference found on GameObject -> {obj.name}. Please fix it. Process is STOPPED!",
+                        "Ok",
+                        "");
+            Selection.activeGameObject = obj; // Selecting the error GameObject
+            EditorUtility.ClearProgressBar(); // Closing the progress bar
+        }
     }
 }

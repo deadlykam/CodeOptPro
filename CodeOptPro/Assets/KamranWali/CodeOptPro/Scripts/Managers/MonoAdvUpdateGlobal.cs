@@ -8,10 +8,14 @@ namespace KamranWali.CodeOptPro.Managers
         [Header("MonoAdvUpdateGlobal Global Properties")]
         [SerializeField] protected UpdateManagerGlobalHelper updateManager;
 
+        #region Editor Scripts
         public override void Init()
         {
             base.Init();
             updateManager.AddObject(this);
         }
+
+        public override bool HasManager() => base.HasManager() && (updateManager != null);
+        #endregion
     }
 }

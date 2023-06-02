@@ -6,10 +6,10 @@ namespace KamranWali.CodeOptPro.Managers
     public interface ICOPSetup_Call<T> : ICOPSetup<T>
     {
         /// <summary>
-        /// This method adds the manager helpers.
+        /// This method sets the manager lists.
         /// </summary>
-        /// <param name="obj">The manager helper to add, of type MonoAdvManagerHelper</param>
-        public void AddManagerHelper(MonoAdvManagerHelper obj);
+        /// <param name="managers">The manager list to set, of type List<MonoAdvManagerHelper></param>
+        public void SetManagers(List<MonoAdvManagerHelper> managers);
 
         /// <summary>
         /// This method gets the list of manager helpers.

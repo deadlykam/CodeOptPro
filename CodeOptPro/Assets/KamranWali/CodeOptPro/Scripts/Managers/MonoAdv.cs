@@ -13,6 +13,8 @@ namespace KamranWali.CodeOptPro.Managers
         /// This method initializes the object.
         /// </summary>
         public virtual void Init() => _manager.AddObject(this);
+
+        public virtual bool HasManager() => _manager != null;
         #endregion
 
         /// <summary>

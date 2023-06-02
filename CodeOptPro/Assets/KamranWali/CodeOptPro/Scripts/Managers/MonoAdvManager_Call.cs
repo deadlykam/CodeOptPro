@@ -21,13 +21,7 @@ namespace KamranWali.CodeOptPro.Managers
 
         #region Editor Script
         public void AddObject(MonoAdvManager obj) => _managers_PreAwakeAdv_Setup.Add(obj);
-
-        public void AddManagerHelper(MonoAdvManagerHelper obj)
-        {
-            if (_managers == null) _managers = new List<MonoAdvManagerHelper>();
-            if (!_managers.Contains(obj)) _managers.Add(obj);
-        }
-
+        public void SetManagers(List<MonoAdvManagerHelper> managers) => _managers = managers;
         public List<MonoAdvManagerHelper> GetManagers() => _managers;
 
         public void ResetData()

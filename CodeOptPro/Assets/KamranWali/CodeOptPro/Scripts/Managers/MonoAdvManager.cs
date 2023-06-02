@@ -35,6 +35,8 @@ namespace KamranWali.CodeOptPro.Managers
         /// </summary>
         public void Init() => _helper.SetManager(this);
 
+        public bool HasManager() => _helper != null;
+
         /// <summary>
         /// This method adds an object to the list, NOT RECOMMENDED TO BE CALLED ON RUN TIME!
         /// </summary>

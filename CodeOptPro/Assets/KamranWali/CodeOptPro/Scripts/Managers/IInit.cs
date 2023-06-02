@@ -9,5 +9,11 @@ namespace KamranWali.CodeOptPro.Managers
         /// This method initializes the object.
         /// </summary>
         public void Init();
+
+        /// <summary>
+        /// This method checks if the object has a manager helper reference.
+        /// </summary>
+        /// <returns>True means has reference, false otherwise, of type bool</returns>
+        public bool HasManager();
     }
 }

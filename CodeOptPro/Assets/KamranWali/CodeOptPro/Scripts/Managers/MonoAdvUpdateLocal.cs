@@ -13,6 +13,8 @@ namespace KamranWali.CodeOptPro.Managers
             base.Init();
             updateManager.AddObject(this);
         }
+
+        public override bool HasManager() => base.HasManager() && (updateManager != null);
         #endregion
     }
 }

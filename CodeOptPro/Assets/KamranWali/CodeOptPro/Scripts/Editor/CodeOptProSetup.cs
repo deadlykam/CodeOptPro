@@ -1,5 +1,6 @@
 using KamranWali.CodeOptPro.Managers;
 using KamranWali.CodeOptPro.ScriptableObjects;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -69,7 +70,7 @@ namespace KamranWali.CodeOptPro.Editor
             {
                 _log = "Initializing...";
                 CodeOptProSetupAuto.Setup();
-                WriteToLog("Setup Successful!");
+                WriteToLog("Done!");
             }
             EditorGUILayout.EndVertical();
             
@@ -104,7 +105,7 @@ namespace KamranWali.CodeOptPro.Editor
             {
                 _managers_creator = new GameObject(_managers_name);
                 _managers_creator.transform.position = Vector3.zero;
-                _managers_creator.AddComponent<MonoAdvManager_Call>().AddManagerHelper(_defaultManager);
+                _managers_creator.AddComponent<MonoAdvManager_Call>().SetManagers(new List<MonoAdvManagerHelper> { _defaultManager });
                 _managers_creator.AddComponent<MonoAdvManager>();
                 WriteToLog("Setup Done!");
             }
