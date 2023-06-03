@@ -117,14 +117,14 @@ The methods inside the region called _Editor Script_ are NOT recommended to be c
 #### [MonoAdvManager](https://github.com/deadlykam/CodeOptPro/blob/1bcb72a7dc3534c3a427f3d1bb14a781cefbc62f/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Managers/MonoAdvManager.cs):
 This is the class that calls all the custom awake and start methods for every objects that is stored inside it. The methods _AwakeAdv()_ and _StartAdv()_ loops through all the objects and calls each one of their custom awake and start methods. It is recommended NOT to call the editor scripts under the region called _Editor Methods_ during runtime. Those methods are only used for _CodeOptProSetupAuto_.
 
-#### [UpdateManagerLocal](https://github.com/deadlykam/CodeOptPro/blob/1bcb72a7dc3534c3a427f3d1bb14a781cefbc62f/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Managers/UpdateManagerLocal.cs):
+#### [UpdateManagerLocal 1](https://github.com/deadlykam/CodeOptPro/blob/1bcb72a7dc3534c3a427f3d1bb14a781cefbc62f/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Managers/UpdateManagerLocal.cs):
 This is the class responsible for calling the custom update method in _MonoAdvUpdateLocal_ objects. This class shares the _Update()_ methods with the objects stored inside it. The field *_timeDelta* is very important in this class. This field must be calculated with _Time.deltaTime_ to get the actual time for accurate calculation. The method _GetTime()_ already calculates the actual time. Also in the _AwakeAdv()_ you can see how *_timeDelta* is calculated.
 
 The method _UpdateObject()_ is where objects' custom update are called. Here you can see the objects _bool IsActive()_ method is called to see if the object is active and ONLY then their _UpdateObject()_ method is called.
 
 It is recommended NOT to call the editor scripts under the region called _Editor Methods_ during runtime. Those methods are only used for _CodeOptProSetupAuto_.
 
-#### [UpdateManagerGlobal](https://github.com/deadlykam/CodeOptPro/blob/1bcb72a7dc3534c3a427f3d1bb14a781cefbc62f/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Managers/UpdateManagerGlobal.cs):
+#### [UpdateManagerGlobal 1](https://github.com/deadlykam/CodeOptPro/blob/1bcb72a7dc3534c3a427f3d1bb14a781cefbc62f/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Managers/UpdateManagerGlobal.cs):
 This class is same as _UpdateManagerLocal_. Please see the description in _[UpdateManagerLocal](#updatemanagerlocal)_ for how _UpdateManagerGlobal_ works. The only difference is that _UpdateManagerGlobal_ uses a scriptable object called _UpdateManagerGlobalHelper_ to communicate between different scripts. This allows the scripts to be decoupled where as for _[UpdateManagerLocal](#updatemanagerlocal)_ the scripts become coupled.
 
 #### [MonoAdv](https://github.com/deadlykam/CodeOptPro/blob/1bcb72a7dc3534c3a427f3d1bb14a781cefbc62f/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Managers/MonoAdv.cs):
