@@ -175,7 +175,7 @@ namespace KamranWali.CodeOptPro.Editor
         /// </summary>
         /// <param name="msg">The message to show</param>
         /// <param name="value">The value of the bar, range 0f - 1f, of type float</param>
-        private static void ShowProgressBar(string msg, float value) => EditorUtility.DisplayProgressBar("Setting up CodeOptPro", msg, value);
+        private static void ShowProgressBar(string msg, float value) => EditorUtility.DisplayCancelableProgressBar("Setting up CodeOptPro", msg, value);
 
         /// <summary>
         /// This method shows the missing reference dialog warning and focuses on the error game object.
