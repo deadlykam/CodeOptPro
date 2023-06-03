@@ -8,6 +8,29 @@
 This is a simple Unity system that helps with performance.
 
 ## Table of Contents:
+- [Prerequisites](#prerequisites)
+- [Stable Build](#stable-build)
+- [Installation](#installation)
+- [Setup](#setup)
+- [Features](#features)
+  - [Advance Awake & Start Methods](#advance-awake-&-start-methods)
+  - [Awake & Start Call Order](#awake-&-start-call-order)
+  - [Performant Update](#performant-update)
+    - [UpdateManagerLocal](#updatemanagerlocal)
+    - [UpdateManagerGlobal](#updatemanagerglobal)
+  - [Vector3 Performant Calculation](#vector3-performant-calculation)
+- [Developer](#developer)
+  - [CodeOptProSetupAuto](#codeoptprosetupauto)
+  - [MonoAdvManager_Call](#monoadvmanager_call)
+  - [MonoAdvManager](#monoadvmanager)
+  - [UpdateManagerLocal](#updatemanagerlocal)
+  - [UpdateManagerGlobal](#updatemanagerglobal)
+  - [MonoAdv](#monoadv)
+  - [MonoAdvUpdateLocal](#monoadvupdatelocal)
+  - [MonoAdvUpdateGlobal](#monoadvupdateglobal)
+- [Versioning](#versioning)
+- [Authors](#authors)
+- [License](#license)
 
 ## Prerequisites
 #### Unity Game Engine
@@ -108,5 +131,31 @@ This class is same as _UpdateManagerLocal_. Please see the description in _[Upda
 This is the class the allows custom awake and start to be used by its children. If you look at the code you will see there are 2 methods inside the region called _Editor Scripts_. The methods are _Init()_ and _bool HasManager()_. Let me explain the methods below:
 - _Init()_ - This method initializes the MonoAdv object and is ONLY called from _CodeOptProSetupAuto_. In this case it is adding itself to the helper manager. So if you require and form of setup before entering the play mode and need automation this is the method to override and implement.
 - _bool HasManager()_ - This method just checks if all the managers has been setup. If you require certain logic to be true then this is the method to implement. If this method returns false then _CodeOptProSetupAuto_ will stop the automation process and give a warning that something went wrong and needs fixing. This is basically to help the user know what went wrong.
-It is recommended NOT to call these methods during run time and ONLY to call them if you understand what they do. 
+It is recommended NOT to call these methods during run time and ONLY to call them if you understand what they do.
+
+#### [MonoAdvUpdateLocal](https://github.com/deadlykam/CodeOptPro/blob/8524978f4a7d67e2cd096397d45a329dbdc87076/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Managers/MonoAdvUpdateLocal.cs):
+This is the class that allows custom update to be used by its children. It also extends _MonoAdv_ so all the children will also get the custom awake and start methods. These class 3 main methods and 2 editor methods. I will explain them briefly as follow:
+- _Init()_ - This method initializes the _MonoAdvUpdateLocal_ and is ONLY caled from _CodeOptProSetupAuto_. In this case it is adding itself to the _MonoAdvManager_ and _UpdateManagerLocal_.
+- _bool HasManager()_ - This method checks if all the managers has been setup. In this case the _MonoAdvManager_ and the _UpdateManagerLocal_. This method is only called from _CodeOptProSetupAuto_.
+- _UpdateObject()_ - This is an abstract method that needs to implemented by the children classes. This is the custom update method. So any upate logic should be done here.
+- _SetActive(bool)_ - This method is an abstract method that needs to be implemented by the children classes. In this method you should decide how the object should be active/deactive for custom update.
+- _bool IsActive()_ - This method is an abstract method that needs to be implemented by the children classes. This method checks if the object is active/deactive for custom update. When the method returns true then the object's _UpdateObject()_ will be called by the update manager but when the method returns false then the object's _UpdateObject()_ will NOT be called.
+
+When extending this class you must refer a _UpdateManagerLocal_ in the _updateManager_ field in the inspector. Otherwise it won't work and the CodeOptPro system will throw an error warning while setup.
+
+#### [MonoAdvUpdateGlobal](https://github.com/deadlykam/CodeOptPro/blob/8524978f4a7d67e2cd096397d45a329dbdc87076/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Managers/UpdateManagerGlobal.cs):
+This is same as _MonoAdvUpdateLocal_. See the details there to understand. The only difference is that _UpdateManagerGlobalHelper_ needs to be refered in the _updateManager_ field in the inspector.
+***
+## Versioning
+The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/SimpleInterface/tags).
+***
+## Authors
+- Syed Shaiyan Kamran Waliullah 
+  - [Kamran Wali Github](https://github.com/deadlykam)
+  - [Kamran Wali Twitter](https://twitter.com/KamranWaliDev)
+  - [Kamran Wali Youtube](https://www.youtube.com/channel/UCkm-BgvswLViigPWrMo8pjg)
+  - [Kamran Wali Website](https://deadlykam.github.io/)
+***
+## License
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details.
 ***
