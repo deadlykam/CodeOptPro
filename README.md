@@ -75,5 +75,38 @@ _UpdateManagerGlobal_ has the _NumUpdate_ field as well and works similarly to _
 
 #### Vector3 Performant Calculation:
 I have also added performant Vector 3 calculations that will save some performance issue in the long run especially when it comes to Vector3 distance calculation. I will give just brief explanation of the methods
-1. _Vec3.Distance(Vector3, Vector3)_ - This method calculates the distance between two Vector3s and the returned value is a squared value. This means that if you want to check if the distance of the two vector point is greater/less than 5 units then you must make the 5 squared which is simply 5x5 = 25. Meaning you are comparing against 25.
+1. _Vec3.Distance(Vector3, Vector3)_ - This method calculates the distance between two Vector3s and the returned value is a squared value. This means that if you want to check if the distance of the two vector point is greater/less than 5 units then you must make the 5 squared which is simply 5x5 = 25. Meaning you are comparing against 25. This will save lot of performance issue later down the line when too many objects needs distance check.
+2. _Vec3.Subtract(Vector3, Vector3)_ - This method subtracts two Vector3s without creating any garbage and returns a Vector3 value.
+3. _Vec3.Add(Vector3, Vector3)_ - This method adds two Vector3s without creating any garbage and returns a Vector3 value.
+4. _Vec3.Divide(Vector3, float)_ - This method multiplys a float value to the Vector3 value without creating any garbage and returns a Vector3 value.
+5. _Vec3.Multiply(Vector3, float)_ - This method divides the Vector3 value with the float value without creating any garbage and returns a Vector3 value.
+***
+## Developer
+I tried to keep the development process for the developers as simple as possible. So if you want to modify CodeOptPro then I will try my best to explain how to.
+#### [CodeOptProSetupAuto](https://github.com/deadlykam/CodeOptPro/blob/1bcb72a7dc3534c3a427f3d1bb14a781cefbc62f/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Editor/CodeOptProSetupAuto.cs):
+This is the main class that handles all the automations for the CodeOptPro system. The _Setup()_ method is where it happens. If create a new script that extends from classes _MonoAdv_, _MonoAdvUpdateLocal_, _MonoAdvUpdateGlobal_, _UpdateManagerLocal_ or _UpdateManagerGlobal_ then you do not need make any changes in this method. BUT if you create a new script that does not extend any of the mentioned classes then you have to apply the logics necesarry for automation and setting up for use. The best way to achieve this is to follow the steps for the field _ums_Local_, _ums_Global_ or *_objects*.
+
+#### [MonoAdvManager_Call](https://github.com/deadlykam/CodeOptPro/blob/1bcb72a7dc3534c3a427f3d1bb14a781cefbc62f/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Managers/MonoAdvManager_Call.cs):
+This is the class that calls the custom awake and start methods for _MonoAdvManager_. This is also the only class that uses Unity's _Awake()_ and _Start()_ methods. That is why there should be only one of these classes throughout the entire scene. The _Awake()_ method calls the _PreAwakeAdv()_ and _AwakeAdv()_. The main purpose of _PreAwakeAdv()_ is to allow the _MonoAdvManager_ to setup up the helper reference which can then later be used by every script that has that reference. The _Start()_ method calls the _StartAdv()_ method of the manager.
+
+The methods inside the region called _Editor Script_ are NOT recommended to be called during runtime. This is only needed for _CodeOptProSetupAuto_ during automation setup.
+
+#### [MonoAdvManager](https://github.com/deadlykam/CodeOptPro/blob/1bcb72a7dc3534c3a427f3d1bb14a781cefbc62f/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Managers/MonoAdvManager.cs):
+This is the class that calls all the custom awake and start methods for every objects that is stored inside it. The methods _AwakeAdv()_ and _StartAdv()_ loops through all the objects and calls each one of their custom awake and start methods. It is recommended NOT to call the editor scripts under the region called _Editor Methods_ during runtime. Those methods are only used for _CodeOptProSetupAuto_.
+
+#### [UpdateManagerLocal](https://github.com/deadlykam/CodeOptPro/blob/1bcb72a7dc3534c3a427f3d1bb14a781cefbc62f/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Managers/UpdateManagerLocal.cs):
+This is the class responsible for calling the custom update method in _MonoAdvUpdateLocal_ objects. This class shares the _Update()_ methods with the objects stored inside it. The field *_timeDelta* is very important in this class. This field must be calculated with _Time.deltaTime_ to get the actual time for accurate calculation. The method _GetTime()_ already calculates the actual time. Also in the _AwakeAdv()_ you can see how *_timeDelta* is calculated.
+
+The method _UpdateObject()_ is where objects' custom update are called. Here you can see the objects _bool IsActive()_ method is called to see if the object is active and ONLY then their _UpdateObject()_ method is called.
+
+It is recommended NOT to call the editor scripts under the region called _Editor Methods_ during runtime. Those methods are only used for _CodeOptProSetupAuto_.
+
+#### [UpdateManagerGlobal](https://github.com/deadlykam/CodeOptPro/blob/1bcb72a7dc3534c3a427f3d1bb14a781cefbc62f/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Managers/UpdateManagerGlobal.cs):
+This class is same as _UpdateManagerLocal_. Please see the description in _[UpdateManagerLocal](#updatemanagerlocal)_ for how _UpdateManagerGlobal_ works. The only difference is that _UpdateManagerGlobal_ uses a scriptable object called _UpdateManagerGlobalHelper_ to communicate between different scripts. This allows the scripts to be decoupled where as for _[UpdateManagerLocal](#updatemanagerlocal)_ the scripts become coupled.
+
+#### [MonoAdv](https://github.com/deadlykam/CodeOptPro/blob/1bcb72a7dc3534c3a427f3d1bb14a781cefbc62f/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Managers/MonoAdv.cs):
+This is the class the allows custom awake and start to be used by its children. If you look at the code you will see there are 2 methods inside the region called _Editor Scripts_. The methods are _Init()_ and _bool HasManager()_. Let me explain the methods below:
+- _Init()_ - This method initializes the MonoAdv object and is ONLY called from _CodeOptProSetupAuto_. In this case it is adding itself to the helper manager. So if you require and form of setup before entering the play mode and need automation this is the method to override and implement.
+- _bool HasManager()_ - This method just checks if all the managers has been setup. If you require certain logic to be true then this is the method to implement. If this method returns false then _CodeOptProSetupAuto_ will stop the automation process and give a warning that something went wrong and needs fixing. This is basically to help the user know what went wrong.
+It is recommended NOT to call these methods during run time and ONLY to call them if you understand what they do. 
 ***
