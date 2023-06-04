@@ -37,7 +37,7 @@ This is a simple Unity system that helps with performance.
 Unity version **2021.3.25f1** and above should work. Some previous Unity versions should work as well but has not been tested. The main branch version is **2021.3.25f1**
 ***
 ## Stable Build
-[Stable-v1.0.0](https://github.com/deadlykam/CodeOptPro/releases/tag/v1.0.0) is the latest stable build of the project. The unitypackage for this project can also be found there. If development is going to be done on this project then it is adviced to branch off of any _Stable_ branches because they will **NOT** be changed or updated except for README.md. Any other branches are subjected to change including the main branch.
+[Stable-v1.0.0](https://github.com/deadlykam/CodeOptPro/tree/Stable-v1.0.0) is the latest stable build of the project. The unitypackage for this project can also be found there. If development is going to be done on this project then it is adviced to branch off of any _Stable_ branches because they will **NOT** be changed or updated except for README.md. Any other branches are subjected to change including the main branch.
 ***
 ## Installation
 1. First download the latest [CodeOptPro-vx.x.x.unitypackage](https://github.com/deadlykam/CodeOptPro/releases/tag/v1.0.0) from the latest Stable build.
