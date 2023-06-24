@@ -1,6 +1,6 @@
 <p align="center"><img src="https://imgur.com/vupUkm8.png"></p>
 
-<p align="center"><a href="https://youtu.be/TiChA9fTR-4" target="_blank"><img src="https://imgur.com/1ZV1Kks.png"></a></p>
+<p align="center"><a href="https://youtu.be/XJ1OeGddYXM" target="_blank"><img src="https://imgur.com/1ZV1Kks.png"></a></p>
 
 # CodeOptPro
 
@@ -90,7 +90,7 @@ Now if you create more scripts that requires the use of update per frame then ju
 1. Create a new script and extend teh class called _MonoAdvUpdateGlobal_.
 2. Import all the abstract methods and implement them. For explanation see point 2 in UpdateManagerLocal. It is similar to that.
 3. Create a new GameObjet or object for which your new script will be used for. Before adding your new script we first need to add the custom update manager. Click the _Add Component_ button and search and add the script called _UpdateManagerGlobal_. It is suggested to add the _UpdateManagerGlobal_ in a GameObject which is inside the _Managers_ game object so that it remains organized because a scriptable object is used to access this update manager in a decouple fashion.
-4. Now we need to create the scriptable object for the _UpdateManagerGlobal_. Right click any folder where you want to store the helper scriptable object then go to Create -> CodeOptPro -> ScriptableObjects -> Managers -> UpdateManagerGlobalHelper. Then it any name you want. After that set the newly created UpdateManagerGlobalHelper in the field called _Helper_ under the _UpdateManagerGlobal Global Properties_ inside the _UpdateManagerGlobal_.
+4. Now we need to create the scriptable object for the _UpdateManagerGlobal_. Right click any folder where you want to store the helper scriptable object then go to Create -> CodeOptPro -> ScriptableObjects -> Managers -> UpdateManagerGlobalHelper. Then give it any name you want. After that set the newly created UpdateManagerGlobalHelper in the field called _Helper_ under the _UpdateManagerGlobal Global Properties_ inside the _UpdateManagerGlobal_.
 5. Now add the newly created UpdateManagerGlobalHelper in your script in the field called _updateManager_ under _MonoAdvUpdateGlobal Global Properties_.
 6. Finally press the play button and your script should work especially the update logic inside _UpdateObject()_ method.
 
@@ -147,7 +147,7 @@ When extending this class you must refer a _UpdateManagerLocal_ in the _updateMa
 This is same as _MonoAdvUpdateLocal_. See the details there to understand. The only difference is that _UpdateManagerGlobalHelper_ needs to be refered in the _updateManager_ field in the inspector.
 ***
 ## Versioning
-The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/SimpleInterface/tags).
+The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro/tags).
 ***
 ## Authors
 - Syed Shaiyan Kamran Waliullah 
