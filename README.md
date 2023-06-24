@@ -1,6 +1,6 @@
 <p align="center"><img src="https://imgur.com/vupUkm8.png"></p>
 
-<p align="center"><a href="https://youtu.be/TiChA9fTR-4" target="_blank"><img src="https://imgur.com/1ZV1Kks.png"></a></p>
+<p align="center"><a href="https://youtu.be/XJ1OeGddYXM" target="_blank"><img src="https://imgur.com/1ZV1Kks.png"></a></p>
 
 # CodeOptPro
 
@@ -147,7 +147,7 @@ When extending this class you must refer a _UpdateManagerLocal_ in the _updateMa
 This is same as _MonoAdvUpdateLocal_. See the details there to understand. The only difference is that _UpdateManagerGlobalHelper_ needs to be refered in the _updateManager_ field in the inspector.
 ***
 ## Versioning
-The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/SimpleInterface/tags).
+The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro/tags).
 ***
 ## Authors
 - Syed Shaiyan Kamran Waliullah 
