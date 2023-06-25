@@ -8,14 +8,14 @@ namespace KamranWali.CodeOptPro.ScriptableObjects.FixedVars
     /// <typeparam name="T">The type of variable to created, of type <typeparamref name="T"/></typeparam>
     public abstract class BaseFixedVar<T> : BaseScriptableObject
     {
-        [SerializeField] private T _value;
+        [SerializeField] protected T value;
 
         /// <summary>
         /// This method gets the value of the fixed variable.
         /// </summary>
         /// <returns>The fixed variable value, of type <typeparamref name="T"/></returns>
-        public virtual T GetValue() => _value;
+        public virtual T GetValue() => value;
 
-        protected override string GetToStringValues() => _value.ToString();
+        protected override string GetToStringValues() => value.ToString();
     }
 }
