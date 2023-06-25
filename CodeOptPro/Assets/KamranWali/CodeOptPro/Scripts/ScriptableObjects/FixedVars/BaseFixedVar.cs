@@ -14,7 +14,7 @@ namespace KamranWali.CodeOptPro.ScriptableObjects.FixedVars
         /// This method gets the value of the fixed variable.
         /// </summary>
         /// <returns>The fixed variable value, of type <typeparamref name="T"/></returns>
-        public virtual T GetValue() => value;
+        public virtual T Get() => value;
 
         protected override string GetToStringValues() => value.ToString();
     }

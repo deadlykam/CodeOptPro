@@ -23,7 +23,7 @@ namespace KamranWali.CodeOptPro.Editor
         private readonly string _logoNamePath = "KamranWali/CodeOptPro/Images/CodeOptProLogo_Name_500x89";
         private  GUIStyle _versionStyle;
         private readonly int _fontSize = 18;
-        private readonly string _version = "Version - v1.0.0";
+        private readonly string _version = "Version - v1.1.0";
         private bool _preIsAutoSetup;
         private bool _preIsAutoSave;
         private bool _preIsAutoFixNullMissRef;
