@@ -1,7 +1,7 @@
 using KamranWali.CodeOptPro.Managers;
 using UnityEngine;
 
-namespace KamranWali.CodeOptPro.ScriptableObjects
+namespace KamranWali.CodeOptPro.ScriptableObjects.Managers
 {
     [CreateAssetMenu(fileName = "MonoAdvManagerHelper",
                      menuName = "CodeOptPro/ScriptableObjects/Managers/" +

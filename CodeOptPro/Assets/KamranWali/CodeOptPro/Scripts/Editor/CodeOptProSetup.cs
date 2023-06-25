@@ -1,5 +1,6 @@
 using KamranWali.CodeOptPro.Managers;
 using KamranWali.CodeOptPro.ScriptableObjects;
+using KamranWali.CodeOptPro.ScriptableObjects.Managers;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;

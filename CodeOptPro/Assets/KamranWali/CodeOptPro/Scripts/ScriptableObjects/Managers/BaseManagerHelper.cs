@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace KamranWali.CodeOptPro.ScriptableObjects
+namespace KamranWali.CodeOptPro.ScriptableObjects.Managers
 {
     public abstract class BaseManagerHelper<T> : ScriptableObject
     {
