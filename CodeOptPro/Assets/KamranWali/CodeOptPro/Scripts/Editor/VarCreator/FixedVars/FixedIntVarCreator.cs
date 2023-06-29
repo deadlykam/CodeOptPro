@@ -1,18 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using KamranWali.CodeOptPro.ScriptableObjects.FixedVars;
+using UnityEditor;
 
-public class FixedIntVarCreator : MonoBehaviour
+namespace KamranWali.CodeOptPro.Editor.VarCreator.FixedVars
 {
-    // Start is called before the first frame update
-    void Start()
+    public class FixedIntVarCreator : BaseVarCreator<FixedIntVar>
     {
-        
-    }
+        private int _value;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        [MenuItem("KamranWali/CodeOptPro/FixedVariables/IntFixedVariable")]
+        private static void Init()
+        {
+            FixedIntVarCreator window = (FixedIntVarCreator)EditorWindow.GetWindow(typeof(FixedIntVarCreator));
+            window.Show();
+        }
+
+        protected override void SetProperties(ref SerializedObject sObj) => sObj.FindProperty("value").intValue = _value;
+        protected override void SetupInputs() => _value = EditorGUILayout.IntField("Value", _value);
     }
 }

@@ -43,7 +43,7 @@ namespace KamranWali.CodeOptPro.Editor
             " then no changes will be made.";
         #endregion
 
-        [MenuItem("KamranWali/CodeOptPro")]
+        [MenuItem("KamranWali/CodeOptPro/CodeOptPro")]
         private static void Init()
         {
             CodeOptProSetup window = (CodeOptProSetup)EditorWindow.GetWindow(typeof(CodeOptProSetup)); // Setting the window
