@@ -3,7 +3,11 @@ guid: 00f81e04a52150742a95399c57aed7cc
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - m_ViewDataDictionary: {instanceID: 0}
+  - _actionPaths: {fileID: 11400000, guid: 47dcefe223764414485276214ac2c764, type: 2}
+  - _fixedVarPaths: {fileID: 11400000, guid: 036ff467b2cb2f342a0dee244d188975, type: 2}
+  - _varPaths: {fileID: 11400000, guid: b2a48ea7141050a44ba6e16a897718d8, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
