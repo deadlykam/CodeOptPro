@@ -14,12 +14,12 @@ namespace KamranWali.CodeOptPro.ScriptableObjects.Actions
         /// This method sets the Action delegate.
         /// </summary>
         /// <param name="action">The Action delegate to set, of type Action</param>
-        public void Set(System.Action action) => _action = action;
+        public void SetAction(System.Action action) => _action = action;
 
         /// <summary>
         /// This method calls the Action delegate.
         /// </summary>
-        public void Call() => _action();
+        public void CallAction() => _action();
 
         protected override string GetToStringValues() => _action.ToString();
     }
