@@ -44,12 +44,13 @@ namespace KamranWali.CodeOptPro.Editor
         private double _valueDouble1;
         private float _valueFloat1;
         private int _valueInt1;
-        private Vector2 _valueVector2;
-        private Vector3 _valueVector3;
+        private Vector2 _valueVector2_1;
+        private Vector3 _valueVector3_1;
         #endregion
         private int _index, _selCatePre = -1, _selPre = -1;
         private bool _init = false;
         private ScriptableObject _createVar;
+        private SerializedObject _sObj;
 
         [MenuItem("KamranWali/CodeOptPro/VariableCreator")]
         private static void Init()
@@ -76,13 +77,13 @@ namespace KamranWali.CodeOptPro.Editor
                 if (_selCate == 0)
                 {
                     _selActions = EditorGUILayout.Popup(new GUIContent("Actions", _actionToolTip), _selActions, _actions);
-                    if (!string.IsNullOrWhiteSpace(_name)) if (GUILayout.Button($"Create {_actions[_selActions]}")) CreateActionType();
+                    if (!string.IsNullOrWhiteSpace(_name)) if (GUILayout.Button($"Create {_actions[_selActions]}")) CreateVariable(true);
                 }
                 else if (_selCate == 1)
                 {
                     _selFixedVar = EditorGUILayout.Popup(new GUIContent("Fixed Vars", _fixedVarToolTip), _selFixedVar, _fixedVars);
                     SetupFixedVarInput(); // Setting up the input
-                    //TODO: For creating fixed var SO follow the same if else logic like SetupFixedVarInput()
+                    if (!string.IsNullOrWhiteSpace(_name)) if (GUILayout.Button($"Create {_fixedVars[_selFixedVar]}")) CreateFixedVarType();
                 }
                 else if (_selCate == 2) _selVar = EditorGUILayout.Popup(new GUIContent("Vars", _varToolTip), _selVar, _vars);
                 //TODO: Button for creating the SO and give input methods inside the else if conditions
@@ -123,13 +124,23 @@ namespace KamranWali.CodeOptPro.Editor
         }
 
         /// <summary>
-        /// This method creates Action types.
+        /// This method creates Fixed Var Type.
         /// </summary>
-        private void CreateActionType() 
+        private void CreateFixedVarType()
         {
-            _createVar = ScriptableObject.CreateInstance(System.Type.GetType($"KamranWali.CodeOptPro.ScriptableObjects.Actions.{_actions[_selActions]}, Assembly-CSharp"));
-            AssetDatabase.CreateAsset(_createVar, $"{_path}/{_name}.asset");
-            AssetDatabase.SaveAssets();
+            CreateVariable(false); // Creating the variable
+            _sObj = null;
+            _sObj = new SerializedObject(_createVar);
+            if (GetFixedVarType().Equals(typeof(FixedBoolVar))) _sObj.FindProperty("value").boolValue = _valueBool1;
+            else if (GetFixedVarType().Equals(typeof(FixedDoubleVar))) _sObj.FindProperty("value").doubleValue = _valueDouble1;
+            else if (GetFixedVarType().Equals(typeof(FixedFloatVar))) _sObj.FindProperty("value").floatValue = _valueFloat1;
+            else if (GetFixedVarType().Equals(typeof(FixedIntVar))) _sObj.FindProperty("value").intValue = _valueInt1;
+            else if (GetFixedVarType().Equals(typeof(FixedVector2Var))) _sObj.FindProperty("value").vector2Value = _valueVector2_1;
+            else if (GetFixedVarType().Equals(typeof(FixedVector3Var))) _sObj.FindProperty("value").vector3Value = _valueVector3_1; ;
+            _sObj.ApplyModifiedProperties();
+            EditorUtility.SetDirty(_createVar);
+            _sObj = null;
+            _createVar = null; // Helping GC
         }
 
         /// <summary>
@@ -141,8 +152,23 @@ namespace KamranWali.CodeOptPro.Editor
             else if (GetFixedVarType().Equals(typeof(FixedDoubleVar))) _valueDouble1 = EditorGUILayout.DoubleField("Double", _valueDouble1);
             else if (GetFixedVarType().Equals(typeof(FixedFloatVar))) _valueFloat1 = EditorGUILayout.FloatField("Float", _valueFloat1);
             else if (GetFixedVarType().Equals(typeof(FixedIntVar))) _valueInt1 = EditorGUILayout.IntField("Int", _valueInt1);
-            else if (GetFixedVarType().Equals(typeof(FixedVector2Var))) _valueVector2 = EditorGUILayout.Vector2Field("Vector2", _valueVector2);
-            else if (GetFixedVarType().Equals(typeof(FixedVector3Var))) _valueVector3 = EditorGUILayout.Vector3Field("Vector3", _valueVector3);
+            else if (GetFixedVarType().Equals(typeof(FixedVector2Var))) _valueVector2_1 = EditorGUILayout.Vector2Field("Vector2", _valueVector2_1);
+            else if (GetFixedVarType().Equals(typeof(FixedVector3Var))) _valueVector3_1 = EditorGUILayout.Vector3Field("Vector3", _valueVector3_1);
+        }
+
+        /// <summary>
+        /// This method creates the variable.
+        /// </summary>
+        /// <param name="isMakeNull">Flag for making _createVar null, true means to make it null, false otherwise, of type bool</param>
+        private void CreateVariable(bool isMakeNull)
+        {
+            _createVar = null;
+            if (_selCate == 0) _createVar = ScriptableObject.CreateInstance(System.Type.GetType($"KamranWali.CodeOptPro.ScriptableObjects.Actions.{_actions[_selActions]}, Assembly-CSharp"));
+            else if (_selCate == 1) _createVar = ScriptableObject.CreateInstance(System.Type.GetType($"KamranWali.CodeOptPro.ScriptableObjects.FixedVars.{_fixedVars[_selFixedVar]}, Assembly-CSharp"));
+            else if (_selCate == 2) _createVar = ScriptableObject.CreateInstance(System.Type.GetType($"KamranWali.CodeOptPro.ScriptableObjects.Vars.{_vars[_selVar]}, Assembly-CSharp"));
+            AssetDatabase.CreateAsset(_createVar, $"{_path}/{_name}.asset");
+            AssetDatabase.SaveAssets();
+            if (isMakeNull) _createVar = null; // Condition for making _createVar to help GC
         }
 
         /// <summary>
