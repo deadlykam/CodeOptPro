@@ -12,13 +12,13 @@ namespace KamranWali.CodeOptPro.ScriptableObjects.Vars
         /// This method returns the value of the variable.
         /// </summary>
         /// <returns>The value of the variable, of type <typeparamref name="T"/></returns>
-        public virtual T Get() => value;
+        public virtual T GetValue() => value;
 
         /// <summary>
         /// This method sets the value of the variable.
         /// </summary>
         /// <param name="value">The value to set, of type <typeparamref name="T"/></param>
-        public virtual void Set(T value) => this.value = value;
+        public virtual void SetValue(T value) => this.value = value;
 
         protected override string GetToStringValues() => value.ToString();
     }

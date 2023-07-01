@@ -10,12 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bb457a5890f062349bb79df41dc0cf36, type: 3}
-  m_Name: Paths_FixedVar
+  m_Name: Paths_Action
   m_EditorClassIdentifier: 
   _paths:
+  - Assets/KamranWali/CodeOptPro/Scripts/ScriptableObjects/Actions
   - Assets/KamranWali/CodeOptPro/SO_Data
   - Assets/KamranWali/CodeOptPro/SO_Data
   - Assets/KamranWali/CodeOptPro/SO_Data
   - Assets/KamranWali/CodeOptPro/SO_Data
   - Assets/KamranWali/CodeOptPro/SO_Data
   - Assets/KamranWali/CodeOptPro/SO_Data
+  - Assets/KamranWali/CodeOptPro/SO_Data
+  - Assets/KamranWali/CodeOptPro/SO_Data
+  - Assets/KamranWali/CodeOptPro/Scripts/ScriptableObjects/Actions
+  - Assets/KamranWali/CodeOptPro/Scripts/ScriptableObjects/Actions

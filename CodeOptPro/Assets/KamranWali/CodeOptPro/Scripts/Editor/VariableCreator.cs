@@ -7,11 +7,12 @@ using UnityEngine;
 
 namespace KamranWali.CodeOptPro.Editor
 {
-    public class VariableCreator : EditorWindow
+    public class VariableCreator : BaseCodeOptPro
     {
         [SerializeField] private VariablePath _actionPaths;
         [SerializeField] private VariablePath _fixedVarPaths;
         [SerializeField] private VariablePath _varPaths;
+        [SerializeField] private FixedStringVar _version;
 
         private string _name = "VarName";
         private string _path;
@@ -44,6 +45,7 @@ namespace KamranWali.CodeOptPro.Editor
         private double _valueDouble1;
         private float _valueFloat1;
         private int _valueInt1;
+        private string _valueString1;
         private Vector2 _valueVector2_1;
         private Vector3 _valueVector3_1;
         #endregion
@@ -51,23 +53,28 @@ namespace KamranWali.CodeOptPro.Editor
         private bool _init = false;
         private ScriptableObject _createVar;
         private SerializedObject _sObj;
+        private GUIStyle _style = new GUIStyle(EditorStyles.textArea);
 
-        [MenuItem("KamranWali/CodeOptPro/VariableCreator")]
+        [MenuItem("KamranWali/CodeOptPro/Variable Creator")]
         private static void Init()
         {
-            VariableCreator window = (VariableCreator)EditorWindow.GetWindow(typeof(VariableCreator));
+            VariableCreator window = (VariableCreator)EditorWindow.GetWindow(typeof(VariableCreator), true, "Variable Creator");
             window.Show();
         }
 
-        private void OnGUI()
+        protected override void InitInput()
         {
             _name = EditorGUILayout.TextField("Name", _name);
 
+            EditorGUILayout.BeginVertical("Box");
+            EditorGUILayout.LabelField(new GUIContent("Path", _pathToolTip));
             EditorGUILayout.BeginHorizontal();
             SetPath(); // Setting the correct path
-            _path = EditorGUILayout.TextField(new GUIContent("Path", _pathToolTip), _path);
+            _style.wordWrap = true;
+            _path = EditorGUILayout.TextArea(_path, _style);
             if (GUILayout.Button("Update Path")) UpdatePath(); // Updating the path
             EditorGUILayout.EndHorizontal();
+            EditorGUILayout.EndVertical();
 
             if (!_init) SetCategoryTypes(); // Setting up category types
             _selCate = EditorGUILayout.Popup(new GUIContent("Category", _categoryToolTip), _selCate, _categories);
@@ -85,8 +92,11 @@ namespace KamranWali.CodeOptPro.Editor
                     SetupFixedVarInput(); // Setting up the input
                     if (!string.IsNullOrWhiteSpace(_name)) if (GUILayout.Button($"Create {_fixedVars[_selFixedVar]}")) CreateFixedVarType();
                 }
-                else if (_selCate == 2) _selVar = EditorGUILayout.Popup(new GUIContent("Vars", _varToolTip), _selVar, _vars);
-                //TODO: Button for creating the SO and give input methods inside the else if conditions
+                else if (_selCate == 2)
+                {
+                    _selVar = EditorGUILayout.Popup(new GUIContent("Vars", _varToolTip), _selVar, _vars);
+                    if (!string.IsNullOrWhiteSpace(_name)) if (GUILayout.Button($"Create {_vars[_selVar]}")) CreateVariable(true);
+                }
             }
         }
 
@@ -129,18 +139,21 @@ namespace KamranWali.CodeOptPro.Editor
         private void CreateFixedVarType()
         {
             CreateVariable(false); // Creating the variable
+            WriteToLog($"Setting {_name}'s Values...");
             _sObj = null;
             _sObj = new SerializedObject(_createVar);
             if (GetFixedVarType().Equals(typeof(FixedBoolVar))) _sObj.FindProperty("value").boolValue = _valueBool1;
             else if (GetFixedVarType().Equals(typeof(FixedDoubleVar))) _sObj.FindProperty("value").doubleValue = _valueDouble1;
             else if (GetFixedVarType().Equals(typeof(FixedFloatVar))) _sObj.FindProperty("value").floatValue = _valueFloat1;
             else if (GetFixedVarType().Equals(typeof(FixedIntVar))) _sObj.FindProperty("value").intValue = _valueInt1;
+            else if (GetFixedVarType().Equals(typeof(FixedStringVar))) _sObj.FindProperty("value").stringValue = _valueString1;
             else if (GetFixedVarType().Equals(typeof(FixedVector2Var))) _sObj.FindProperty("value").vector2Value = _valueVector2_1;
             else if (GetFixedVarType().Equals(typeof(FixedVector3Var))) _sObj.FindProperty("value").vector3Value = _valueVector3_1; ;
             _sObj.ApplyModifiedProperties();
             EditorUtility.SetDirty(_createVar);
             _sObj = null;
             _createVar = null; // Helping GC
+            WriteToLog($"{_name}'s Values Set Successful!");
         }
 
         /// <summary>
@@ -152,6 +165,7 @@ namespace KamranWali.CodeOptPro.Editor
             else if (GetFixedVarType().Equals(typeof(FixedDoubleVar))) _valueDouble1 = EditorGUILayout.DoubleField("Double", _valueDouble1);
             else if (GetFixedVarType().Equals(typeof(FixedFloatVar))) _valueFloat1 = EditorGUILayout.FloatField("Float", _valueFloat1);
             else if (GetFixedVarType().Equals(typeof(FixedIntVar))) _valueInt1 = EditorGUILayout.IntField("Int", _valueInt1);
+            else if (GetFixedVarType().Equals(typeof(FixedStringVar))) _valueString1 = EditorGUILayout.TextField("String", _valueString1);
             else if (GetFixedVarType().Equals(typeof(FixedVector2Var))) _valueVector2_1 = EditorGUILayout.Vector2Field("Vector2", _valueVector2_1);
             else if (GetFixedVarType().Equals(typeof(FixedVector3Var))) _valueVector3_1 = EditorGUILayout.Vector3Field("Vector3", _valueVector3_1);
         }
@@ -162,6 +176,7 @@ namespace KamranWali.CodeOptPro.Editor
         /// <param name="isMakeNull">Flag for making _createVar null, true means to make it null, false otherwise, of type bool</param>
         private void CreateVariable(bool isMakeNull)
         {
+            SetLog($"Creating {_name} Variable...");
             _createVar = null;
             if (_selCate == 0) _createVar = ScriptableObject.CreateInstance(System.Type.GetType($"KamranWali.CodeOptPro.ScriptableObjects.Actions.{_actions[_selActions]}, Assembly-CSharp"));
             else if (_selCate == 1) _createVar = ScriptableObject.CreateInstance(System.Type.GetType($"KamranWali.CodeOptPro.ScriptableObjects.FixedVars.{_fixedVars[_selFixedVar]}, Assembly-CSharp"));
@@ -169,6 +184,7 @@ namespace KamranWali.CodeOptPro.Editor
             AssetDatabase.CreateAsset(_createVar, $"{_path}/{_name}.asset");
             AssetDatabase.SaveAssets();
             if (isMakeNull) _createVar = null; // Condition for making _createVar to help GC
+            WriteToLog($"{_name} Creation Successful!");
         }
 
         /// <summary>
@@ -214,20 +230,24 @@ namespace KamranWali.CodeOptPro.Editor
         /// </summary>
         private void UpdatePath()
         {
+            SetLog("Updating Path...");
             if (_selCate == 0) // Updating Action Paths
             {
                 _actionPaths.SetPath(_selActions, _path);
                 DirtyingSO(_actionPaths, "Action Path Update");
+                WriteToLog($"{_actions[_selActions]} Path Update Successful!");
             }
             else if (_selCate == 1) // Updating Fixed Var Paths
             {
                 _fixedVarPaths.SetPath(_selFixedVar, _path);
                 DirtyingSO(_fixedVarPaths, "Fixed Var Path Update");
+                WriteToLog($"{_fixedVars[_selFixedVar]} Path Update Successful!");
             }
             else if (_selCate == 2) // Updating Var Paths
             {
                 _varPaths.SetPath(_selVar, _path);
                 DirtyingSO(_varPaths, "Var Path Update");
+                WriteToLog($"{_vars[_selVar]} Path Update Successful!");
             }
         }
 
