@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Paths_Action
   m_EditorClassIdentifier: 
   _paths:
-  - Assets/KamranWali/CodeOptPro/Scripts/ScriptableObjects/Actions
   - Assets/KamranWali/CodeOptPro/SO_Data
   - Assets/KamranWali/CodeOptPro/SO_Data
   - Assets/KamranWali/CodeOptPro/SO_Data
@@ -22,5 +21,6 @@ MonoBehaviour:
   - Assets/KamranWali/CodeOptPro/SO_Data
   - Assets/KamranWali/CodeOptPro/SO_Data
   - Assets/KamranWali/CodeOptPro/SO_Data
-  - Assets/KamranWali/CodeOptPro/Scripts/ScriptableObjects/Actions
-  - Assets/KamranWali/CodeOptPro/Scripts/ScriptableObjects/Actions
+  - Assets/KamranWali/CodeOptPro/SO_Data
+  - Assets/KamranWali/CodeOptPro/SO_Data
+  - Assets/KamranWali/CodeOptPro/SO_Data
