@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 00f81e04a52150742a95399c57aed7cc
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - m_ViewDataDictionary: {instanceID: 0}
+  - version: {fileID: 11400000, guid: 6a15315a5db67b542a3e25d5190ce63a, type: 2}
+  - _actionPaths: {fileID: 11400000, guid: 47dcefe223764414485276214ac2c764, type: 2}
+  - _fixedVarPaths: {fileID: 11400000, guid: 036ff467b2cb2f342a0dee244d188975, type: 2}
+  - _varPaths: {fileID: 11400000, guid: b2a48ea7141050a44ba6e16a897718d8, type: 2}
+  - _version: {fileID: 11400000, guid: 6a15315a5db67b542a3e25d5190ce63a, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,4 +1,4 @@
-using KamranWali.CodeOptPro.ScriptableObjects;
+using KamranWali.CodeOptPro.ScriptableObjects.Managers;
 
 namespace KamranWali.CodeOptPro.Managers
 {

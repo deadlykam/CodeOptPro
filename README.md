@@ -19,6 +19,11 @@ This is a simple Unity system that helps with performance.
     - [UpdateManagerLocal](#updatemanagerlocal)
     - [UpdateManagerGlobal](#updatemanagerglobal)
   - [Vector3 Performant Calculation](#vector3-performant-calculation)
+  - [Performant Data Share/Use](#performant-data-shareuse)
+    - [Actions](#1-actions)
+    - [FixedVars](#2-fixedvars)
+    - [Vars](#3-vars)
+    - [Variable Creator](#variable-creator)
 - [Developer](#developer)
   - [CodeOptProSetupAuto](#codeoptprosetupauto)
   - [MonoAdvManager_Call](#monoadvmanager_call)
@@ -37,20 +42,20 @@ This is a simple Unity system that helps with performance.
 Unity version **2021.3.25f1** and above should work. Some previous Unity versions should work as well but has not been tested. The main branch version is **2021.3.25f1**
 ***
 ## Stable Build
-[Stable-v1.0.0](https://github.com/deadlykam/CodeOptPro/tree/Stable-v1.0.0) is the latest stable build of the project. The unitypackage for this project can also be found there. If development is going to be done on this project then it is adviced to branch off of any _Stable_ branches because they will **NOT** be changed or updated except for README.md. Any other branches are subjected to change including the main branch.
+[Stable-v1.1.0](https://github.com/deadlykam/CodeOptPro/tree/Stable-v1.1.0) is the latest stable build of the project. The unitypackage for this project can also be found there. If development is going to be done on this project then it is adviced to branch off of any _Stable_ branches because they will **NOT** be changed or updated except for README.md. Any other branches are subjected to change including the main branch.
 ***
 ## Installation
-1. First download the latest [CodeOptPro-vx.x.x.unitypackage](https://github.com/deadlykam/CodeOptPro/releases/tag/v1.0.0) from the latest Stable build.
+1. First download the latest [CodeOptPro-vx.x.x.unitypackage](https://github.com/deadlykam/CodeOptPro/releases/tag/v1.1.0) from the latest Stable build.
 2. Once download is completed open up the Unity project you want to use this project in.
 3. Now go to Assets -> Import Package -> Custom Package.
 4. Selet the CodeOptPro-vx.x.x you just downloaded and open it.
 5. Make sure everything is selected in the Import Unity Package otherwise there will be errors. Press the **Import** button to import the package.
 6. Once import is done a new menu will popup called **KamranWali**.
-7. This step is optional. To open the interface for CodeOptPro simply go to KamranWali -> CodeOptPro.
+7. This step is optional. To open the interface for CodeOptPro simply go to KamranWali -> CodeOptPro -> CodeOptPro.
 ***
 ## Setup
 You must set the scene up before using the CodeOptPro. This MUST be done in every scene if this system is to be used. It is very easy to set up the scene for CodeOptPro. I made sure this process is also automated as well. Follow the steps below.
-1. Open the CodeOptPro interface by going to KamranWali -> CodeOptPro.
+1. Open the CodeOptPro interface by going to KamranWali -> CodeOptPro -> CodeOptPro.
 2. Once opened clicked the "SCENE SETUP" button. This will create a GameObject in the scene called _Managers_. By default two components will be added to called MonoAdvManager_Call and MonoAdvManager. That is it and the scene is ready for CodeOptPro.
 ***
 ## Features
@@ -87,7 +92,7 @@ The other good feature of CodeOptPro is that you can use custom update to update
 Now if you create more scripts that requires the use of update per frame then just drag and drop the _UpdateManagerLocal_ to the _updateManager_ field and they too will start to use update per frame and share the main Update() method from the _UpdateManagerLocal_. There is a field in _UpdateManagerLocal_ called _NumUpdate_. This value means how many objects should be updated per frame. For example if this value is set to 5 then 5 objects will be update in one frame cycle. If there are too many objects that needs to be updated then increasing this value should make the update process much better but that depends on your scripts and their logic.
 
 ###### UpdateManagerGlobal:
-1. Create a new script and extend teh class called _MonoAdvUpdateGlobal_.
+1. Create a new script and extend the class called _MonoAdvUpdateGlobal_.
 2. Import all the abstract methods and implement them. For explanation see point 2 in UpdateManagerLocal. It is similar to that.
 3. Create a new GameObjet or object for which your new script will be used for. Before adding your new script we first need to add the custom update manager. Click the _Add Component_ button and search and add the script called _UpdateManagerGlobal_. It is suggested to add the _UpdateManagerGlobal_ in a GameObject which is inside the _Managers_ game object so that it remains organized because a scriptable object is used to access this update manager in a decouple fashion.
 4. Now we need to create the scriptable object for the _UpdateManagerGlobal_. Right click any folder where you want to store the helper scriptable object then go to Create -> CodeOptPro -> ScriptableObjects -> Managers -> UpdateManagerGlobalHelper. Then give it any name you want. After that set the newly created UpdateManagerGlobalHelper in the field called _Helper_ under the _UpdateManagerGlobal Global Properties_ inside the _UpdateManagerGlobal_.
@@ -103,6 +108,65 @@ I have also added performant Vector 3 calculations that will save some performan
 3. _Vec3.Add(Vector3, Vector3)_ - This method adds two Vector3s without creating any garbage and returns a Vector3 value.
 4. _Vec3.Divide(Vector3, float)_ - This method multiplys a float value to the Vector3 value without creating any garbage and returns a Vector3 value.
 5. _Vec3.Multiply(Vector3, float)_ - This method divides the Vector3 value with the float value without creating any garbage and returns a Vector3 value.
+
+#### Performant Data Share/Use:
+I have also added a feature that allows to share/use data in a performant way by using ScriptableObject. For now there are three categories of data share and each have their own different data types.
+##### 1. Actions
+In this category different type of action delegates are used and share. So if you want to share action delegates with no parameters or some basic property parameters then you can do so. Basically if you want to share a specific method type in a script with other scripts then you can use the Action Types. Below are all the types.
+  - **Action** - This shares delegates with no parameters. In the _void Action.SetAction(System.Action)_ method only methods with no parameters can be set, example _void SomeMethod()_. Use _void Action.CallAction()_ method to invoke the shared delegate. To use Action simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Actions.Action_.
+  - **ActionBool** - This shares delegates with one bool parameter. In the _void ActionBool.SetAction(System.Action<bool>)_ method only methods with one bool parameter can be set, example _void SomeMethod(bool someBool)_. Use _void ActionBool.CallAction()_ method to invoke the shared delegate. To use ActionBool simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Actions.ActionBool_.
+  - **ActionDouble** - This shares delegates with one double parameter. In the _void ActionDouble.SetAction(System.Action<double>)_ method only methods with one double parameter can be set, example _void SomeMethod(double someDouble)_. Use _void ActionDouble.CallAction()_ method to invoke the shared delegate. To use ActionDouble simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Actions.ActionDouble_.
+  - **ActionFloat** - This shares delegates with one float parameter. In the _void ActionFloat.SetAction(System.Action<float>)_ method only methods with one float parameter can be set, example _void SomeMethod(float someFloat)_. Use _void ActionFloat.CallAction()_ method to invoke the shared delegate. To use ActionFloat simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Actions.ActionFloat._
+  - **ActionGameObject** - This shares delegates with one GameObject parameter. In the _void ActionGameObject.SetAction(System.Action<GameObject>)_ method only methods with one GameObject parameter can be set, example _void SomeMethod(GameObject someGameObject)_. Use _void ActionGameObject.CallAction()_ method to invoke the shared delegate. To use ActionGameObject simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Actions.ActionGameObject_.
+  - **ActionInt** - This shares delegates with one int parameter. In the _void ActionInt.SetAction(System.Action<int>)_ method only methods with one int paramater can be set, example _void SomeMethod(int someInt)_. Use _void ActionInt.CallAction()_ method to invoke the shared delegate. To use ActionInt simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Actions.ActionInt_.
+  - **ActionQuaternion** - This shares delegates with one quaternion parameter. In the _void ActionQuaternion.SetAction(System.Action<Quaternion>)_ method only methods with one quaternion parameter can be set, example _void SomeMethod(Quaternion someQuaternion)_. Use _void ActionQuaternion.CallAction()_ method to invoke the shared delegate. To use ActionQuaternion simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Actions.ActionQuaternion_.
+  - **ActionString** - This shares delegates with one string parameter. In the _void ActinoString.SetAction(System.Action<string>)_ method only methods with one string parameter can be set, example _void SomeMethod(string someString)_. Use _void ActionString.CallAction()_ method to invoke the shared delegate. To use ActionString simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Actions.ActionString_.
+  - **ActionTransform** - This shares delegates with one transform parameter. In the _void ActionTransform.SetAction(System.Action<Transform>)_ method only methods with one transform parameter can be set, example _void SomeMethod(Transform someTransform)_. Use _void ActionTransform.CallAction()_ method to invoke the shared delegate. To use ActionTransform simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Actions.ActionTransform_.
+  - **ActionVector2** - This shares delegates with one vector2 parameter. In the _void ActionVector2.SetAction(System.Action<Vector2>)_ method only methods with one vector2 parameter can be set, example _void SomeMethod(Vector2 someVec2)_. Use _void ActionVector2.CallAction()_ method to invoke the shared delegate. To use ActionVector2 simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Actions.ActionVector2_.
+  - **ActionVector3** - This shares delegates with one vector3 parameter. In the _void ActionVector3.SetAction(System.Action<Vector3>)_ method only methods with one vector3 parameter can be set, example _void SomeMethod(Vector3 someVec3)_. Use _void ActionVector3.CallAction()_ method to invoke the shared delegate. To use ActionVector3 simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Actions.ActionVector3_.
+  - **BaseAction** - If you want to create your own shared _System.Action_ delegate type then extend from **BaseAction**. Just check out the above Action scripts to know how to code for it, it is very simple. The only difference would be the type and the name of the menu.
+
+##### 2. FixedVars
+In this category different type of data types are shared, example bool, float, int, string etc. You only need to create one fixed var and share it with multiple objects, example - If five objects needs an int value of 1 then create a fixed var of type int that has the value 1 and share that. In that way only one int value of 1 is created instead of five which saves some memory. Like the name suggests the values are fixed and can **NOT** be updated. Below are all the types.
+  - **FixedBoolVar** - This FixedVar shares _bool_ data types. When creating the FixedBoolVar set the value either true or false by clicking the tick box. To get the value simply call the method _bool FixedBoolVar.GetValue()_. To use FixedBoolVar simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.FixedVars.FixedBoolVar_.
+  - **FixedDoubleVar** - This FixedVar shares _double_ data types. When creating the FixedDoubleVar set the value to any double type value. To get the value simply call the method _double FixedDoubleVar.GetValue()_. To use FixedDoubleVar simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.FixedVars.FixedDoubleVar_.
+  - **FixedFloatVar** - This FixedVar shares _float_ data types. When creating the FixedFloatVar set the value to any float type value. To get the value simply call the method _float FixedFloatVar.GetValue()_. To use FixedFloatVar simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.FixedVars.FixedFloatVar_.
+  - **FixedIntVar** - This FixedVar shares _int_ data types. When creating the FixedIntVar set the value to any int type value. To get the value simply call the method _int FixedIntVar.GetValue()_. To use FixedIntVar simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.FixedVars.FixedIntVar_.
+  - **FixedStringVar** - This FixedVar shares _string_ data types. When creating the FixedStringVar set the value to any string type value. To get the value simply call the method _string FixedStringVar.GetValue()_. To use FixedStringVar simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.FixedVars.FixedStringVar_.
+  - **FixedVector2Var** - This FixedVar shares _Vector2_ data types. When creating the FixedVector2Var set the value to any Vector2 type value. To get the value simply call the method _Vector2 FixedVector2Var.GetValue()_. To use FixedVector2Var simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.FixedVars.FixedVector2Var_.
+  - **FixedVector3Var** - This FixedVar shares _Vector3_ data types. When creating the FixedVector3Var set the value to any Vector3 type value. To get the value simply call the method _Vector3 FixedVector3Var.GetValue()_. To use FixedVector3Var simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.FixedVars.FixedVector3Var_.
+  - **BaseFixedVar** - If you want to create your own FixedVar type then you must extend from **BaseFixedVar**. Just check out the above FixedVar scripts to know how to code for it, it is very simple. The only difference would be the type and the name of the menu.
+
+##### 3. Vars
+Just like FixedVars this category shares different type of data types as well, example bool, float, int, string etc. The only difference is that you can **NOT** set any values here like FixedVars and the values may change. Vars basically shares values that are constantly changing. For example - You have 5 objects that wants to know the player's position. Then just create a Vector3Var and make the player script constantly update the newly created Vector3Var. Then add the newly created Vector3Var to the other 5 objects. Now all of those 5 objects have access to the player's position without the need of player script reference. Below are all the types.
+  - **BoolVar** - This Var shares _bool_ data types. To set the value simply call _void BoolVar.SetValue(bool value)_. To get the value just call _bool BoolVar.GetValue()_. To use BoolVar just import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Vars.BoolVar_.
+  - **DoubleVar** - This Var shares _double_ data types. To set the value simply call _void DoubleVar.SetValue(double value)_. To get the value just call _double DoubleVar.GetValue()_. To use DoubleVar just import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Vars.DoubleVar_.
+  - **FloatVar** - This Var shares _float_ data types. To set the value simply call _void FloatVar.SetValue(float value)_. To get the value just call _float FloatVar.GetValue()_. To use FloatVar just import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Vars.FloatVar_.
+  - **GameObjectVar** - This Var shares _GameObject_ data types. To set the value simply call _void GameObjectVar.SetValue(GameObject value)_. To get the value just call _GameObject GameObjectVar.GetValue()_. To use GameObjectVar just import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Vars.GameObjectVar_.
+  - **IntVar** - This Var shares _int_ data types. To set the value simply call _void IntVar.SetValue(int value)_. To get the value just call _int IntVar.GetValue()_. To use IntVar just import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Vars.IntVar_.
+  - **QuaternionVar** - This Var shares _Quaternion_ data types. To set the value simply call _void QuaternionVar.SetValue(Quaternion value)_. To get the value just call _Quaternion QuaternionVar.GetValue()_. To use QuaternionVar just import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Vars.QuaternionVar_.
+  - **StringVar** - This Var shares _string_ data types. To set the value simply call _void StringVar.SetValue(string value)_. To get the value just call _string StringVar.GetValue()_. To use StringVar just import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Vars.StringVar_.
+  - **TransformVar** - This Var shares _Transform_ data types. To set the value simply call _void TransformVar.SetValue(Transform value)_. To get the value just call _Transform TransformVar.GetValue()_. To use TransformVar just import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Vars.TransformVar_.
+  - **Vector2Var** - This Var shares _Vector2_ data types. To set the value simply call _void Vector2Var.SetValue(Vector2 value)_. To get the value just call _Vector2 Vector2Var.GetValue()_. To use Vector2Var just import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Vars.Vector2Var_.
+  - **Vector3Var** - This Var shares _Vector3_ data types. To set the value simply call _void Vector3Var.SetValue(Vector3 value)_. To get the value just call _Vector3 Vector3Var.GetValue()_. To use Vector3Var just import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Vars.Vector3Var_.
+  - **BaseVar** - If you want to create your own Var type then you must extend from **BaseVar**. Just check out the above Var scripts to know how to code for it, it is very simple. The only difference would be the type and the name of the menu.
+
+#### Variable Creator
+There are 2 ways to create a variable from any category. Below are the two ways.
+1. The first way is to right click any folder where you want to create a variable and then go to _CodeOptPro -> ScriptableObjects -> Actions_ or _CodeOptPro -> ScriptableObjects -> FixedVars_ or _CodeOptPro -> ScriptableObjects -> Vars_. This will then create a variable and you can name it anything you want and if it is a type where you can give values then you can give it a value as well.
+2. The second way is use the _Variable Creator_ window to create any variable. You can open the _Variable Creator_ window by going to the menu _KamranWali -> CodeOptPro -> Variable Creator_. I would recommend using the _Variable Creator_ as it is faster to create a variable and you can select which location every specific variables should be created in. See the image below how the _Variable Creator_ looks like and I will explain the highlighted parts.
+
+| ![Variable-Creator1.png](https://imgur.com/I7c9IZl.png) | 
+|:--:| 
+| *Variable Creator* |
+
+  - **a.** _Name_ - This where you give the name of the variable you want to create.
+  - **b.** _Update Path_ - If you want to update the path where the new variable will be created then right click the folder where the variable should be created and selected _Copy Path_. Paste the copied path in the path field, _f_. Finally press the _Update Path_ button and the path will be updated. This will only update the path for 1 variable type, in this case _Action_ type. This way the _Variable Creator_ will allow you to have different paths for different variable types. The default path is _Assets/KamranWali/CodeOptPro/SO_Data_.
+  - **c.** _Category_ - This is where you get to select from which category the variable will be created. For now there are 3 categories which are _Actions_, _FixedVariables_ and _Variables_.
+  - **d.** _Variable Type_ - This is where you get to select which type of variable to create. Each category have different type of variable types. The image shows _Actions_ but this label changes when selecting a different category.
+  - **e.** _Log_ - Here the logs for the _Variable Creator_ will be shown.
+  - **f.** _Path_ - This is the path or folder location where the new variable will be created. You can updated this path as well. Follow the instructions in _b._ to see how to update path.
+  - **g.** _Create Variable_ - This button will create the new variable type. Remember to give a name to the variable otherwise this button will **NOT** be visible. Also the name of the button _Create Variable_ will change with the variable type selected so that you will know what type you are creating.
 ***
 ## Developer
 I tried to keep the development process for the developers as simple as possible. So if you want to modify CodeOptPro then I will try my best to explain how to.

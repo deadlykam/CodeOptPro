@@ -5,6 +5,7 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - m_ViewDataDictionary: {instanceID: 0}
+  - version: {fileID: 11400000, guid: 6a15315a5db67b542a3e25d5190ce63a, type: 2}
   - _settings: {fileID: 11400000, guid: 60441467db148b34db664992a1408405, type: 2}
   - _defaultManager: {fileID: 11400000, guid: dbbe919781cbd094485176840e7b626e, type: 2}
   executionOrder: 0
