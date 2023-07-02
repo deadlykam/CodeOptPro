@@ -142,6 +142,23 @@ I have also added a feature that allows to share/use data in a performant way by
     - **Vector2Var** - This Var shares _Vector2_ data types. To set the value simply call _void Vector2Var.SetValue(Vector2 value)_. To get the value just call _Vector2 Vector2Var.GetValue()_. To use Vector2Var just import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Vars.Vector2Var_.
     - **Vector3Var** - This Var shares _Vector3_ data types. To set the value simply call _void Vector3Var.SetValue(Vector3 value)_. To get the value just call _Vector3 Vector3Var.GetValue()_. To use Vector3Var just import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Vars.Vector3Var_.
     - **BaseVar** - If you want to create your own Var type then you must extend from **BaseVar**. Just check out the above Var scripts to know how to code for it, it is very simple. The only difference would be the type and the name of the menu.
+
+###### Variable Creator
+There are 2 ways to create a variable from any category. Below are the two ways.
+1. The first way is to right click any folder where you want to create a variable and then go to _CodeOptPro -> ScriptableObjects -> Actions_ or _CodeOptPro -> ScriptableObjects -> FixedVars_ or _CodeOptPro -> ScriptableObjects -> Vars_. This will then create a variable and you can name it anything you want and if it is a type where you can give values then you can give it a value as well.
+2. The second way is use the _Variable Creator_ window to create any variable. You can open the _Variable Creator_ window by going to the menu _KamranWali -> CodeOptPro -> Variable Creator_. I would recommend using the _Variable Creator_ as it is faster to create a variable and you can select which location every specific variables should be created in. See the image below how the _Variable Creator_ looks like and I will explain the highlighted parts.
+
+| ![Variable-Creator1.png](https://imgur.com/I7c9IZl.png) | 
+|:--:| 
+| *Variable Creator* |
+
+  - **a.** _Name_ - This where you give the name of the variable you want to create.
+  - **b.** _Update Path_ - If you want to update the path where the new variable will be created then right click the folder where the variable should be created and selected _Copy Path_. Paste the copied path in the path field, _f_. Finally press the _Update Path_ button and the path will be updated. This will only update the path for 1 variable type, in this case _Action_ type. This way the _Variable Creator_ will allow you to have different paths for different variable types. The default path is _Assets/KamranWali/CodeOptPro/SO_Data_.
+  - **c.** _Category_ - This is where you get to select from which category the variable will be created. For now there are 3 categories which are _Actions_, _FixedVariables_ and _Variables_.
+  - **d.** _Variable Type_ - This is where you get to select which type of variable to create. Each category have different type of variable types. The image shows _Actions_ but this label changes when selecting a different category.
+  - **e.** _Log_ - Here the logs for the _Variable Creator_ will be shown.
+  - **f.** _Path_ - This is the path or folder location where the new variable will be created. You can updated this path as well. Follow the instructions in _b._ to see how to update path.
+  - **g.** _Create Variable_ - This button will create the new variable type. Remember to give a name to the variable otherwise this button will **NOT** be visible. Also the name of the button _Create Variable_ will change with the variable type selected so that you will know what type you are creating.
 ***
 ## Developer
 I tried to keep the development process for the developers as simple as possible. So if you want to modify CodeOptPro then I will try my best to explain how to.
