@@ -4,6 +4,7 @@ using KamranWali.CodeOptPro.Managers;
 using UnityEditor.SceneManagement;
 using System.Collections.Generic;
 using KamranWali.CodeOptPro.ScriptableObjects;
+using KamranWali.CodeOptPro.ScriptableObjects.Managers;
 
 namespace KamranWali.CodeOptPro.Editor
 {
