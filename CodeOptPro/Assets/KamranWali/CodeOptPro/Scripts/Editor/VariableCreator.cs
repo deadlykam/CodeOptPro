@@ -79,20 +79,20 @@ namespace KamranWali.CodeOptPro.Editor
             if (!_init) SetCategoryTypes(); // Setting up category types
             _selCate = EditorGUILayout.Popup(new GUIContent("Category", _categoryToolTip), _selCate, _categories);
 
-            if (_init) // Condition to show the correct category type
+            if (_init) // Condition to show the selected category
             {
-                if (_selCate == 0)
+                if (_selCate == 0) // Condition to show Action type variables
                 {
                     _selActions = EditorGUILayout.Popup(new GUIContent("Actions", _actionToolTip), _selActions, _actions);
                     if (!string.IsNullOrWhiteSpace(_name)) if (GUILayout.Button($"Create {_actions[_selActions]}")) CreateVariable(true);
                 }
-                else if (_selCate == 1)
+                else if (_selCate == 1) // Condition to show Fixed Var type variables
                 {
                     _selFixedVar = EditorGUILayout.Popup(new GUIContent("Fixed Vars", _fixedVarToolTip), _selFixedVar, _fixedVars);
                     SetupFixedVarInput(); // Setting up the input
                     if (!string.IsNullOrWhiteSpace(_name)) if (GUILayout.Button($"Create {_fixedVars[_selFixedVar]}")) CreateFixedVarType();
                 }
-                else if (_selCate == 2)
+                else if (_selCate == 2) // Condition to show Var type variables
                 {
                     _selVar = EditorGUILayout.Popup(new GUIContent("Vars", _varToolTip), _selVar, _vars);
                     if (!string.IsNullOrWhiteSpace(_name)) if (GUILayout.Button($"Create {_vars[_selVar]}")) CreateVariable(true);
