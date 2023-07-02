@@ -19,6 +19,42 @@ This is a simple Unity system that helps with performance.
     - [UpdateManagerLocal](#updatemanagerlocal)
     - [UpdateManagerGlobal](#updatemanagerglobal)
   - [Vector3 Performant Calculation](#vector3-performant-calculation)
+  - [Performant Data Share/Use](#performant-data-share/use)
+    - [Actinos](#actions)
+      - [Action](#action)
+      - [ActionBool](#actionbool)
+      - [ActionDouble](#actiondouble)
+      - [ActionFloat](#actionfloat)
+      - [ActionGameObject](#actiongameobject)
+      - [ActionInt](#actionint)
+      - [ActionQuaternion](#actionquaternion)
+      - [ActionString](#actionstring)
+      - [ActionTransform](#actiontransform)
+      - [ActionVector2](#actionvector2)
+      - [ActionVector3](#actionvector3)
+      - [BaseAction](#baseAction)
+    - [FixedVars](#fixedvars)
+      - [FixedBoolVar](#fixedboolvar)
+      - [FixedDoubleVar](#fixeddoublevar)
+      - [FixedFloatVar](#fixedfloatvar)
+      - [FixedIntVar](#fixedintvar)
+      - [FixedStringVar](#fixedstringvar)
+      - [FixedVector2Var](#fixedvector2var)
+      - [FixedVector3Var](#fixedvector3var)
+      - [BaseFixedVar](#basefixedvar)
+    - [Vars](#vars)
+      - [BoolVar](#boolvar)
+      - [DoubleVar](#doublevar)
+      - [FloatVar](#floatvar)
+      - [GameObjectVar](#gameobjectvar)
+      - [IntVar](#intvar)
+      - [QuaternionVar](#quaternionvar)
+      - [StringVar](#stringvar)
+      - [TransformVar](#transformvar)
+      - [Vector2Var](#vector2var)
+      - [Vector3Var](#vector3var)
+      - [BaseVar](#basevar)
+    - [Variable Creator](#variable-creator)
 - [Developer](#developer)
   - [CodeOptProSetupAuto](#codeoptprosetupauto)
   - [MonoAdvManager_Call](#monoadvmanager_call)
@@ -143,7 +179,7 @@ I have also added a feature that allows to share/use data in a performant way by
     - **Vector3Var** - This Var shares _Vector3_ data types. To set the value simply call _void Vector3Var.SetValue(Vector3 value)_. To get the value just call _Vector3 Vector3Var.GetValue()_. To use Vector3Var just import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Vars.Vector3Var_.
     - **BaseVar** - If you want to create your own Var type then you must extend from **BaseVar**. Just check out the above Var scripts to know how to code for it, it is very simple. The only difference would be the type and the name of the menu.
 
-###### Variable Creator
+**Variable Creator**
 There are 2 ways to create a variable from any category. Below are the two ways.
 1. The first way is to right click any folder where you want to create a variable and then go to _CodeOptPro -> ScriptableObjects -> Actions_ or _CodeOptPro -> ScriptableObjects -> FixedVars_ or _CodeOptPro -> ScriptableObjects -> Vars_. This will then create a variable and you can name it anything you want and if it is a type where you can give values then you can give it a value as well.
 2. The second way is use the _Variable Creator_ window to create any variable. You can open the _Variable Creator_ window by going to the menu _KamranWali -> CodeOptPro -> Variable Creator_. I would recommend using the _Variable Creator_ as it is faster to create a variable and you can select which location every specific variables should be created in. See the image below how the _Variable Creator_ looks like and I will explain the highlighted parts.
