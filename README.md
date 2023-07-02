@@ -19,7 +19,7 @@ This is a simple Unity system that helps with performance.
     - [UpdateManagerLocal](#updatemanagerlocal)
     - [UpdateManagerGlobal](#updatemanagerglobal)
   - [Vector3 Performant Calculation](#vector3-performant-calculation)
-  - [Performant Data Share/Use](#performant-data-share/use)
+  - [Performant Data Share/Use](#performant-data-share-use)
     - [Actions](#actions)
       - [Action](#action)
       - [ActionBool](#actionbool)
@@ -142,7 +142,7 @@ I have also added performant Vector 3 calculations that will save some performan
 
 #### Performant Data Share/Use:
 I have also added a feature that allows to share/use data in a performant way by using ScriptableObject. For now there are three categories of data share and each have their own different data types.
-1. ##### Actions - In this category different type of action delegates are used and share. So if you want to share action delegates with no parameters or some basic property parameters then you can do so. Basically if you want to share a specific method type in a script with other scripts then you can use the Action Types. Below are all the types.
+1. #### Actions - In this category different type of action delegates are used and share. So if you want to share action delegates with no parameters or some basic property parameters then you can do so. Basically if you want to share a specific method type in a script with other scripts then you can use the Action Types. Below are all the types.
     - **Action** - This shares delegates with no parameters. In the _void Action.SetAction(System.Action)_ method only methods with no parameters can be set, example _void SomeMethod()_. Use _void Action.CallAction()_ method to invoke the shared delegate. To use Action simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Actions.Action_.
     - **ActionBool** - This shares delegates with one bool parameter. In the _void ActionBool.SetAction(System.Action<bool>)_ method only methods with one bool parameter can be set, example _void SomeMethod(bool someBool)_. Use _void ActionBool.CallAction()_ method to invoke the shared delegate. To use ActionBool simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Actions.ActionBool_.
     - **ActionDouble** - This shares delegates with one double parameter. In the _void ActionDouble.SetAction(System.Action<double>)_ method only methods with one double parameter can be set, example _void SomeMethod(double someDouble)_. Use _void ActionDouble.CallAction()_ method to invoke the shared delegate. To use ActionDouble simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Actions.ActionDouble_.
