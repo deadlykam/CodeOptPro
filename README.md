@@ -42,20 +42,20 @@ This is a simple Unity system that helps with performance.
 Unity version **2021.3.25f1** and above should work. Some previous Unity versions should work as well but has not been tested. The main branch version is **2021.3.25f1**
 ***
 ## Stable Build
-[Stable-v1.0.0](https://github.com/deadlykam/CodeOptPro/tree/Stable-v1.0.0) is the latest stable build of the project. The unitypackage for this project can also be found there. If development is going to be done on this project then it is adviced to branch off of any _Stable_ branches because they will **NOT** be changed or updated except for README.md. Any other branches are subjected to change including the main branch.
+[Stable-v1.1.0](https://github.com/deadlykam/CodeOptPro/tree/Stable-v1.1.0) is the latest stable build of the project. The unitypackage for this project can also be found there. If development is going to be done on this project then it is adviced to branch off of any _Stable_ branches because they will **NOT** be changed or updated except for README.md. Any other branches are subjected to change including the main branch.
 ***
 ## Installation
-1. First download the latest [CodeOptPro-vx.x.x.unitypackage](https://github.com/deadlykam/CodeOptPro/releases/tag/v1.0.0) from the latest Stable build.
+1. First download the latest [CodeOptPro-vx.x.x.unitypackage](https://github.com/deadlykam/CodeOptPro/releases/tag/v1.1.0) from the latest Stable build.
 2. Once download is completed open up the Unity project you want to use this project in.
 3. Now go to Assets -> Import Package -> Custom Package.
 4. Selet the CodeOptPro-vx.x.x you just downloaded and open it.
 5. Make sure everything is selected in the Import Unity Package otherwise there will be errors. Press the **Import** button to import the package.
 6. Once import is done a new menu will popup called **KamranWali**.
-7. This step is optional. To open the interface for CodeOptPro simply go to KamranWali -> CodeOptPro.
+7. This step is optional. To open the interface for CodeOptPro simply go to KamranWali -> CodeOptPro -> CodeOptPro.
 ***
 ## Setup
 You must set the scene up before using the CodeOptPro. This MUST be done in every scene if this system is to be used. It is very easy to set up the scene for CodeOptPro. I made sure this process is also automated as well. Follow the steps below.
-1. Open the CodeOptPro interface by going to KamranWali -> CodeOptPro.
+1. Open the CodeOptPro interface by going to KamranWali -> CodeOptPro -> CodeOptPro.
 2. Once opened clicked the "SCENE SETUP" button. This will create a GameObject in the scene called _Managers_. By default two components will be added to called MonoAdvManager_Call and MonoAdvManager. That is it and the scene is ready for CodeOptPro.
 ***
 ## Features
@@ -92,7 +92,7 @@ The other good feature of CodeOptPro is that you can use custom update to update
 Now if you create more scripts that requires the use of update per frame then just drag and drop the _UpdateManagerLocal_ to the _updateManager_ field and they too will start to use update per frame and share the main Update() method from the _UpdateManagerLocal_. There is a field in _UpdateManagerLocal_ called _NumUpdate_. This value means how many objects should be updated per frame. For example if this value is set to 5 then 5 objects will be update in one frame cycle. If there are too many objects that needs to be updated then increasing this value should make the update process much better but that depends on your scripts and their logic.
 
 ###### UpdateManagerGlobal:
-1. Create a new script and extend teh class called _MonoAdvUpdateGlobal_.
+1. Create a new script and extend the class called _MonoAdvUpdateGlobal_.
 2. Import all the abstract methods and implement them. For explanation see point 2 in UpdateManagerLocal. It is similar to that.
 3. Create a new GameObjet or object for which your new script will be used for. Before adding your new script we first need to add the custom update manager. Click the _Add Component_ button and search and add the script called _UpdateManagerGlobal_. It is suggested to add the _UpdateManagerGlobal_ in a GameObject which is inside the _Managers_ game object so that it remains organized because a scriptable object is used to access this update manager in a decouple fashion.
 4. Now we need to create the scriptable object for the _UpdateManagerGlobal_. Right click any folder where you want to store the helper scriptable object then go to Create -> CodeOptPro -> ScriptableObjects -> Managers -> UpdateManagerGlobalHelper. Then give it any name you want. After that set the newly created UpdateManagerGlobalHelper in the field called _Helper_ under the _UpdateManagerGlobal Global Properties_ inside the _UpdateManagerGlobal_.
