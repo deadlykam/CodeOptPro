@@ -120,7 +120,7 @@ I have also added a feature that allows to share/use data in a performant way by
     - **ActionVector3** - This shares delegates with one vector3 parameter. In the _void ActionVector3.SetAction(System.Action<Vector3>)_ method only methods with one vector3 parameter can be set, example _void SomeMethod(Vector3 someVec3)_. Use _void ActionVector3.CallAction()_ method to invoke the shared delegate. To use ActionVector3 simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Actions.ActionVector3_.
     - **BaseAction** - If you want to create your own shared _System.Action_ delegate type then extend from **BaseAction**. Just check out the above Action scripts to know how to code for it, it is very simple. The only difference would be the type and the name of the menu.
 
-2. **FixedVars** - In this category different type of data types are shared, example bool, float, int, string etc. You only need to create one fixed var and share it with multiple objects, example - If five objects needs an int value of 1 then create a fixed var of type int that has the value 1 and share that. In that way only one int value of 1 is created instead of five which saves some memory. Like the name suggests the values are fixed and can **NOT** be updated.
+2. **FixedVars** - In this category different type of data types are shared, example bool, float, int, string etc. You only need to create one fixed var and share it with multiple objects, example - If five objects needs an int value of 1 then create a fixed var of type int that has the value 1 and share that. In that way only one int value of 1 is created instead of five which saves some memory. Like the name suggests the values are fixed and can **NOT** be updated. Below are all the types.
     - **FixedBoolVar** - This FixedVar shares _bool_ data types. When creating the FixedBoolVar set the value either true or false by clicking the tick box. To get the value simply call the method _bool FixedBoolVar.GetValue()_. To use FixedBoolVar simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.FixedVars.FixedBoolVar_.
     - **FixedDoubleVar** - This FixedVar shares _double_ data types. When creating the FixedDoubleVar set the value to any double type value. To get the value simply call the method _double FixedDoubleVar.GetValue()_. To use FixedDoubleVar simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.FixedVars.FixedDoubleVar_.
     - **FixedFloatVar** - This FixedVar shares _float_ data types. When creating the FixedFloatVar set the value to any float type value. To get the value simply call the method _float FixedFloatVar.GetValue()_. To use FixedFloatVar simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.FixedVars.FixedFloatVar_.
@@ -129,6 +129,19 @@ I have also added a feature that allows to share/use data in a performant way by
     - **FixedVector2Var** - This FixedVar shares _Vector2_ data types. When creating the FixedVector2Var set the value to any Vector2 type value. To get the value simply call the method _Vector2 FixedVector2Var.GetValue()_. To use FixedVector2Var simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.FixedVars.FixedVector2Var_.
     - **FixedVector3Var** - This FixedVar shares _Vector3_ data types. When creating the FixedVector3Var set the value to any Vector3 type value. To get the value simply call the method _Vector3 FixedVector3Var.GetValue()_. To use FixedVector3Var simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.FixedVars.FixedVector3Var_.
     - **BaseFixedVar** - If you want to create your own FixedVar type then you must extend from **BaseFixedVar**. Just check out the above FixedVar scripts to know how to code for it, it is very simple. The only difference would be the type and the name of the menu.
+
+3. **Vars** - Just like FixedVars this category shares different type of data types as well, example bool, float, int, string etc. The only difference is that you can **NOT** set any values here like FixedVars and the values may change. Vars basically shares values that are constantly changing. For example - You have 5 objects that wants to know the player's position. Then just create a Vector3Var and make the player script constantly update the newly created Vector3Var. Then add the newly created Vector3Var to the other 5 objects. Now all of those 5 objects have access to the player's position without the need of player script reference. Below are all the types.
+    - **BoolVar** - 
+    - **DoubleVar** -
+    - **FloatVar** -
+    - **GameObjectVar** -
+    - **IntVar** -
+    - **QuaternionVar** -
+    - **StringVar** -
+    - **TransformVar** -
+    - **Vector2Var** -
+    - **Vector3Var** -
+    - **BaseVar** - 
 ***
 ## Developer
 I tried to keep the development process for the developers as simple as possible. So if you want to modify CodeOptPro then I will try my best to explain how to.
