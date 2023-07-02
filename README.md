@@ -131,17 +131,17 @@ I have also added a feature that allows to share/use data in a performant way by
     - **BaseFixedVar** - If you want to create your own FixedVar type then you must extend from **BaseFixedVar**. Just check out the above FixedVar scripts to know how to code for it, it is very simple. The only difference would be the type and the name of the menu.
 
 3. **Vars** - Just like FixedVars this category shares different type of data types as well, example bool, float, int, string etc. The only difference is that you can **NOT** set any values here like FixedVars and the values may change. Vars basically shares values that are constantly changing. For example - You have 5 objects that wants to know the player's position. Then just create a Vector3Var and make the player script constantly update the newly created Vector3Var. Then add the newly created Vector3Var to the other 5 objects. Now all of those 5 objects have access to the player's position without the need of player script reference. Below are all the types.
-    - **BoolVar** - 
-    - **DoubleVar** -
-    - **FloatVar** -
-    - **GameObjectVar** -
-    - **IntVar** -
-    - **QuaternionVar** -
-    - **StringVar** -
-    - **TransformVar** -
-    - **Vector2Var** -
-    - **Vector3Var** -
-    - **BaseVar** - 
+    - **BoolVar** - This Var shares _bool_ data types. To set the value simply call _void BoolVar.SetValue(bool value)_. To get the value just call _bool BoolVar.GetValue()_. To use BoolVar just import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Vars.BoolVar_.
+    - **DoubleVar** - This Var shares _double_ data types. To set the value simply call _void DoubleVar.SetValue(double value)_. To get the value just call _double DoubleVar.GetValue()_. To use DoubleVar just import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Vars.DoubleVar_.
+    - **FloatVar** - This Var shares _float_ data types. To set the value simply call _void FloatVar.SetValue(float value)_. To get the value just call _float FloatVar.GetValue()_. To use FloatVar just import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Vars.FloatVar_.
+    - **GameObjectVar** - This Var shares _GameObject_ data types. To set the value simply call _void GameObjectVar.SetValue(GameObject value)_. To get the value just call _GameObject GameObjectVar.GetValue()_. To use GameObjectVar just import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Vars.GameObjectVar_.
+    - **IntVar** - This Var shares _int_ data types. To set the value simply call _void IntVar.SetValue(int value)_. To get the value just call _int IntVar.GetValue()_. To use IntVar just import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Vars.IntVar_.
+    - **QuaternionVar** - This Var shares _Quaternion_ data types. To set the value simply call _void QuaternionVar.SetValue(Quaternion value)_. To get the value just call _Quaternion QuaternionVar.GetValue()_. To use QuaternionVar just import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Vars.QuaternionVar_.
+    - **StringVar** - This Var shares _string_ data types. To set the value simply call _void StringVar.SetValue(string value)_. To get the value just call _string StringVar.GetValue()_. To use StringVar just import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Vars.StringVar_.
+    - **TransformVar** - This Var shares _Transform_ data types. To set the value simply call _void TransformVar.SetValue(Transform value)_. To get the value just call _Transform TransformVar.GetValue()_. To use TransformVar just import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Vars.TransformVar_.
+    - **Vector2Var** - This Var shares _Vector2_ data types. To set the value simply call _void Vector2Var.SetValue(Vector2 value)_. To get the value just call _Vector2 Vector2Var.GetValue()_. To use Vector2Var just import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Vars.Vector2Var_.
+    - **Vector3Var** - This Var shares _Vector3_ data types. To set the value simply call _void Vector3Var.SetValue(Vector3 value)_. To get the value just call _Vector3 Vector3Var.GetValue()_. To use Vector3Var just import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Vars.Vector3Var_.
+    - **BaseVar** - If you want to create your own Var type then you must extend from **BaseVar**. Just check out the above Var scripts to know how to code for it, it is very simple. The only difference would be the type and the name of the menu.
 ***
 ## Developer
 I tried to keep the development process for the developers as simple as possible. So if you want to modify CodeOptPro then I will try my best to explain how to.
