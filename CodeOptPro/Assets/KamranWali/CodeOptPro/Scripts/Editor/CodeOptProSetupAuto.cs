@@ -20,7 +20,7 @@ namespace KamranWali.CodeOptPro.Editor
         private static List<MonoAdvManagerHelper> _checkHelpers;
         private static CodeOptProSettings _settings;
         private static int _counter;
-        private static readonly string _settingsPath = "Assets/KamranWali/CodeOptPro/SO_Data/DefaultCodeOptProSettings.asset";
+        private static readonly string _settingsPath = "Assets/KamranWali/CodeOptPro/SO_Data/DefaultSettings/DefaultCodeOptProSettings.asset";
 
         static CodeOptProSetupAuto() => EditorApplication.playModeStateChanged += OnPlayModeStateChange;
 
