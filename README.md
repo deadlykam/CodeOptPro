@@ -24,6 +24,7 @@ This is a simple Unity system that helps with performance.
     - [FixedVars](#2-fixedvars)
     - [Vars](#3-vars)
     - [Variable Creator](#variable-creator)
+  - [TimerCountdown](#timercountdown)
 - [Developer](#developer)
   - [CodeOptProSetupAuto](#codeoptprosetupauto)
   - [MonoAdvManager_Call](#monoadvmanager_call)
@@ -33,6 +34,7 @@ This is a simple Unity system that helps with performance.
   - [MonoAdv](#monoadv)
   - [MonoAdvUpdateLocal](#monoadvupdatelocal)
   - [MonoAdvUpdateGlobal](#monoadvupdateglobal)
+- [Updates](#updates)
 - [Versioning](#versioning)
 - [Authors](#authors)
 - [License](#license)
@@ -42,10 +44,10 @@ This is a simple Unity system that helps with performance.
 Unity version **2021.3.25f1** and above should work. Some previous Unity versions should work as well but has not been tested. The main branch version is **2021.3.25f1**
 ***
 ## Stable Build
-[Stable-v1.1.0](https://github.com/deadlykam/CodeOptPro/tree/Stable-v1.1.0) is the latest stable build of the project. The unitypackage for this project can also be found there. If development is going to be done on this project then it is adviced to branch off of any _Stable_ branches because they will **NOT** be changed or updated except for README.md. Any other branches are subjected to change including the main branch.
+[Stable-v1.1.1](https://github.com/deadlykam/CodeOptPro/tree/Stable-v1.1.1) is the latest stable build of the project. The unitypackage for this project can also be found there. If development is going to be done on this project then it is adviced to branch off of any _Stable_ branches because they will **NOT** be changed or updated except for README.md. Any other branches are subjected to change including the main branch.
 ***
 ## Installation
-1. First download the latest [CodeOptPro-vx.x.x.unitypackage](https://github.com/deadlykam/CodeOptPro/releases/tag/v1.1.0) from the latest Stable build.
+1. First download the latest [CodeOptPro-vx.x.x.unitypackage](https://github.com/deadlykam/CodeOptPro/releases/tag/v1.1.1) from the latest Stable build.
 2. Once download is completed open up the Unity project you want to use this project in.
 3. Now go to Assets -> Import Package -> Custom Package.
 4. Selet the CodeOptPro-vx.x.x you just downloaded and open it.
@@ -167,6 +169,11 @@ There are 2 ways to create a variable from any category. Below are the two ways.
   - **e.** _Log_ - Here the logs for the _Variable Creator_ will be shown.
   - **f.** _Path_ - This is the path or folder location where the new variable will be created. You can updated this path as well. Follow the instructions in _b._ to see how to update path.
   - **g.** _Create Variable_ - This button will create the new variable type. Remember to give a name to the variable otherwise this button will **NOT** be visible. Also the name of the button _Create Variable_ will change with the variable type selected so that you will know what type you are creating.
+
+#### TimerCountdown:
+Added a timer interface that handles everything timer related blue print. Used it to create countdown timer called [TimerCountdown](https://github.com/deadlykam/CodeOptPro/blob/7799362173cf57412db51a058df00c29ec26d2a9/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Timers/TimerCountdown.cs). The script does as the name suggests which is it count downs to 0. This timer also calculates the normal value for the count down which may help later to sync up some other logic or features of yours.
+
+To use _TimerCountdown_ you must first call the method _void StartSetup(float)_ in the Start or StartAdv methods. The float value it takes in is in seconds which means 1f = 1s. Then in the Update method you must call _void UpdateTimer(float)_ method for the count down to happen. The float value here determines how fast the count down will happen so 1 is normal speed, higher than 1 means countdown will be faster and less than 1 means countdown will happen slower. _void UpdateTimer(float)_ also has Time.deltaTime being calculated so no need to calculate that. I have commented all the methods for the timer. If you want to know what each method does then please read all the comments for the method in [ITimer](https://github.com/deadlykam/CodeOptPro/blob/7799362173cf57412db51a058df00c29ec26d2a9/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Timers/ITimer.cs).
 ***
 ## Developer
 I tried to keep the development process for the developers as simple as possible. So if you want to modify CodeOptPro then I will try my best to explain how to.
@@ -209,6 +216,10 @@ When extending this class you must refer a _UpdateManagerLocal_ in the _updateMa
 
 #### [MonoAdvUpdateGlobal](https://github.com/deadlykam/CodeOptPro/blob/8524978f4a7d67e2cd096397d45a329dbdc87076/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Managers/UpdateManagerGlobal.cs):
 This is same as _MonoAdvUpdateLocal_. See the details there to understand. The only difference is that _UpdateManagerGlobalHelper_ needs to be refered in the _updateManager_ field in the inspector.
+***
+## Updates
+Here I will share all the updates done to the newer versions. Below are the updates.
+1. Added countdown timer.
 ***
 ## Versioning
 The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro/tags).
