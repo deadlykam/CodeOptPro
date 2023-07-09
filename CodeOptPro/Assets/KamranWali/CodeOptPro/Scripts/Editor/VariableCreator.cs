@@ -45,6 +45,7 @@ namespace KamranWali.CodeOptPro.Editor
         private double _valueDouble1;
         private float _valueFloat1;
         private int _valueInt1;
+        private LayerMask _valueLayerMask1;
         private string _valueString1;
         private Vector2 _valueVector2_1;
         private Vector3 _valueVector3_1;
@@ -58,7 +59,8 @@ namespace KamranWali.CodeOptPro.Editor
         [MenuItem("KamranWali/CodeOptPro/Variable Creator")]
         private static void Init()
         {
-            VariableCreator window = (VariableCreator)EditorWindow.GetWindow(typeof(VariableCreator), true, "Variable Creator");
+            VariableCreator window = GetWindow<VariableCreator>();
+            window.titleContent = new GUIContent("Variable Creator");
             window.Show();
         }
 

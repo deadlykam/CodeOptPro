@@ -25,6 +25,7 @@ This is a simple Unity system that helps with performance.
     - [Vars](#3-vars)
     - [Variable Creator](#variable-creator)
   - [TimerCountdown](#timercountdown)
+  - [Bars](#bars)
 - [Developer](#developer)
   - [CodeOptProSetupAuto](#codeoptprosetupauto)
   - [MonoAdvManager_Call](#monoadvmanager_call)
@@ -134,6 +135,7 @@ In this category different type of data types are shared, example bool, float, i
   - **FixedDoubleVar** - This FixedVar shares _double_ data types. When creating the FixedDoubleVar set the value to any double type value. To get the value simply call the method _double FixedDoubleVar.GetValue()_. To use FixedDoubleVar simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.FixedVars.FixedDoubleVar_.
   - **FixedFloatVar** - This FixedVar shares _float_ data types. When creating the FixedFloatVar set the value to any float type value. To get the value simply call the method _float FixedFloatVar.GetValue()_. To use FixedFloatVar simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.FixedVars.FixedFloatVar_.
   - **FixedIntVar** - This FixedVar shares _int_ data types. When creating the FixedIntVar set the value to any int type value. To get the value simply call the method _int FixedIntVar.GetValue()_. To use FixedIntVar simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.FixedVars.FixedIntVar_.
+  - **FixedLayerMaskVar** - This FixedVar shares _LayerMask_ data types. When creating the FixedLayerMaskVar select any layer mask values. To get the value simply call the method _LayerMask FixedLayerMask.GetValue()_. To use FixedLayerMaskVar simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.FixedVar.FixedLayerMaskVar_.
   - **FixedStringVar** - This FixedVar shares _string_ data types. When creating the FixedStringVar set the value to any string type value. To get the value simply call the method _string FixedStringVar.GetValue()_. To use FixedStringVar simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.FixedVars.FixedStringVar_.
   - **FixedVector2Var** - This FixedVar shares _Vector2_ data types. When creating the FixedVector2Var set the value to any Vector2 type value. To get the value simply call the method _Vector2 FixedVector2Var.GetValue()_. To use FixedVector2Var simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.FixedVars.FixedVector2Var_.
   - **FixedVector3Var** - This FixedVar shares _Vector3_ data types. When creating the FixedVector3Var set the value to any Vector3 type value. To get the value simply call the method _Vector3 FixedVector3Var.GetValue()_. To use FixedVector3Var simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.FixedVars.FixedVector3Var_.
@@ -174,6 +176,20 @@ There are 2 ways to create a variable from any category. Below are the two ways.
 Added a timer interface that handles everything timer related blue print. Used it to create countdown timer called [TimerCountdown](https://github.com/deadlykam/CodeOptPro/blob/7799362173cf57412db51a058df00c29ec26d2a9/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Timers/TimerCountdown.cs). The script does as the name suggests which is it count downs to 0. This timer also calculates the normal value for the count down which may help later to sync up some other logic or features of yours.
 
 To use _TimerCountdown_ you must first call the method _void StartSetup(float)_ in the Start or StartAdv methods. The float value it takes in is in seconds which means 1f = 1s. Then in the Update method you must call _void UpdateTimer(float)_ method for the count down to happen. The float value here determines how fast the count down will happen so 1 is normal speed, higher than 1 means countdown will be faster and less than 1 means countdown will happen slower. _void UpdateTimer(float)_ also has Time.deltaTime being calculated so no need to calculate that. I have commented all the methods for the timer. If you want to know what each method does then please read all the comments for the method in [ITimer](https://github.com/deadlykam/CodeOptPro/blob/7799362173cf57412db51a058df00c29ec26d2a9/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Timers/ITimer.cs).
+
+#### Bars:
+Added a bar interface that handles everything bar related blue print called [IBar](https://github.com/deadlykam/CodeOptPro/blob/b6e1013d4797a11a78c36cff2b880ddb4001c2cb/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Bars/IBar.cs). Used it to create an abstract class called [BaseBar](https://github.com/deadlykam/CodeOptPro/blob/b6e1013d4797a11a78c36cff2b880ddb4001c2cb/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Bars/BaseBar.cs) that handles most common logics between bars. Then used that to create [NormalBar](https://github.com/deadlykam/CodeOptPro/blob/b6e1013d4797a11a78c36cff2b880ddb4001c2cb/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Bars/NormalBar.cs) that works like any common bars.
+
+To use _NormalBar_ you must first call the _void StartSetup(int)_ in the Start or StartAdv methods. The int value it takes is the max value for the bar. The value of the bar will be from 0(included) to max value(included). I have commented about the methods in the script so please read the comments in [IBar](https://github.com/deadlykam/CodeOptPro/blob/b6e1013d4797a11a78c36cff2b880ddb4001c2cb/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Bars/IBar.cs) to get an idea. I recommend using _NormalBar_ as health bars for npcs and players. I will give brief explanations of the methods below for the _NormalBar_
+1. _void StartSetup(int)_ - This method sets up the bar at the start of the game. This method MUST be called in the start method otherwise there will be error. Later if you want to change the max value for the bar then you can call this method again.
+2. _float GetNormalValue()_ - This method returns the normal value of the bar which is basically _curValue/maxValue_.
+3. _void AddValue(int)_ - This will add to the bar's current value. The current value will not exceed the maximum value and will stop at the maximum value.
+4. _int GetCurrentValue()_ - This method returns the current bar value.
+5. _void SetCurrent(int)_ This method sets the current value. If the value given is higher than the maximum value then the maximum value will be set so current value will never exceed maximum value.
+6. _int GetMaxValue_ - This method returns the maximum threshold value of the bar.
+7. _bool IsDepleted()_ - This method checks if the bar has been depleted that is if the current value has become 0. 0 = true, 0 != false.
+8. _void Restore()_ - This method restores the bar to the maximum value. That is making current value equal to maximum value.
+9. _void RemoveValue(int)_ - This method removes an amount from the current value. The lowest current value will go is 0 and will not go below it.
 ***
 ## Developer
 I tried to keep the development process for the developers as simple as possible. So if you want to modify CodeOptPro then I will try my best to explain how to.
@@ -219,7 +235,9 @@ This is same as _MonoAdvUpdateLocal_. See the details there to understand. The o
 ***
 ## Updates
 Here I will share all the updates done to the newer versions. Below are the updates.
-1. Added countdown timer.
+1. Added FixedLayerMaskVar variable.
+2. Added Bars.
+3. **Bug Fixed** - Fixed the docking issue of the windows.
 ***
 ## Versioning
 The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro/tags).

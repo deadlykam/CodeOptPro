@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f237dd72b280dd0448185ea64cb2708f, type: 3}
   m_Name: CodeOptPro_Version
   m_EditorClassIdentifier: 
-  value: Version - v1.1.1
+  value: Version - v1.1.2a
