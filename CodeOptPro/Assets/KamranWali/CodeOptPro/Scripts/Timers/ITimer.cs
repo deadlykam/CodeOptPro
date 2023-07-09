@@ -1,6 +1,8 @@
+using KamranWali.CodeOptPro.CommonInterfaces;
+
 namespace KamranWali.CodeOptPro.Timers
 {
-    public interface ITimer
+    public interface ITimer : IObjectNormalValue
     {
         /// <summary>
         /// This method sets up the timer.
@@ -41,11 +43,5 @@ namespace KamranWali.CodeOptPro.Timers
         /// </summary>
         /// <returns>The current time in seconds, of type float</returns>
         public float GetCurrentTime();
-
-        /// <summary>
-        /// The normalized value of the Timer.
-        /// </summary>
-        /// <returns>The normalized value of the Timer from 0 - 1, of type float</returns>
-        float GetNormalValue();
     }
 }

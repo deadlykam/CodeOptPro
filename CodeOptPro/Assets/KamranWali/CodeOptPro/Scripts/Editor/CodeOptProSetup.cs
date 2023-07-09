@@ -36,7 +36,8 @@ namespace KamranWali.CodeOptPro.Editor
         [MenuItem("KamranWali/CodeOptPro/CodeOptPro")]
         private static void Init()
         {
-            CodeOptProSetup window = (CodeOptProSetup)EditorWindow.GetWindow(typeof(CodeOptProSetup), true, "CodeOptPro"); // Setting the window
+            CodeOptProSetup window = GetWindow<CodeOptProSetup>();
+            window.titleContent = new GUIContent("CodeOptPro");
             window.Show(); // Opening the window
         }
 

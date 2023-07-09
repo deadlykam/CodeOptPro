@@ -59,7 +59,8 @@ namespace KamranWali.CodeOptPro.Editor
         [MenuItem("KamranWali/CodeOptPro/Variable Creator")]
         private static void Init()
         {
-            VariableCreator window = (VariableCreator)EditorWindow.GetWindow(typeof(VariableCreator), true, "Variable Creator");
+            VariableCreator window = GetWindow<VariableCreator>();
+            window.titleContent = new GUIContent("Variable Creator");
             window.Show();
         }
 
