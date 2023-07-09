@@ -45,6 +45,7 @@ namespace KamranWali.CodeOptPro.Editor
         private double _valueDouble1;
         private float _valueFloat1;
         private int _valueInt1;
+        private LayerMask _valueLayerMask1;
         private string _valueString1;
         private Vector2 _valueVector2_1;
         private Vector3 _valueVector3_1;
