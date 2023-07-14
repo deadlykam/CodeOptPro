@@ -68,7 +68,11 @@ namespace KamranWali.CodeOptPro.Managers
         /// <summary>
         /// This method calculates the time delta for the update manager.
         /// </summary>
-        private void CalculateTimeDelta() => _timeDelta = ((float) _objects.Count) / ((float) _numUpdate);
+        private void CalculateTimeDelta()
+        {
+            _timeDelta = ((float)_objects.Count) / ((float)_numUpdate);
+            _timeDelta = _timeDelta <= 1f ? 1f : _timeDelta; // Validating time delta value
+        }
 
         /// <summary>
         /// This method calculates the actual number of objects to update.
