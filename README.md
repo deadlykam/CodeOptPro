@@ -237,7 +237,8 @@ This is same as _MonoAdvUpdateLocal_. See the details there to understand. The o
 Here I will share all the updates done to the newer versions. Below are the updates.
 1. Added FixedLayerMaskVar variable.
 2. Added Bars.
-3. **Bug Fixed** - Fixed the docking issue of the windows.
+3. **Bug: Docking (Fixed)** - Fixed the docking issue of the windows.
+4. **Bug: UpdateManager Number of Object Update (Fixed)** - There was a bug in UpdateManager where if the __numUpdate_ was greater than __objects.Count_ then the update manager would update an object twice per frame. Fixed this bug by selecting the lower value from the two variables __numUpdate_ and __object.Count_.
 ***
 ## Versioning
 The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro/tags).
