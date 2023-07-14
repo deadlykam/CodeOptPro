@@ -239,6 +239,7 @@ Here I will share all the updates done to the newer versions. Below are the upda
 2. Added Bars.
 3. **Bug: Docking (Fixed)** - Fixed the docking issue of the windows.
 4. **Bug: UpdateManager Number of Object Update (Fixed)** - There was a bug in UpdateManager where if the __numUpdate_ was greater than __objects.Count_ then the update manager would update an object twice per frame. Fixed this bug by selecting the lower value from the two variables __numUpdate_ and __object.Count_.
+5. **Bug: UpdateManager TimeDelta** - There was a bug in __timeDelta_ calculation in UpdateManagers. The fields __objects.Count_ and __numUpdate_ where ints so dividing them were giving wrong result. Used float casting to get the correct __timeDelta_ calculation.
 ***
 ## Versioning
 The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro/tags).
