@@ -13,7 +13,6 @@ namespace KamranWali.CodeOptPro.Managers
             base.AwakeAdv();
             _helper.SetManager(this);
         }
-        public override void StartAdv() { }
 
         #region Editor Script
         /// <summary>
