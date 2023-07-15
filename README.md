@@ -26,6 +26,9 @@ This is a simple Unity system that helps with performance.
     - [Variable Creator](#variable-creator)
   - [TimerCountdown](#timercountdown)
   - [Bars](#bars)
+  - [Searches](#searches)
+    - [RayHit](#rayhit)
+    - [RayHitSearch](#rayhitsearch)
 - [Developer](#developer)
   - [CodeOptProSetupAuto](#codeoptprosetupauto)
   - [MonoAdvManager_Call](#monoadvmanager_call)
@@ -191,6 +194,36 @@ To use _NormalBar_ you must first call the _void StartSetup(int)_ in the Start o
 7. _bool IsDepleted()_ - This method checks if the bar has been depleted that is if the current value has become 0. 0 = true, 0 != false.
 8. _void Restore()_ - This method restores the bar to the maximum value. That is making current value equal to maximum value.
 9. _void RemoveValue(int)_ - This method removes an amount from the current value. The lowest current value will go is 0 and will not go below it.
+
+#### Searches:
+For now I have added a performant way to use the ray cast to hit objects and to get the farthest and closest objects. No need to keep repeating same code over and over again like a cycle. Below are the scripts that does that.
+##### [RayHit](https://github.com/deadlykam/CodeOptPro/blob/f781787e8fc82608b5bb7adebc485c5c38264785/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Searches/RayHit.cs):
+This script uses a ray to find all the objects that that ray has hit. It uses Unity's _Physics.RaycastNonAlloc(...)_ method to find objects that have hit the ray. Using this method is very performant friendly. I have commented in the scripts in what each constructor and method does but below I will explain it briefly.
+- **RayHit(int hitSize, float rayRange, LayerMask hitMask)** - This is the constructor that MUST be called to initialize the RayHit object. The _hitSize_ parameter will give a limited number of objects to be hit by the ray and then stored. The _rayRange_ parameter defines the range of the ray or how far the ray can go. The _hitMask_ parameter tells the ray which layer the ray can hit. _Example: RayHit rayHit = new RayHit(5, 100f, someLayerMask);_
+- **void SetRay(Ray ray)** - This method will replace the current ray with the given ray. So if there are other rays that you want to use then you can just replace the ray here. _Example: rayHit.SetRay(someRay);_
+- **void SetRay(Vector3 origin, Vector3 dir)** - This method will set the current ray with the given parameters. The _origin_ parameter is the point from where the ray will be generated. The _dir_ parameter is the direction the ray will go towards. _Example: rayHit.SetRay(Vector3.zer0, Vector3.forward);_
+- **void CalculateHits** - This method calculates and stores the number of objects the ray has hit. To get the number of objects hit call the method _int GetNumHit()_ after. _Example: rayHit.CalculateHits(); int numHit = rayHit.GetNumHit();_
+- **bool IsHit()** - This method checks if at least 1 object has been hit. If there is a hit then it will return true. If there are NO hits then it will return false.
+- **int GetNumHit()** - This method gets the number of objects that has been hit. For this method to work _void CalculateHits()_ must be called first. _Example: rayHit.CalculateHits(); int numHit = rayHit.GetNumHit();_
+
+##### [RayHitSearch](https://github.com/deadlykam/CodeOptPro/blob/f781787e8fc82608b5bb7adebc485c5c38264785/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Searches/RayHitSearch.cs):
+This script finds the closest or farthest hit object from the ray. This script also extends from _RayHit_ script so it contains all the methods and features from there as well. Again I have commented in the script to help with understanding it so check the script out and will explain the script briefly here as well.
+- **RaycastHit GetClosestHit(Vector3 origin)** - This method finds the closest hit object. The hit objects are found when the ray hits the objects. The parameter _origin_ is the point from where the distance check is done and from where the closest hit object is found.
+```
+Example:
+RayHitSearch rayHitSearch = new RayHitSearch(5, 100f, someLayerMask);
+rayHitSearch.SetRay(Vector3.zero, Vector3.forward);
+rayHitSearch.CalculateHits();
+RaycastHit hitObject = rayHitSearch.GetClosestHit(Vector3.zero);
+```
+- **RaycastHit GetFarthestHit(Vector3 origin)** - This method finds the farthest hit object. The hit objects are found when the ray hits the objects. The parameter _origin_ is the point from where the distance check is done and from where the farthest hit object is found.
+```
+Example:
+RayHitSearch rayHitSearch = new RayHitSearch(5, 100f, someLayerMask);
+rayHitSearch.SetRay(Vector3.zero, Vector3.forward);
+rayHitSearch.CalculateHits();
+RaycastHit hitObject = rayHitSearch.GetFarthestHit(Vector3.zero);
+```
 ***
 ## Developer
 I tried to keep the development process for the developers as simple as possible. So if you want to modify CodeOptPro then I will try my best to explain how to.
@@ -243,6 +276,7 @@ Here I will share all the updates done to the newer versions. Below are the upda
 5. **Bug: UpdateManager TimeDelta** - There was a bug in __timeDelta_ calculation in UpdateManagers. The fields __objects.Count_ and __numUpdate_ where ints so dividing them were giving wrong result. Used float casting to get the correct __timeDelta_ calculation.
 6. **Bug: UpdateManager TimeDelta Calculation** - Now __timeDelta_ is NOT allowed to go below 1 after calculation. If it does then it will be validated to 1. This was causing some update smoothing issue so calculation had to be changed.
 7. Added CameraVar variable.
+8. Added [_RayHit_](https://github.com/deadlykam/CodeOptPro/blob/f781787e8fc82608b5bb7adebc485c5c38264785/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Searches/RayHit.cs) and [_RayHitSearch_](https://github.com/deadlykam/CodeOptPro/blob/f781787e8fc82608b5bb7adebc485c5c38264785/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Searches/RayHitSearch.cs) scripts that simplifies the use of ray, is performant friendly and finds the closest/farthest hit object.
 ***
 ## Versioning
 The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro/tags).
