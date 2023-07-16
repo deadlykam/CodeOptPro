@@ -16,8 +16,12 @@ namespace KamranWali.CodeOptPro.Editor
         private static UpdateManagerLocal[] _ums_Local;
         private static UpdateManagerGlobal[] _ums_Global;
         private static MonoAdv[] _objects;
-        private static List<MonoAdvManagerHelper> _managerHelpers;
-        private static List<MonoAdvManagerHelper> _checkHelpers;
+        private static List<MonoAdvManagerHelper> _managerHelpers; /*TODO: Make this a list of List<MonoAdvManagerHelper> or
+                                                                           an array of a class that contains list of
+                                                                           List<MonoAdvManagerHelper>*/
+        private static List<MonoAdvManagerHelper> _checkHelpers; /*TODO: Make this a list of List<MonoAdvManagerHelper> or
+                                                                         an array of a class that contains list of
+                                                                         List<MonoAdvManagerHelper>*/
         private static CodeOptProSettings _settings;
         private static int _counter;
         private static readonly string _settingsPath = "Assets/KamranWali/CodeOptPro/SO_Data/DefaultSettings/DefaultCodeOptProSettings.asset";
@@ -54,6 +58,9 @@ namespace KamranWali.CodeOptPro.Editor
             _managerCaller.ResetData();
             ShowProgressBar("Initializing Managers...", .01f);
 
+            //TODO: Call the Init() methods for the MonoAdvManager_Calls so that MonoAdvManagers can be added to them
+            //TODO: Loop to fix missing or null references of all MonoAdvManager_Calls
+
             if (_settings.IsAutoFixNullMissRef()) // Condition to auto fix null and missing reference
             {
                 for (_counter = 0; _counter < _managerHelpers.Count; _counter++) // Loop for removing null or missing references
@@ -68,7 +75,9 @@ namespace KamranWali.CodeOptPro.Editor
 
             for (_counter = 0; _counter < _managers.Length; _counter++) // Loop for initializing the mono adv manager and adding managers to caller
             {
-                _managerCaller.AddObject(_managers[_counter]); // Adding the manager to the calling manager
+                _managerCaller.AddObject(_managers[_counter]); // Adding the manager to the calling manager 
+                                                               // TODO: Remove line 71 as this should be handled in
+                                                               // MonoAdvManager.Init() method
 
                 if (!_managers[_counter].HasManager()) // Condition to stop the system process
                 {
@@ -76,9 +85,14 @@ namespace KamranWali.CodeOptPro.Editor
                     return; // Stop process here until error is fixed
                 }
 
+                //TODO: Condition to stop the system process if MonoAdvManager_CallHelper is NOT found
+
                 _managers[_counter].Init(); // Initializing managers
                 _managers[_counter].ResetData(); // Resetting data
+
+                /*TODO: Use a loop to go through each _managerHelpers.Lists*/
                 if (!_managerHelpers.Contains(_managers[_counter].GetManagerHelper())) _managerHelpers.Add(_managers[_counter].GetManagerHelper()); // Adding any newly added helper
+                /*TODO: Use a loop to go through each _managerHelpers.Lists*/
                 if (!_checkHelpers.Contains(_managers[_counter].GetManagerHelper())) _checkHelpers.Add(_managers[_counter].GetManagerHelper()); // Adding manager helpers which will later be needed for validation
                 ShowProgressBar("Setting MonoAdvManager and Caller...", ((_counter / _managers.Length) * .14f) + .01f);
 
@@ -86,6 +100,7 @@ namespace KamranWali.CodeOptPro.Editor
 
             if (_settings.IsAutoFixNullMissRef()) // Condition to remove any helpers that does NOT exist in scene
             {
+                /*TODO: This will become a N3 loop because now there are children of lists that needs to be worked on*/
                 for (_counter = 0; _counter < _managerHelpers.Count; _counter++) // Loop for removing any helpers that are NOT present in the scene
                 {
                     if (!_checkHelpers.Contains(_managerHelpers[_counter])) // Condition to check if helper does NOT exist
@@ -96,6 +111,7 @@ namespace KamranWali.CodeOptPro.Editor
                 }
             }
 
+            /*Set the correct managers for the multiple MonoAdvManager_Call*/
             _managerCaller.SetManagers(_managerHelpers); // Setting the newly populated manager helpers.
             _managerHelpers = null; // Helping with GC
             _checkHelpers = null; // Helping with GC
@@ -137,6 +153,7 @@ namespace KamranWali.CodeOptPro.Editor
                 ShowProgressBar("Adding all objects...", ((_counter / _objects.Length) * .14f) + .43f);
             }
 
+            /*TODO: Dirty all the MonoAdvManager_Calls*/
             EditorUtility.SetDirty(_managerCaller); // Dirtying manager caller for save
             ShowProgressBar("Dirtying MonoAdvManager_Call", .58f);
 

@@ -8,6 +8,7 @@ namespace KamranWali.CodeOptPro.Managers
     {
         [Header("MonoAdvManager Global Properties")]
         [SerializeField] private MonoAdvManagerHelper _helper;
+        //TODO: Give MonoAdvManager_CallerHelper reference here
 
         [Header("AwakeStartManager Local Properties")]
         [SerializeField] private List<MonoAdv> _data;
@@ -33,7 +34,11 @@ namespace KamranWali.CodeOptPro.Managers
         /// <summary>
         /// This method initializes the object, THIS METHOD IS FOR EDITOR ONLY!
         /// </summary>
-        public void Init() => _helper.SetManager(this);
+        public void Init()
+        {
+            _helper.SetManager(this);
+            //TODO: Do MonoAdvManager_CallerHelper.AddObject(this) here
+        }
 
         public bool HasManager() => _helper != null;
 
