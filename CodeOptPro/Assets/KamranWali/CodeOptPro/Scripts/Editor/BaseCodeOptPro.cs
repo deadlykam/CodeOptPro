@@ -6,7 +6,7 @@ namespace KamranWali.CodeOptPro.Editor
 {
     public abstract class BaseCodeOptPro : EditorWindow
     {
-        [SerializeField] protected FixedStringVar version;
+        //[SerializeField] protected FixedStringVar version;
 
         private string _log;
         #region Logo Fields
@@ -47,7 +47,7 @@ namespace KamranWali.CodeOptPro.Editor
                 GUILayout.Space(10f);
                 GUILayout.BeginHorizontal();
                 GUILayout.Space(5f);
-                EditorGUILayout.LabelField(version.GetValue(), _versionStyle);
+                EditorGUILayout.LabelField(GetVersion(), _versionStyle);
                 GUILayout.EndHorizontal();
             }
 
@@ -65,6 +65,12 @@ namespace KamranWali.CodeOptPro.Editor
         /// </summary>
         /// <param name="msg">The message to write, of type string</param>
         protected void WriteToLog(string msg) => _log += $"\n{msg}";
+
+        /// <summary>
+        /// This method gets the version of CodeOptPro.
+        /// </summary>
+        /// <returns>The version of CodeOptPro, of type string</returns>
+        protected string GetVersion() => CodeOptProSetupAuto.version;
 
         /// <summary>
         /// This method initializes inputs and is called from OnGUI() method.

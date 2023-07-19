@@ -8,7 +8,7 @@ namespace KamranWali.CodeOptPro.Managers
     {
         [Header("MonoAdvManager Global Properties")]
         [SerializeField] private MonoAdvManagerHelper _helper;
-        //TODO: Give MonoAdvManager_CallerHelper reference here
+        [SerializeField] private MonoAdvManager_CallHelper _manager_Caller;
 
         [Header("AwakeStartManager Local Properties")]
         [SerializeField] private List<MonoAdv> _data;
@@ -37,7 +37,7 @@ namespace KamranWali.CodeOptPro.Managers
         public void Init()
         {
             _helper.SetManager(this);
-            //TODO: Do MonoAdvManager_CallerHelper.AddObject(this) here
+            _manager_Caller.AddObject(this);
         }
 
         public bool HasManager() => _helper != null;
@@ -57,6 +57,8 @@ namespace KamranWali.CodeOptPro.Managers
         /// </summary>
         /// <returns></returns>
         public MonoAdvManagerHelper GetManagerHelper() => _helper;
+
+        public bool IsMonoAdvManager_CallHelper(MonoAdvManager_CallHelper managerHelper) => managerHelper.Equals(_manager_Caller);
 
         /// <summary>
         /// This method removes all data from the list, THIS METHOD IS FOR EDITOR ONLY!

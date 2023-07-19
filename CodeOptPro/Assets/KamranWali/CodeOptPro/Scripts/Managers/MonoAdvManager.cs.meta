@@ -5,6 +5,7 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - _helper: {fileID: 11400000, guid: dbbe919781cbd094485176840e7b626e, type: 2}
+  - _manager_Caller: {fileID: 11400000, guid: a37a8845b72b9834c94f3a984ea05a76, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -12,7 +12,6 @@ namespace KamranWali.CodeOptPro.Editor
         [SerializeField] private VariablePath _actionPaths;
         [SerializeField] private VariablePath _fixedVarPaths;
         [SerializeField] private VariablePath _varPaths;
-        [SerializeField] private FixedStringVar _version;
 
         private string _name = "VarName";
         private string _path;
