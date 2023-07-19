@@ -25,6 +25,10 @@ This is a simple Unity system that helps with performance.
     - [Vars](#3-vars)
     - [Variable Creator](#variable-creator)
   - [TimerCountdown](#timercountdown)
+  - [Bars](#bars)
+  - [Searches](#searches)
+    - [RayHit](#rayhit)
+    - [RayHitSearch](#rayhitsearch)
 - [Developer](#developer)
   - [CodeOptProSetupAuto](#codeoptprosetupauto)
   - [MonoAdvManager_Call](#monoadvmanager_call)
@@ -63,6 +67,8 @@ You must set the scene up before using the CodeOptPro. This MUST be done in ever
 ## Features
 #### Advance Awake And Start Methods:
 The advance awake and start feature works like Unity's API Awake and Start method. The differences are that only one class, _MonoAdvManager_Call_, calls the Unity's API Awake and Start methods and that class calls the custom awake(AwakeAdv) and start(StartAdv) methods of other classes. This reduces the need to use Unity's API which in turn helps with performance. The custom awake and start methods are also called for the GameObjects that are inactive as well. Also as of this writing this feature will NOT work with instantiated objects but only with already loaded objects.
+
+You can now have multiple _MonoAdvManager_Call_ components in one scene. I have also allowed grouping for this component as well. By default _DefaultManagerCallHelper_ group is used. You can use your own groups as well. It is simple to create a new group. Just right click any folder where you want to store the group then go to _Create -> CodeOptPro -> ScriptableObjects -> Managers -> MonoAdvManager_CallHelper_. Give the group any name you want. Then select the game object that contains the newly created _MonoAdvManager_Call_ component. In the _Helper_ field select the newly created group. Now select a game object that contains _MonoAdvManager_ component. In the _Manager_Caller_ field select the newly created group. That is it, you are done setting up a new _MonoAdvManager_Call_ component to work in the same scene. This is mainly useful when creating prefabs or updating them.
 
 To use this feature simply import from _using KamranWali.CodeOptPro.Managers;_ and then extend from the class called _MonoAdv_. Afterwards just implement the imported methods which will be _AwakeAdv()_ and _StartAdv()_. Add your script to a GameObject. Now select your GameObject to open up the inspector for the script. Under _MonoAdv Global Properties_ we need to set the _Manager_ field. Click the field to open the selection window and for now select _DefaultManagerHelper_, I will later discuss in more details about _DefaultManagerHelper_. Now press the Play button and everything should be working. 
 
@@ -134,6 +140,7 @@ In this category different type of data types are shared, example bool, float, i
   - **FixedDoubleVar** - This FixedVar shares _double_ data types. When creating the FixedDoubleVar set the value to any double type value. To get the value simply call the method _double FixedDoubleVar.GetValue()_. To use FixedDoubleVar simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.FixedVars.FixedDoubleVar_.
   - **FixedFloatVar** - This FixedVar shares _float_ data types. When creating the FixedFloatVar set the value to any float type value. To get the value simply call the method _float FixedFloatVar.GetValue()_. To use FixedFloatVar simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.FixedVars.FixedFloatVar_.
   - **FixedIntVar** - This FixedVar shares _int_ data types. When creating the FixedIntVar set the value to any int type value. To get the value simply call the method _int FixedIntVar.GetValue()_. To use FixedIntVar simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.FixedVars.FixedIntVar_.
+  - **FixedLayerMaskVar** - This FixedVar shares _LayerMask_ data types. When creating the FixedLayerMaskVar select any layer mask values. To get the value simply call the method _LayerMask FixedLayerMask.GetValue()_. To use FixedLayerMaskVar simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.FixedVar.FixedLayerMaskVar_.
   - **FixedStringVar** - This FixedVar shares _string_ data types. When creating the FixedStringVar set the value to any string type value. To get the value simply call the method _string FixedStringVar.GetValue()_. To use FixedStringVar simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.FixedVars.FixedStringVar_.
   - **FixedVector2Var** - This FixedVar shares _Vector2_ data types. When creating the FixedVector2Var set the value to any Vector2 type value. To get the value simply call the method _Vector2 FixedVector2Var.GetValue()_. To use FixedVector2Var simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.FixedVars.FixedVector2Var_.
   - **FixedVector3Var** - This FixedVar shares _Vector3_ data types. When creating the FixedVector3Var set the value to any Vector3 type value. To get the value simply call the method _Vector3 FixedVector3Var.GetValue()_. To use FixedVector3Var simply import by calling _using KamranWali.CodeOptPro.ScriptableObjects.FixedVars.FixedVector3Var_.
@@ -142,6 +149,7 @@ In this category different type of data types are shared, example bool, float, i
 ##### 3. Vars
 Just like FixedVars this category shares different type of data types as well, example bool, float, int, string etc. The only difference is that you can **NOT** set any values here like FixedVars and the values may change. Vars basically shares values that are constantly changing. For example - You have 5 objects that wants to know the player's position. Then just create a Vector3Var and make the player script constantly update the newly created Vector3Var. Then add the newly created Vector3Var to the other 5 objects. Now all of those 5 objects have access to the player's position without the need of player script reference. Below are all the types.
   - **BoolVar** - This Var shares _bool_ data types. To set the value simply call _void BoolVar.SetValue(bool value)_. To get the value just call _bool BoolVar.GetValue()_. To use BoolVar just import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Vars.BoolVar_.
+  - **CameraVar** - This Var shares _Camera_ data types. To set the value simply call _void CameraVar.SetValue(Camera value)_. To get the value just call _Camera CameraVar.GetValue()_. To use CameraVar just import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Vars.CameraVar_.
   - **DoubleVar** - This Var shares _double_ data types. To set the value simply call _void DoubleVar.SetValue(double value)_. To get the value just call _double DoubleVar.GetValue()_. To use DoubleVar just import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Vars.DoubleVar_.
   - **FloatVar** - This Var shares _float_ data types. To set the value simply call _void FloatVar.SetValue(float value)_. To get the value just call _float FloatVar.GetValue()_. To use FloatVar just import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Vars.FloatVar_.
   - **GameObjectVar** - This Var shares _GameObject_ data types. To set the value simply call _void GameObjectVar.SetValue(GameObject value)_. To get the value just call _GameObject GameObjectVar.GetValue()_. To use GameObjectVar just import by calling _using KamranWali.CodeOptPro.ScriptableObjects.Vars.GameObjectVar_.
@@ -174,6 +182,50 @@ There are 2 ways to create a variable from any category. Below are the two ways.
 Added a timer interface that handles everything timer related blue print. Used it to create countdown timer called [TimerCountdown](https://github.com/deadlykam/CodeOptPro/blob/7799362173cf57412db51a058df00c29ec26d2a9/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Timers/TimerCountdown.cs). The script does as the name suggests which is it count downs to 0. This timer also calculates the normal value for the count down which may help later to sync up some other logic or features of yours.
 
 To use _TimerCountdown_ you must first call the method _void StartSetup(float)_ in the Start or StartAdv methods. The float value it takes in is in seconds which means 1f = 1s. Then in the Update method you must call _void UpdateTimer(float)_ method for the count down to happen. The float value here determines how fast the count down will happen so 1 is normal speed, higher than 1 means countdown will be faster and less than 1 means countdown will happen slower. _void UpdateTimer(float)_ also has Time.deltaTime being calculated so no need to calculate that. I have commented all the methods for the timer. If you want to know what each method does then please read all the comments for the method in [ITimer](https://github.com/deadlykam/CodeOptPro/blob/7799362173cf57412db51a058df00c29ec26d2a9/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Timers/ITimer.cs).
+
+#### Bars:
+Added a bar interface that handles everything bar related blue print called [IBar](https://github.com/deadlykam/CodeOptPro/blob/b6e1013d4797a11a78c36cff2b880ddb4001c2cb/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Bars/IBar.cs). Used it to create an abstract class called [BaseBar](https://github.com/deadlykam/CodeOptPro/blob/b6e1013d4797a11a78c36cff2b880ddb4001c2cb/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Bars/BaseBar.cs) that handles most common logics between bars. Then used that to create [NormalBar](https://github.com/deadlykam/CodeOptPro/blob/b6e1013d4797a11a78c36cff2b880ddb4001c2cb/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Bars/NormalBar.cs) that works like any common bars.
+
+To use _NormalBar_ you must first call the _void StartSetup(int)_ in the Start or StartAdv methods. The int value it takes is the max value for the bar. The value of the bar will be from 0(included) to max value(included). I have commented about the methods in the script so please read the comments in [IBar](https://github.com/deadlykam/CodeOptPro/blob/b6e1013d4797a11a78c36cff2b880ddb4001c2cb/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Bars/IBar.cs) to get an idea. I recommend using _NormalBar_ as health bars for npcs and players. I will give brief explanations of the methods below for the _NormalBar_
+1. _void StartSetup(int)_ - This method sets up the bar at the start of the game. This method MUST be called in the start method otherwise there will be error. Later if you want to change the max value for the bar then you can call this method again.
+2. _float GetNormalValue()_ - This method returns the normal value of the bar which is basically _curValue/maxValue_.
+3. _void AddValue(int)_ - This will add to the bar's current value. The current value will not exceed the maximum value and will stop at the maximum value.
+4. _int GetCurrentValue()_ - This method returns the current bar value.
+5. _void SetCurrent(int)_ This method sets the current value. If the value given is higher than the maximum value then the maximum value will be set so current value will never exceed maximum value.
+6. _int GetMaxValue_ - This method returns the maximum threshold value of the bar.
+7. _bool IsDepleted()_ - This method checks if the bar has been depleted that is if the current value has become 0. 0 = true, 0 != false.
+8. _void Restore()_ - This method restores the bar to the maximum value. That is making current value equal to maximum value.
+9. _void RemoveValue(int)_ - This method removes an amount from the current value. The lowest current value will go is 0 and will not go below it.
+
+#### Searches:
+For now I have added a performant way to use the ray cast to hit objects and to get the farthest and closest objects. No need to keep repeating same code over and over again like a cycle. Below are the scripts that does that.
+##### [RayHit](https://github.com/deadlykam/CodeOptPro/blob/f781787e8fc82608b5bb7adebc485c5c38264785/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Searches/RayHit.cs):
+This script uses a ray to find all the objects that that ray has hit. It uses Unity's _Physics.RaycastNonAlloc(...)_ method to find objects that have hit the ray. Using this method is very performant friendly. I have commented in the scripts in what each constructor and method does but below I will explain it briefly.
+- **RayHit(int hitSize, float rayRange, LayerMask hitMask)** - This is the constructor that MUST be called to initialize the RayHit object. The _hitSize_ parameter will give a limited number of objects to be hit by the ray and then stored. The _rayRange_ parameter defines the range of the ray or how far the ray can go. The _hitMask_ parameter tells the ray which layer the ray can hit. _Example: RayHit rayHit = new RayHit(5, 100f, someLayerMask);_
+- **void SetRay(Ray ray)** - This method will replace the current ray with the given ray. So if there are other rays that you want to use then you can just replace the ray here. _Example: rayHit.SetRay(someRay);_
+- **void SetRay(Vector3 origin, Vector3 dir)** - This method will set the current ray with the given parameters. The _origin_ parameter is the point from where the ray will be generated. The _dir_ parameter is the direction the ray will go towards. _Example: rayHit.SetRay(Vector3.zer0, Vector3.forward);_
+- **void CalculateHits** - This method calculates and stores the number of objects the ray has hit. To get the number of objects hit call the method _int GetNumHit()_ after. _Example: rayHit.CalculateHits(); int numHit = rayHit.GetNumHit();_
+- **bool IsHit()** - This method checks if at least 1 object has been hit. If there is a hit then it will return true. If there are NO hits then it will return false.
+- **int GetNumHit()** - This method gets the number of objects that has been hit. For this method to work _void CalculateHits()_ must be called first. _Example: rayHit.CalculateHits(); int numHit = rayHit.GetNumHit();_
+
+##### [RayHitSearch](https://github.com/deadlykam/CodeOptPro/blob/f781787e8fc82608b5bb7adebc485c5c38264785/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Searches/RayHitSearch.cs):
+This script finds the closest or farthest hit object from the ray. This script also extends from _RayHit_ script so it contains all the methods and features from there as well. Again I have commented in the script to help with understanding it so check the script out and will explain the script briefly here as well.
+- **RaycastHit GetClosestHit(Vector3 origin)** - This method finds the closest hit object. The hit objects are found when the ray hits the objects. The parameter _origin_ is the point from where the distance check is done and from where the closest hit object is found.
+```
+Example:
+RayHitSearch rayHitSearch = new RayHitSearch(5, 100f, someLayerMask);
+rayHitSearch.SetRay(Vector3.zero, Vector3.forward);
+rayHitSearch.CalculateHits();
+RaycastHit hitObject = rayHitSearch.GetClosestHit(Vector3.zero);
+```
+- **RaycastHit GetFarthestHit(Vector3 origin)** - This method finds the farthest hit object. The hit objects are found when the ray hits the objects. The parameter _origin_ is the point from where the distance check is done and from where the farthest hit object is found.
+```
+Example:
+RayHitSearch rayHitSearch = new RayHitSearch(5, 100f, someLayerMask);
+rayHitSearch.SetRay(Vector3.zero, Vector3.forward);
+rayHitSearch.CalculateHits();
+RaycastHit hitObject = rayHitSearch.GetFarthestHit(Vector3.zero);
+```
 ***
 ## Developer
 I tried to keep the development process for the developers as simple as possible. So if you want to modify CodeOptPro then I will try my best to explain how to.
@@ -219,7 +271,15 @@ This is same as _MonoAdvUpdateLocal_. See the details there to understand. The o
 ***
 ## Updates
 Here I will share all the updates done to the newer versions. Below are the updates.
-1. Added countdown timer.
+1. Added FixedLayerMaskVar variable.
+2. Added Bars.
+3. **Bug: Docking (Fixed)** - Fixed the docking issue of the windows.
+4. **Bug: UpdateManager Number of Object Update (Fixed)** - There was a bug in UpdateManager where if the __numUpdate_ was greater than __objects.Count_ then the update manager would update an object twice per frame. Fixed this bug by selecting the lower value from the two variables __numUpdate_ and __object.Count_.
+5. **Bug: UpdateManager TimeDelta** - There was a bug in __timeDelta_ calculation in UpdateManagers. The fields __objects.Count_ and __numUpdate_ where ints so dividing them were giving wrong result. Used float casting to get the correct __timeDelta_ calculation.
+6. **Bug: UpdateManager TimeDelta Calculation** - Now __timeDelta_ is NOT allowed to go below 1 after calculation. If it does then it will be validated to 1. This was causing some update smoothing issue so calculation had to be changed.
+7. Added CameraVar variable.
+8. Added [_RayHit_](https://github.com/deadlykam/CodeOptPro/blob/f781787e8fc82608b5bb7adebc485c5c38264785/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Searches/RayHit.cs) and [_RayHitSearch_](https://github.com/deadlykam/CodeOptPro/blob/f781787e8fc82608b5bb7adebc485c5c38264785/CodeOptPro/Assets/KamranWali/CodeOptPro/Scripts/Searches/RayHitSearch.cs) scripts that simplifies the use of ray, is performant friendly and finds the closest/farthest hit object.
+9. Multiple _MonoAdvManager_Call_ can be used in one scene. [Read here for more details](#advance-awake-and-start-methods).
 ***
 ## Versioning
 The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro/tags).

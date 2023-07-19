@@ -8,6 +8,7 @@ namespace KamranWali.CodeOptPro.Managers
     {
         [Header("MonoAdvManager Global Properties")]
         [SerializeField] private MonoAdvManagerHelper _helper;
+        [SerializeField] private MonoAdvManager_CallHelper _manager_Caller;
 
         [Header("AwakeStartManager Local Properties")]
         [SerializeField] private List<MonoAdv> _data;
@@ -33,7 +34,11 @@ namespace KamranWali.CodeOptPro.Managers
         /// <summary>
         /// This method initializes the object, THIS METHOD IS FOR EDITOR ONLY!
         /// </summary>
-        public void Init() => _helper.SetManager(this);
+        public void Init()
+        {
+            _helper.SetManager(this);
+            _manager_Caller.AddObject(this);
+        }
 
         public bool HasManager() => _helper != null;
 
@@ -52,6 +57,8 @@ namespace KamranWali.CodeOptPro.Managers
         /// </summary>
         /// <returns></returns>
         public MonoAdvManagerHelper GetManagerHelper() => _helper;
+
+        public bool IsMonoAdvManager_CallHelper(MonoAdvManager_CallHelper managerHelper) => managerHelper.Equals(_manager_Caller);
 
         /// <summary>
         /// This method removes all data from the list, THIS METHOD IS FOR EDITOR ONLY!

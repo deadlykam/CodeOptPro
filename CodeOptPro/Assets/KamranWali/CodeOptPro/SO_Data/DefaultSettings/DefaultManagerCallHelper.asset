@@ -9,7 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f237dd72b280dd0448185ea64cb2708f, type: 3}
-  m_Name: CodeOptPro_Version
+  m_Script: {fileID: 11500000, guid: 1df171daa65f40a42a1e32fe32fb9347, type: 3}
+  m_Name: DefaultManagerCallHelper
   m_EditorClassIdentifier: 
-  value: Version - v1.1.1

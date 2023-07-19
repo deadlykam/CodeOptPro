@@ -169,6 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ab87f76bfd82174199acc2d3ae5eb9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _helper: {fileID: 11400000, guid: a37a8845b72b9834c94f3a984ea05a76, type: 2}
   _managers_PreAwakeAdv_Setup:
   - {fileID: 122583308}
   _managers:
@@ -186,6 +187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _helper: {fileID: 11400000, guid: dbbe919781cbd094485176840e7b626e, type: 2}
+  _manager_Caller: {fileID: 11400000, guid: a37a8845b72b9834c94f3a984ea05a76, type: 2}
   _data:
   - {fileID: 1423468278}
 --- !u!1 &917970724
