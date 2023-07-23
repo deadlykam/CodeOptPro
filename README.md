@@ -29,6 +29,8 @@ This is a simple Unity system that helps with performance.
   - [Searches](#searches)
     - [RayHit](#rayhit)
     - [RayHitSearch](#rayhitsearch)
+  - [Pooling System](#pooling-system)
+    - [Custom Pooling System](#custom-pooling-system)
 - [Developer](#developer)
   - [CodeOptProSetupAuto](#codeoptprosetupauto)
   - [MonoAdvManager_Call](#monoadvmanager_call)
@@ -226,6 +228,64 @@ rayHitSearch.SetRay(Vector3.zero, Vector3.forward);
 rayHitSearch.CalculateHits();
 RaycastHit hitObject = rayHitSearch.GetFarthestHit(Vector3.zero);
 ```
+
+#### Pooling System
+Added the pooling system feature. This tool allows to pool any objects or components. By default I have added pooling system for GameObjects and Transforms called _PoolGameObjectGlobal_, _PoolGameObjectLocal_, _PoolTransformGlobal_ and _PoolTransformLocal_. You can also create your own pooling system by extend the scripts _BasePoolGlobal_ or _BasePoolLocal_. Let me explain how the pooling system works with the already added default pool objects and how you can apply that to your own custom pooling objects or components.
+
+For example let's use the _PoolGameObjectGlobal_. Create a GameObject in the scene called _ExamplePool_. Now add 10 more GameObjects inside _ExamplePool_. Now we need to create the _RequestGameObject_ scriptable object. To do this simply right click anywhere in the project and go to _Create -> CodeOptPro -> ScriptableObjects -> RequestObjects_ and then select _RequestGameObject_. Name is _RequestSomeObjects_. Now add the _PoolGameObjectGlobal_ component to the _ExamplePool_ GameObject. Now we need to fill up the properties of the component. For the _Manager_ and _Update Manager_ fields give whatever _MonoAdvManagerHelper_ and _UpdateManagerGlobalHelper_ you are using. Then for the _AddRequest_ field give the _RequestSomeObjects_, for the _SizeRequest_ give _FixedIntVar_ value of 5 and for _EnableAtStart_ give the _FixedBoolVar_ value of true. I will explain what each of these field does later down below.
+
+Now lets create a new script called _RequestExample_ and write the code like below.
+```
+using KamranWali.CodeOptPro.Pools;
+using KamranWali.CodeOptPro.ScriptableObjects.RequestObjects;
+using UnityEngine;
+
+public class RequestExample : MonoBehaviour, IRequestObject<GameObject>
+{
+    [SerializeField] private RequestGameObject _requestObject;
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space)) _requestObject.CallAction(this);
+    }
+
+    public void ReceivePoolObject(GameObject poolObject)
+    {
+        Debug.Log($"Requested GameObject: {poolObject.name}");
+    }
+}
+```
+To recieve pool objects you must extend the generic interface script called IRequesetObject<T> and because we are working with GameObjects the generic type must be GameObject as well. The method _void ReceivePoolObject(GameObject)_ is the interface method that will receive the pool object. Here we will simply print the name of the game object received. To request for a pool object must call the _requestObject which in this case will take _IRequestObject<GameObject>_ which the script is a child of.
+
+Now go back to the editor. Create another GameObject anywhere in the scene and call it _Receiver_. Add the script _RequestGameObject_ to it. For the _Request Object_ field give the _RequestSomeObjects_ scriptable object. Finally hit play and press the _Space Bar_. You will notice that each time you press the _Space Bar_ a new GameObject is received and the name for it is shown. After hiting the _Space Bar_ more than 10 times you will see the objects received begins to cycle. That is it, this is how you use the pooling system.
+
+Alright so let me explain the last 3 fields of the pool system.
+- **Add Request:** This is the delegate scriptable object that will request the pooling system for an object.
+- **Size Request:** This is the size of the request array for the pooling system. This means that the pooling system can only handle _n_ amount of requests at a time. If the total requests received at one time is greater than _n_ then some of the requests will be lost. So make sure you give enough request size so that no requests are missed.
+- **Enable At Start:** This flag decides if to allow the pool system to work when the game starts. If you make it _false_ then you can activate the pooling system yourself by sending true to the method _SetActive(bool)_.
+
+##### Custom Pooling System:
+To create a custom pooling system is simple. There are two tasks you need to do for the custom pooling system to work. The first task is to extend either _BasePoolGlobal<T>_ or _BasePoolLocal<T>_. Set the generic type to any object or component you wish, Example: To a script called _SomeObject_
+
+Example:
+```
+public class PoolSomeObjectGlobal : BasePoolGlobal<SomeObject>
+{
+}
+```
+
+The seacond task is to create a _BaseRequest<T>_ scriptable object that will be used for requesting pool objects. The generic type here MUST be same as the one in pooling system, Example: To the script called _SomeObject_
+
+Example:
+```
+[CreateAssetMenu(fileName = "RequestSomeObject",
+                 menuName = "CodeOptPro/ScriptableObjects/RequestObjects/" +
+                            "RequestSomeObject",
+                 order = 1)]
+public class RequestSomeObject : BaseRequest<SomeObject> { }
+```
+
+That is it. You are now done in creating the custom pooling system. All you have to do now is create the scriptable object and apply that to both the pooling system and the one that will receive the objects.
 ***
 ## Developer
 I tried to keep the development process for the developers as simple as possible. So if you want to modify CodeOptPro then I will try my best to explain how to.
@@ -272,6 +332,7 @@ This is same as _MonoAdvUpdateLocal_. See the details there to understand. The o
 ## Updates
 Here I will share all the updates done to the newer versions. Below are the updates.
 1. Added _IUpdate_ interface. This is needed so that other interfaces can extend from this interface and get the methods. Later may also simplify search for MonoAdv objects by using _IUpdate_. This may allow other custom classes to be searched as well.
+2. Added pooling system.
 ***
 ## Versioning
 The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro/tags).
