@@ -11,7 +11,7 @@ namespace KamranWali.CodeOptPro.Editor
     [InitializeOnLoad]
     public static class CodeOptProSetupAuto
     {
-        public static readonly string version = "Version - v1.2.0";
+        public static readonly string version = "Version - v1.2.1a";
         private static MonoAdvManager_Call[] _managerCallers;
         private static MonoAdvManager[] _managers;
         private static UpdateManagerLocal[] _ums_Local;

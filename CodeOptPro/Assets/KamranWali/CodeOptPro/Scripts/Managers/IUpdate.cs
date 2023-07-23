@@ -10,8 +10,8 @@ namespace KamranWali.CodeOptPro.Managers
         /// <summary>
         /// This method sets the active state of the object.
         /// </summary>
-        /// <param name="isActivate">Flag to activate/deactivate object, of type bool</param>
-        public void SetActive(bool isActivate);
+        /// <param name="isActive">Flag to activate/deactivate object, of type bool</param>
+        public void SetActive(bool isActive);
 
         /// <summary>
         /// This method checks if the object is active.
