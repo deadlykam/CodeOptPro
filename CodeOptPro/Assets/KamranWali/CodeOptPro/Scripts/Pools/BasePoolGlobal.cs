@@ -6,10 +6,10 @@ using UnityEngine;
 namespace KamranWali.CodeOptPro.Pools
 {
     /// <summary>
-    /// This class makes the children classes into pooling local system.
+    /// This class makes the children classes into pooling global system.
     /// </summary>
     /// <typeparam name="T">The object type to pool, of type <typeparamref name="T"/></typeparam>
-    public abstract class BasePoolLocal<T> : MonoAdvUpdateLocal
+    public abstract class BasePoolGlobal<T> : MonoAdvUpdateGlobal
     {
         [Header("BasePoolLocal Global Properties")]
         [SerializeField] protected BaseRequest<T> addRequest;
