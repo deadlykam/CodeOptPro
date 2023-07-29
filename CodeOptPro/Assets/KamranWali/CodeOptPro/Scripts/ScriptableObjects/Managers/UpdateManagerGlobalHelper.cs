@@ -7,7 +7,7 @@ namespace KamranWali.CodeOptPro.ScriptableObjects.Managers
                      menuName = "CodeOptPro/ScriptableObjects/Managers/" +
                                 "UpdateManagerGlobalHelper",
                      order = 1)]
-    public class UpdateManagerGlobalHelper : BaseManagerHelper<UpdateManagerGlobal>
+    public class UpdateManagerGlobalHelper : BaseManagerHelper<UpdateManagerGlobal>, IUpdateManager
     {
         /// <summary>
         /// Gets the time delta value for the manager.
