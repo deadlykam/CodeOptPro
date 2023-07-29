@@ -333,6 +333,7 @@ This is same as _MonoAdvUpdateLocal_. See the details there to understand. The o
 Here I will share all the updates done to the newer versions. Below are the updates.
 1. Added _IUpdate_ interface. This is needed so that other interfaces can extend from this interface and get the methods. Later may also simplify search for MonoAdv objects by using _IUpdate_. This may allow other custom classes to be searched as well.
 2. Added pooling system.
+3. Added _IUpdateManager_ interface. Now UpdateManagerLocal, UpdateManagerGlobal and UpdateManagerGlobalHelper are child of _IUpdateManager_. This helps with generic scripts with constraints.
 ***
 ## Versioning
 The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro/tags).
