@@ -12,12 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8633442b094ff784aaeae2674bb3918d, type: 3}
   m_Name: DefaultFolderSelectSettings
   m_EditorClassIdentifier: 
-  _data:
-  - name: 2
-    path: Assets/KamranWali/CodeOptPro/Scripts/Pools
-  - name: 1
-    path: Assets/KamranWali/CodeOptPro/Scripts/Maths
-  - name: 4
-    path: Assets/KamranWali/CodeOptPro/SO_Data/DefaultSettings
-  - name: 5
-    path: Assets/KamranWali/CodeOptPro/Scripts/ScriptableObjects/Actions
+  _data: []

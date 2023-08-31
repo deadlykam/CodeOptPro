@@ -77,7 +77,13 @@ namespace KamranWali.CodeOptPro.Editor
                 _selOption = EditorGUILayout.Popup(new GUIContent("Mode Type", _optionsToolTip), _selOption, _options);
 
                 if (_selOption == 0)
-                    if (GUILayout.Button("SAVE")) DirtyingSettings(); // Saving by dirtying the object
+                {
+                    if (GUILayout.Button("SAVE"))
+                    {
+                        SetLog("Settings Saved Successfully!");
+                        DirtyingSettings(); // Saving by dirtying the object
+                    }
+                }
             }
         }
 
@@ -193,8 +199,10 @@ namespace KamranWali.CodeOptPro.Editor
         /// <param name="index">The indexth data to move up, of type int</param>
         private void MoveUp(int index)
         {
+            SetLog($"Moved {_data[index].name} Up and Settings Saved Successfully!");
             _settings.SwapFolderUp(index);
             SwapData(index - 1, index);
+            DirtyingSettings();
         }
 
         /// <summary>
@@ -203,8 +211,10 @@ namespace KamranWali.CodeOptPro.Editor
         /// <param name="index">The indexth data to move down, of type int</param>
         private void MoveDown(int index)
         {
+            SetLog($"Moved {_data[index].name} Down and Settings Saved Successfully!");
             _settings.SwapFolderDown(index);
             SwapData(index + 1, index);
+            DirtyingSettings();
         }
 
         /// <summary>
@@ -213,6 +223,7 @@ namespace KamranWali.CodeOptPro.Editor
         /// <param name="index">The indexth data to remove, of type int</param>
         private void RemoveData(int index)
         {
+            SetLog($"Successfully removed {_data[index].name} and Saved Settings!");
             _settings.RemoveFolder(index);
             _data.RemoveAt(index);
             DirtyingSettings();
