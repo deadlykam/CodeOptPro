@@ -1,4 +1,3 @@
-using KamranWali.CodeOptPro.ScriptableObjects.FixedVars;
 using UnityEditor;
 using UnityEngine;
 
@@ -6,8 +5,6 @@ namespace KamranWali.CodeOptPro.Editor
 {
     public abstract class BaseCodeOptPro : EditorWindow
     {
-        //[SerializeField] protected FixedStringVar version;
-
         private string _log;
         #region Logo Fields
         private bool _isSetLogo;
@@ -32,8 +29,9 @@ namespace KamranWali.CodeOptPro.Editor
                 _isSetLogo = true;
             }
 
-            _scrollPos = EditorGUILayout.BeginScrollView(_scrollPos);
             InitInput();
+            _scrollPos = EditorGUILayout.BeginScrollView(_scrollPos);
+            InitInput_Scroll();
 
             EditorGUI.BeginDisabledGroup(true);
             _log = EditorGUILayout.TextArea(_log);
@@ -73,8 +71,13 @@ namespace KamranWali.CodeOptPro.Editor
         protected string GetVersion() => CodeOptProSetupAuto.version;
 
         /// <summary>
-        /// This method initializes inputs and is called from OnGUI() method.
+        /// This method initializes inputs and is called from OnGUI() method, is NOT part of the scroll view.
         /// </summary>
         protected abstract void InitInput();
+
+        /// <summary>
+        /// This method initializes inputs and is called from OnGUI() method, also is part of the scroll view.
+        /// </summary>
+        protected abstract void InitInput_Scroll();
     }
 }
