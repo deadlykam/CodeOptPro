@@ -51,7 +51,7 @@ namespace KamranWali.CodeOptPro.Editor
 
             EditorGUILayout.BeginVertical("Box");
             GUI.skin.label.fontSize = 20;
-            GUILayout.Label(new GUIContent("Add Folder Settings", _addFolderToolTip));
+            GUILayout.Label(new GUIContent("Add Folder Properties", _addFolderToolTip));
             _name_Add = EditorGUILayout.TextField(new GUIContent("Name", _nameAddToolTip), _name_Add);
             EditorGUILayout.BeginHorizontal();
             _styleTextArea.wordWrap = true;
@@ -61,13 +61,19 @@ namespace KamranWali.CodeOptPro.Editor
 
             if (ValidateAdd()) // Validating the add input
             {
-                if (GUILayout.Button("Add Folder")) // Adding new folder
+                if (GUILayout.Button("ADD FOLDER")) // Adding new folder
                 {
                     _settings.AddFolder(_name_Add, _path_Add);
                     _data.Add(_settings.GetFolder(_settings.GetSize() - 1)); // Adding the newly added data
                     DirtyingSettings();
                     SetLog($"Added new folder name: {_name_Add}, path: {_path_Add}");
                 }
+            }
+            else // Showing disabled add folder button
+            {
+                EditorGUI.BeginDisabledGroup(true);
+                if (GUILayout.Button("ADD FOLDER")) { }
+                EditorGUI.EndDisabledGroup();
             }
 
             EditorGUILayout.EndVertical();
@@ -84,6 +90,12 @@ namespace KamranWali.CodeOptPro.Editor
                         DirtyingSettings(); // Saving by dirtying the object
                     }
                 }
+            }
+            else // Showing disabled options
+            {
+                EditorGUI.BeginDisabledGroup(true);
+                _selOption = EditorGUILayout.Popup(new GUIContent("Mode Type", _optionsToolTip), _selOption, _options);
+                EditorGUI.EndDisabledGroup();
             }
         }
 
