@@ -30,7 +30,7 @@ namespace KamranWali.CodeOptPro.Editor
 
         private List<FolderSelectData> _data;
         private string[] _names;
-        private GUIStyle _styleTextArea = new GUIStyle(EditorStyles.textArea);
+        private GUIStyle _styleTextArea;
         private int _index, _index2;
         private string[] _options = new string[] { "Edit Mode", "Select Mode" };
         private int _selOption = 1, _selGrid = -1, _gridColumns = 3;
@@ -48,6 +48,7 @@ namespace KamranWali.CodeOptPro.Editor
         protected override void InitInput()
         {
             if (_data == null) SetupData(); // Condition to set up data
+            if (_styleTextArea == null) _styleTextArea = new GUIStyle(EditorStyles.textArea); // Initializing text area style
 
             EditorGUILayout.BeginVertical("Box");
             GUI.skin.label.fontSize = 20;
