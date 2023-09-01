@@ -31,6 +31,7 @@ This is a simple Unity system that helps with performance.
     - [RayHitSearch](#rayhitsearch)
   - [Pooling System](#pooling-system)
     - [Custom Pooling System](#custom-pooling-system)
+  - [Folder Selection Palette](#folder-selection-palette)
 - [Developer](#developer)
   - [CodeOptProSetupAuto](#codeoptprosetupauto)
   - [MonoAdvManager_Call](#monoadvmanager_call)
@@ -286,6 +287,25 @@ public class RequestSomeObject : BaseRequest<SomeObject> { }
 ```
 
 That is it. You are now done in creating the custom pooling system. All you have to do now is create the scriptable object and apply that to both the pooling system and the one that will receive the objects.
+
+#### Folder Selection Palette
+| ![Variable-Creator1.png](https://imgur.com/0yWbgxP.png) | 
+|:--:| 
+| *Fig: Folder Selection Palette* |
+
+This feature allows the user to store the path locations of any folder and then by clicking the button will select that folder in the Project view. No need to look around for the important folders anymore. To open _Folder Selection Palette_ window click the menu _KamranWali_ then _CodeOptPro_ and finally _Folder Selection Palette_. Let me explain what each field does.
+- **a.** _Name_ - This is where you give the name for the folder selection. It can be any name but keeping it same as the folder name will help you understand which folder it is.
+- **b.** _Path_ - This is where you give the path of the folder you want to select. It is very easy to get the path just open up the folder in the _Project View_ window then right click an empty space in the folder and select _Copy Path_. Once the path has been copied then just paste it in this field.
+- **c.** _ADD FOLDER_ - Once you have given the name and the path this button will be enabled. Clicking this button will add a folder selection button below and the name will be same as the name given while adding. The image _Fig: Added Selection Button_ below shows how it looks like when a selection button is added.
+- **d.** _Mode Type_ - The mode type allows the user to either select the folder locations or edit the folder locations buttons. There are two modes. The first mode is called _Select Mode_. This mode allows the user to select the folder selection buttons. The second mode is called _Edit Mode_. This is the mode where the user can edit the selections buttons. See the image _Fig: Edit Mode_ to see how the edit mode looks like. Here you can move around the buttons and/or delete them. Make sure after making all the changes you click the _SAVE_ button to save all the changes.
+
+| ![Variable-Creator1.png](https://imgur.com/9TmMdUQ.png) | 
+|:--:| 
+| *Fig: Added Selection Button* |
+
+| ![Variable-Creator1.png](https://imgur.com/Ys2hRyT.png) | 
+|:--:| 
+| *Fig: Edit Mode* |
 ***
 ## Developer
 I tried to keep the development process for the developers as simple as possible. So if you want to modify CodeOptPro then I will try my best to explain how to.
@@ -334,6 +354,7 @@ Here I will share all the updates done to the newer versions. Below are the upda
 1. Added _IUpdate_ interface. This is needed so that other interfaces can extend from this interface and get the methods. Later may also simplify search for MonoAdv objects by using _IUpdate_. This may allow other custom classes to be searched as well.
 2. Added pooling system.
 3. Added _IUpdateManager_ interface. Now UpdateManagerLocal, UpdateManagerGlobal and UpdateManagerGlobalHelper are child of _IUpdateManager_. This helps with generic scripts with constraints.
+4. Added a new feature called _Folder Selection Palette_. This feature allows the user to store any folder locations and then later can go to those folders instantly, in the _Project View_, by clicking a button. Check out more details about _Folder Selection Palette_ [here](#folder-selection-palette).
 ***
 ## Versioning
 The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro/tags).
