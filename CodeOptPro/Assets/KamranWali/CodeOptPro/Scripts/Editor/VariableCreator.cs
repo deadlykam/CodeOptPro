@@ -68,7 +68,9 @@ namespace KamranWali.CodeOptPro.Editor
             window.Show();
         }
 
-        protected override void InitInput()
+        protected override void InitInput() { }
+
+        protected override void InitInput_Scroll()
         {
             _name = EditorGUILayout.TextField("Name", _name);
 
