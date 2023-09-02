@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace KamranWali.CodeOptPro.Managers
 {
-    public class UpdateManagerLocal : MonoAdv, ICOPSetup<MonoAdvUpdate>
+    public class UpdateManagerLocal : MonoAdv, ICOPSetup<MonoAdvUpdate>, IUpdateManager
     {
         [Header("UpdateManagerLocal Local Properties")]
         [SerializeField] private List<MonoAdvUpdate> _objects;

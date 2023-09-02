@@ -41,7 +41,9 @@ namespace KamranWali.CodeOptPro.Editor
             window.Show(); // Opening the window
         }
 
-        protected override void InitInput() 
+        protected override void InitInput() { }
+
+        protected override void InitInput_Scroll() 
         {
             if (GUILayout.Button(new GUIContent("SCENE SETUP", _setupSceneToolTip))) SceneSetup();
             EditorGUILayout.BeginVertical("Box");

@@ -11,6 +11,7 @@ namespace KamranWali.CodeOptPro.Editor
     {
         [SerializeField] private VariablePath _actionPaths;
         [SerializeField] private VariablePath _fixedVarPaths;
+        [SerializeField] private VariablePath _requestObjectPaths;
         [SerializeField] private VariablePath _varPaths;
 
         private string _name = "VarName";
@@ -18,17 +19,20 @@ namespace KamranWali.CodeOptPro.Editor
         private int _selCate = 0;
         private int _selActions = 0;
         private int _selFixedVar;
+        private int _selRequestObjects;
         private int _selVar;
 
-        private readonly string[] _categories = new string[] { "Actions", "Fixed Variables", "Variables" };
+        private readonly string[] _categories = new string[] { "Actions", "Fixed Variables", "Request Objects", "Variables" };
         private string[] _actions;
         private string[] _fixedVars;
+        private string[] _requestObjects;
         private string[] _vars;
         private List<string> _tempNames;
         #region ToolTips
         private readonly string _categoryToolTip = "Select the variable category";
         private readonly string _actionToolTip = "Select the Action type";
         private readonly string _fixedVarToolTip = "Select the Fixed Var type";
+        private readonly string _requestObjectToolTip = "Select the Request Object type";
         private readonly string _varToolTip = "Select the Var type";
         private readonly string _pathToolTip = "Give a path location for the variable type to be saved in. Right click a " +
                                                "folder and select 'Copy Path'. Then paste the path in the field here to update " +
@@ -37,6 +41,7 @@ namespace KamranWali.CodeOptPro.Editor
         #region Script Paths
         private readonly string _pathActionScripts = "Assets/KamranWali/CodeOptPro/Scripts/ScriptableObjects/Actions";
         private readonly string _pathFixedVarScripts = "Assets/KamranWali/CodeOptPro/Scripts/ScriptableObjects/FixedVars";
+        private readonly string _pathRequestObjectScripts = "Assets/KamranWali/CodeOptPro/Scripts/ScriptableObjects/RequestObjects";
         private readonly string _pathVarScripts = "Assets/KamranWali/CodeOptPro/Scripts/ScriptableObjects/Vars";
         #endregion
         #region Input Fields
@@ -63,7 +68,9 @@ namespace KamranWali.CodeOptPro.Editor
             window.Show();
         }
 
-        protected override void InitInput()
+        protected override void InitInput() { }
+
+        protected override void InitInput_Scroll()
         {
             _name = EditorGUILayout.TextField("Name", _name);
 
@@ -93,7 +100,12 @@ namespace KamranWali.CodeOptPro.Editor
                     SetupFixedVarInput(); // Setting up the input
                     if (!string.IsNullOrWhiteSpace(_name)) if (GUILayout.Button($"Create {_fixedVars[_selFixedVar]}")) CreateFixedVarType();
                 }
-                else if (_selCate == 2) // Condition to show Var type variables
+                else if (_selCate == 2) // Condition to show Request Object type variables
+                {
+                    _selRequestObjects = EditorGUILayout.Popup(new GUIContent("Request Objects", _requestObjectToolTip), _selRequestObjects, _requestObjects);
+                    if (!string.IsNullOrWhiteSpace(_name)) if (GUILayout.Button($"Create {_requestObjects[_selRequestObjects]}")) CreateVariable(true);
+                }
+                else if (_selCate == 3) // Condition to show Var type variables
                 {
                     _selVar = EditorGUILayout.Popup(new GUIContent("Vars", _varToolTip), _selVar, _vars);
                     if (!string.IsNullOrWhiteSpace(_name)) if (GUILayout.Button($"Create {_vars[_selVar]}")) CreateVariable(true);
@@ -122,7 +134,15 @@ namespace KamranWali.CodeOptPro.Editor
                     _selPre = _selFixedVar;
                 }
             }
-            else if (_selCate == 2) // Getting the var path
+            else if (_selCate == 2) // Getting the request object path
+            {
+                if (_selCatePre != _selCate || _selPre != _selRequestObjects) // Condition to check if new path to set
+                {
+                    _path = _requestObjectPaths.GetPath(_selRequestObjects);
+                    _selPre = _selRequestObjects;
+                }
+            }
+            else if (_selCate == 3) // Getting the var path
             {
                 if (_selCatePre != _selCate || _selPre != _selVar) // Condition to check if new path to set
                 {
@@ -181,7 +201,8 @@ namespace KamranWali.CodeOptPro.Editor
             _createVar = null;
             if (_selCate == 0) _createVar = ScriptableObject.CreateInstance(System.Type.GetType($"KamranWali.CodeOptPro.ScriptableObjects.Actions.{_actions[_selActions]}, Assembly-CSharp"));
             else if (_selCate == 1) _createVar = ScriptableObject.CreateInstance(System.Type.GetType($"KamranWali.CodeOptPro.ScriptableObjects.FixedVars.{_fixedVars[_selFixedVar]}, Assembly-CSharp"));
-            else if (_selCate == 2) _createVar = ScriptableObject.CreateInstance(System.Type.GetType($"KamranWali.CodeOptPro.ScriptableObjects.Vars.{_vars[_selVar]}, Assembly-CSharp"));
+            else if (_selCate == 2) _createVar = ScriptableObject.CreateInstance(System.Type.GetType($"KamranWali.CodeOptPro.ScriptableObjects.RequestObjects.{_requestObjects[_selRequestObjects]}, Assembly-CSharp"));
+            else if (_selCate == 3) _createVar = ScriptableObject.CreateInstance(System.Type.GetType($"KamranWali.CodeOptPro.ScriptableObjects.Vars.{_vars[_selVar]}, Assembly-CSharp"));
             AssetDatabase.CreateAsset(_createVar, $"{_path}/{_name}.asset");
             AssetDatabase.SaveAssets();
             if (isMakeNull) _createVar = null; // Condition for making _createVar to help GC
@@ -201,8 +222,9 @@ namespace KamranWali.CodeOptPro.Editor
         {
             SetScriptNames(ref _actions, _pathActionScripts); // Setting up the action script names
             SetScriptNames(ref _fixedVars, _pathFixedVarScripts); // Setting up the fixed var script names
+            SetScriptNames(ref _requestObjects, _pathRequestObjectScripts); // Setting up the request objects script names
             SetScriptNames(ref _vars, _pathVarScripts); // Setting up the var script names
-            if (_actions != null && _fixedVars != null && _vars != null) _init = true; // Condition to check if category types are initialized
+            if (_actions != null && _fixedVars != null && _requestObjects != null && _vars != null) _init = true; // Condition to check if category types are initialized
         }
 
         /// <summary>
@@ -244,7 +266,13 @@ namespace KamranWali.CodeOptPro.Editor
                 DirtyingSO(_fixedVarPaths, "Fixed Var Path Update");
                 WriteToLog($"{_fixedVars[_selFixedVar]} Path Update Successful!");
             }
-            else if (_selCate == 2) // Updating Var Paths
+            else if (_selCate == 2) // Updating Request Object Paths
+            {
+                _requestObjectPaths.SetPath(_selRequestObjects, _path);
+                DirtyingSO(_requestObjectPaths, "Request Object Path Update");
+                WriteToLog($"{_requestObjects[_selRequestObjects]} Path Update Successful!");
+            }
+            else if (_selCate == 3) // Updating Var Paths
             {
                 _varPaths.SetPath(_selVar, _path);
                 DirtyingSO(_varPaths, "Var Path Update");
