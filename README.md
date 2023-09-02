@@ -51,10 +51,10 @@ This is a simple Unity system that helps with performance.
 Unity version **2021.3.25f1** and above should work. Some previous Unity versions should work as well but has not been tested. The main branch version is **2021.3.25f1**
 ***
 ## Stable Build
-[Stable-v1.2.0](https://github.com/deadlykam/CodeOptPro/tree/Stable-v1.2.0) is the latest stable build of the project. The unitypackage for this project can also be found there. If development is going to be done on this project then it is adviced to branch off of any _Stable_ branches because they will **NOT** be changed or updated except for README.md. Any other branches are subjected to change including the main branch.
+[Stable-v1.3.0](https://github.com/deadlykam/CodeOptPro/tree/Stable-v1.3.0) is the latest stable build of the project. The unitypackage for this project can also be found there. If development is going to be done on this project then it is adviced to branch off of any _Stable_ branches because they will **NOT** be changed or updated except for README.md. Any other branches are subjected to change including the main branch.
 ***
 ## Installation
-1. First download the latest [CodeOptPro-v1.2.0.unitypackage](https://github.com/deadlykam/CodeOptPro/releases/tag/v1.2.0) from the latest Stable build.
+1. First download the latest [CodeOptPro-v1.3.0.unitypackage](https://github.com/deadlykam/CodeOptPro/releases/tag/v1.3.0) from the latest Stable build.
 2. Once download is completed open up the Unity project you want to use this project in.
 3. Now go to Assets -> Import Package -> Custom Package.
 4. Selet the CodeOptPro-v1.2.0 you just downloaded and open it.
